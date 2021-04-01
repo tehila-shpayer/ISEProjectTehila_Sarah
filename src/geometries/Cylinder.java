@@ -7,6 +7,7 @@ import primitives.*;
  *  - a surface consisting of all the points on all the lines which are parallel to a given line (axis ray)
  * and distanced from it at a fixed radius in a Cartesian 3-Dimensional coordinate system.
  * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
+ * mail: tehila1742@gmail.com
 */
 
 public class Cylinder extends Tube {
@@ -36,5 +37,10 @@ public class Cylinder extends Tube {
 	public String toString()
 	{
 		return super.toString() + " Height: " + this.height;
+	}
+	
+	public Vector getNormal(Point3D point3D)
+	{
+		return null;
 	}
 }
