@@ -1,4 +1,6 @@
+package MainPackage;
 import primitives.*;
+import geometries.*;
 import static java.lang.System.out;
 import static primitives.Util.*;
 
