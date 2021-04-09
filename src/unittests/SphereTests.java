@@ -14,7 +14,7 @@ public class SphereTests {
 	@Test
 	public void testGetNormal() {
 		// ============ Equivalence Partitions Tests ==============
-        // TC01: There is a simple single test here
+        // TC01: There is a simple test here
         Sphere s = new Sphere(new Point3D(1,  3, 0), 2);
         assertEquals("Bad normal to sphere", new Vector(0, -1, 0), s.getNormal(new Point3D(1, 2, 0)));
 	}
