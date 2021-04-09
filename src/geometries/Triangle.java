@@ -9,6 +9,7 @@ package geometries;
 import java.util.List;
 
 import primitives.Point3D;
+import primitives.Vector;
 
 public class Triangle extends Polygon
 {
@@ -20,8 +21,7 @@ public class Triangle extends Polygon
 	 * @param p2 - the second vertex
 	 * @param p3 - the third vertex
 	 */
-	public Triangle(Point3D p1, Point3D p2, Point3D p3)
-	{
+	public Triangle(Point3D p1, Point3D p2, Point3D p3) {
 		super(p1, p2, p3);
 	}
 	
@@ -29,13 +29,17 @@ public class Triangle extends Polygon
      * Returns the list of the 3 triangle points
      * @return vertices - the list of the triangle's points
      */
-	public List<Point3D> getVertices()
-	{
+	public List<Point3D> getVertices() {
 		return this.vertices;
 	}
+	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return super.toString();
+	}
+	
+	@Override
+	public Vector getNormal(Point3D point) {
+		return plane.getNormal();
 	}
 }
