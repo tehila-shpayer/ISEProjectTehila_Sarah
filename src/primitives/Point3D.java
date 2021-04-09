@@ -77,7 +77,7 @@ public class Point3D
 	
 	 /**
      * Find the square of the distance by algebraic operation
-     * The algebraic operation - ((q1-p1)^2, (q2-p2)^2, (q3-p3)^2)
+     * The algebraic operation - ((q1-p1)^2 + (q2-p2)^2 + (q3-p3)^2)
      * @param p - the second point
      * @return the Square of the distance between the points
      */
