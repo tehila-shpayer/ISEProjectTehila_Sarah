@@ -35,7 +35,14 @@ public class PlaneTests {
 	
 	@Test
 	public void testGetNormalPoint3D() {
-		fail("Not yet implemented");
+		// ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
+		Point3D p1 = new Point3D(1, 1, 1);
+        Point3D p2 = new Point3D(1, 1, -1);
+        Point3D p3 = new Point3D(0, 1, 1);
+        Plane plane = new Plane(p1,p2,p3);
+        assertEquals("Bad normal", plane.getNormal(p3), new Vector(0,1,0));
+
 	}
 
 }
