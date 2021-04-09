@@ -140,7 +140,7 @@ public class VectorTests {
         // } catch (Exception e) {}
     }
 
-
+    
 	@Test
 	public void testLengthSquared() {
         Vector v1 = new Vector(1, 2, 3);
@@ -152,6 +152,10 @@ public class VectorTests {
         assertTrue("lengthSquared() wrong value",isZero(v2.lengthSquared() - 73.25));
 	}
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#length(primitives.Vector)}.
+	 */
 	@Test
 	public void testLength() {
         Vector v1 = new Vector(0, 3, 4);
