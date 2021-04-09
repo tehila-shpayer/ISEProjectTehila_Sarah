@@ -1,9 +1,6 @@
 package geometries;
 
 import static primitives.Util.isZero;
-
-import org.graalvm.compiler.asm.amd64.AMD64Address.Scale;
-
 import primitives.*;
 import primitives.Util.*;
 
