@@ -2,7 +2,8 @@ package unittests;
 
 import static org.junit.Assert.*;
 import primitives.Vector;
-import primitives.Util;
+import primitives.*;
+import primitives.Util.*;
 import org.junit.Test;
 /**
  * Unit tests for primitives.Vector class
@@ -10,6 +11,16 @@ import org.junit.Test;
  */
 public class VectorTests {
 
+	@Test
+	public void testConstructor() {
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Test that vector zero throws an exception
+        assertThrows("constructor does not throw an exception for vector zero",
+                IllegalArgumentException.class, () -> new Vector(0, 0, 0));
+        
+	}
+	
 	@Test
 	public void testAdd() {
 		fail("Not yet implemented");
@@ -63,12 +74,27 @@ public class VectorTests {
 
 	@Test
 	public void testLengthSquared() {
-		fail("Not yet implemented");
+        Vector v1 = new Vector(1, 2, 3);
+        Vector v2 = new Vector(-2, 4.5, 7);
+        
+        // ============ Equivalence Partitions Tests ==============
+        
+        // TC01: Test that squared length of vector is proper 
+        assertTrue("lengthSquared() wrong value",isZero(v1.lengthSquared() - 14));
+        assertTrue("lengthSquared() wrong value",isZero(v2.lengthSquared() - 73.25));
 	}
 
 	@Test
 	public void testLength() {
-		fail("Not yet implemented");
+        Vector v1 = new Vector(0, 3, 4);
+        Vector v2 = new Vector(-2, 4.5, 7)
+        
+        // ============ Equivalence Partitions Tests ==============
+        
+        // TC01: Test that length of vector is proper 
+        assertTrue("length() wrong value",isZero(v1.length() - 5));
+        assertEquals("lengthSquared() wrong value",v2.length(), 8.558621, 0.00001);
+
 	}
 
 	@Test
