@@ -11,6 +11,10 @@ import primitives.Vector;
 
 public class CylinderTests {
 	
+	/**
+     * Test method for
+     * {@link geometries.Cylinder#getNormal(primitives.Point3D)}.
+     */
 	@Test
 	public void testGetNormal() {
 		// ============ Equivalence Partitions Tests ==============

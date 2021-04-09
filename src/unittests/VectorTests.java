@@ -26,6 +26,11 @@ public class VectorTests {
         
 	}
 	
+	/**
+     * Test method
+     * for
+     * {@link primitives.Vector#add(primitives.Vector)}.
+	 */
 	@Test
 	public void testAdd() {
 		Vector v1 = new Vector(1, 2, 3);
@@ -44,6 +49,10 @@ public class VectorTests {
 
     }
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#subtract(primitives.Vector)}.
+	 */
 	@Test
 	public void testSubtract() {
 		Vector v1 = new Vector(1, 2, 3);
@@ -59,6 +68,10 @@ public class VectorTests {
                 IllegalArgumentException.class, () -> v1.subtract(v1));
 	}
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#scale(double)}.
+	 */
 	@Test
 	public void testScale() {
 		Vector v1 = new Vector(1, 2, 3);
@@ -75,6 +88,10 @@ public class VectorTests {
 
 	}
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#dotProduct(primitives.Vector)}.
+	 */
 	@Test
 	public void testDotProduct() {
         Vector v1 = new Vector(1, 2, 3);

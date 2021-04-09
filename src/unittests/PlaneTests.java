@@ -8,7 +8,11 @@ import primitives.Point3D;
 import primitives.Vector;
 
 public class PlaneTests {
-
+	
+	/**
+     * Test method for
+     * {@link geometries.Plane#Plane(primitives.Point3D, primitives.Point3D, primitives.Point3D)}.
+     */
 	@Test
 	public void testConstructor() {
 
@@ -33,6 +37,10 @@ public class PlaneTests {
                 IllegalArgumentException.class, () -> new Plane(p1,p2,p3));
 	}
 	
+	/**
+     * Test method for
+     * {@link geometries.Plane#getNormal(primitives.Point3D)}.
+     */
 	@Test
 	public void testGetNormalPoint3D() {
 		// ============ Equivalence Partitions Tests ==============

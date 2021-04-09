@@ -11,6 +11,10 @@ import primitives.Vector;
 
 public class TubeTests {
 
+	/**
+     * Test method for
+     * {@link geometries.Tube#getNormal(primitives.Point3D)}.
+     */
 	@Test
 	public void testGetNormal() {
 		
