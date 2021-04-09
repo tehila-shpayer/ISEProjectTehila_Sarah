@@ -102,7 +102,7 @@ public class VectorTests {
         Vector vr = v1.crossProduct(v2);
         
         // TC01: Test that cross-product operation is proper
-        assertEquals("crossProduct() wrong result vector", v1.crossProduct(v2), new Vector(-10, 2, 3));
+        assertEquals("crossProduct() wrong result vector", v1.crossProduct(v2), new Vector(-13, 2, 3));
 
         // TC02: Test that length of cross-product is proper (orthogonal vectors taken
         // for simplicity)
@@ -169,7 +169,7 @@ public class VectorTests {
         // ============ Equivalence Partitions Tests ============== 
         // TC01: Test that normalize() creates a new vector and doesn't change the original vector 
         Vector u = v.normalized();
-        assertEquals("normalized() function does not create a new vector", v, u);
+        assertFalse("normalized() function does not create a new vector", v.equals(u));
 
 	}
 
