@@ -81,6 +81,11 @@ public class Polygon implements Geometry {
 		}
 	}
 
+	/**
+	 * Returns normal to polygon
+	 * @param point3D - normal from that point
+	 * @return normalized normal tpolygon in point3D
+	 */
 	@Override
 	public Vector getNormal(Point3D point) {
 		return plane.getNormal();

@@ -45,10 +45,14 @@ public class Sphere implements Geometry
 		return radius;
 	}
 
-
+	/**
+	 * Returns normal to sphere
+	 * @param point3D - normal from that point
+	 * @return normalized normal to sphere in point3D
+	 */
 	@Override
 	public Vector getNormal(Point3D point) {
-		return (point.subtract(center)).normalized();
+		return (point.subtract(center)).normalized();      // known calculation
 	}
 	
 	@Override
