@@ -37,9 +37,4 @@ public class Triangle extends Polygon
 	public String toString() {
 		return super.toString();
 	}
-	
-	@Override
-	public Vector getNormal(Point3D point) {
-		return plane.getNormal();
-	}
 }

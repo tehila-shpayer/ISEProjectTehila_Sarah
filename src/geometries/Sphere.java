@@ -49,14 +49,12 @@ public class Sphere implements Geometry
 
 
 	@Override
-	public Vector getNormal(Point3D point)
-	{
-		// TODO Auto-generated method stub
-		return null;
+	public Vector getNormal(Point3D point) {
+		return (point.subtract(center)).normalized();
 	}
+	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "center: " + this.center.toString() + ", radius: " + this.radius;
 	}
 }
