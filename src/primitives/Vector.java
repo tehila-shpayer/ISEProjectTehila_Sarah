@@ -60,7 +60,7 @@ public class Vector {
      * @return the new vector resulted in the subtraction
      */
     public Vector subtract(Vector other) {
-		return other.getHead().subtract(head);
+		return head.subtract(other.getHead());
 	}
     
     /**
@@ -140,8 +140,7 @@ public class Vector {
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return this.head.toString();
 	}
 }
