@@ -24,8 +24,7 @@ public class Sphere implements Geometry
      * @param center - the center point of the sphere
      * @param radius - the radius of the sphere
      */
-	public Sphere(Point3D center, double radius)
-	{
+	public Sphere(Point3D center, double radius) {
 		this.center = center;
 		this.radius = radius;
 	}
@@ -34,29 +33,26 @@ public class Sphere implements Geometry
      * Returns the field center of the sphere
      * @return center - the center point of the sphere
      */
-	public Point3D getCenter()
-	{
+	public Point3D getCenter() {
 		return center;
 	}
+	
 	/**
      * Returns the field radius of the sphere
      * @return radius - the radius of the sphere
      */
-	public double getRadius()
-	{
+	public double getRadius() {
 		return radius;
 	}
 
 
 	@Override
-	public Vector getNormal(Point3D point)
-	{
-		// TODO Auto-generated method stub
-		return null;
+	public Vector getNormal(Point3D point) {
+		return (point.subtract(center)).normalized();
 	}
+	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "center: " + this.center.toString() + ", radius: " + this.radius;
 	}
 }

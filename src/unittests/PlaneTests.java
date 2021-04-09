@@ -22,19 +22,19 @@ public class PlaneTests {
 
 		// ============ Boundary Partitions Tests ==============
         // TC02: There is two equals points
-        Point3D p1 = new Point3D(4, 5, -2);
-        Point3D p2 = new Point3D(4, 5, -2);
-        Point3D p3 = new Point3D(0, 3, 2);
+        // Point3D p1 = new Point3D(4, 5, -2);
+        // Point3D p2 = new Point3D(4, 5, -2);
+        // Point3D p3 = new Point3D(0, 3, 2);
         assertThrows("does not throw an exception for equals points",
-                IllegalArgumentException.class, () -> new Plane(p1,p2,p3));
+                IllegalArgumentException.class, () -> new Plane(new Point3D(4, 5, -2), new Point3D(4, 5, -2), new Point3D(0, 3, 2)));
         
 		// ============ Boundary Partitions Tests ==============
         // TC03: The points are on the same line
-        p1 = new Point3D(1,1,1);
-        p2 = new Point3D(2,2,2);
-        p3 = new Point3D(3,3,3);
+        // p1 = new Point3D(1,1,1);
+        // p2 = new Point3D(2,2,2);
+        // p3 = new Point3D(3,3,3);
         assertThrows("does not throw an exception for points on the same line",
-                IllegalArgumentException.class, () -> new Plane(p1,p2,p3));
+                IllegalArgumentException.class, () -> new Plane(new Point3D(1,1,1),new Point3D(2,2,2),new Point3D(3,3,3)));
 	}
 	
 	/**
