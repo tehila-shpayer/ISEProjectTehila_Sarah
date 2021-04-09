@@ -70,8 +70,7 @@ public class Point3D
      * @param p - the second point
      * @return a vector resulted in the subtraction
      */
-	public Vector subtract(Point3D p)
-	{
+	public Vector subtract(Point3D p) {
 		return new Vector(this.getX() - p.getX(), this.getY() - p.getY(), this.getZ() - p.getZ());
 	}
 	

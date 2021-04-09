@@ -23,8 +23,7 @@ public class Plane implements Geometry
      * @param p - a point on the plane
      * @param v - a normal vector to the plane
      */
-	public Plane(Point3D p, Vector v)
-	{
+	public Plane(Point3D p, Vector v) {
 		this.q0 = p;
 		this.normal = v.normalized();
 	}
@@ -36,8 +35,7 @@ public class Plane implements Geometry
      * @param p2 - a point on the plane
      * @param p3 - a point on the plane
      */
-	public Plane(Point3D p1, Point3D p2, Point3D p3)
-	{
+	public Plane(Point3D p1, Point3D p2, Point3D p3) {
 		this.q0 = p1; //we take the first point to be the point of the plane
 		//calculating the normal vector using the 3 points:
 		Vector v1 = p1.subtract(p2);
@@ -50,27 +48,24 @@ public class Plane implements Geometry
      * Returns the field q0 of the plane
      * @return q0 - the point of the plane
      */
-	public Point3D getQ0()
-	{
+	public Point3D getQ0() {
 		return q0;
 	}
 	/**
      * Returns the field normal of the plane
      * @return normal - the normal vector to the plane
      */
-	public Vector getNormal()
-	{
+	public Vector getNormal() {
 		return normal;
 	}
 	
 	@Override
-	public Vector getNormal(Point3D point)
-	{
+	public Vector getNormal(Point3D point) {
 		return normal;
 	}
+	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "q0: " + this.q0.toString() + ", normal: " + this.normal.toString();
 	}
 }
