@@ -39,6 +39,7 @@ public class Cylinder extends Tube {
 		return super.toString() + " Height: " + this.height;
 	}
 	
+	
 	public Vector getNormal(Point3D point3D) {
 		Point3D q0 = axisRay.getQ0();
 		Vector dirVector = axisRay.getDir();
