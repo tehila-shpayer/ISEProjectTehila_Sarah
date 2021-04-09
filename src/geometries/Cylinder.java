@@ -39,14 +39,20 @@ public class Cylinder extends Tube {
 		return super.toString() + " Height: " + this.height;
 	}
 	
-	
+	/**
+	 * Returns normal to cylinder
+	 * @param point3D - normal from that point
+	 * @return normalized normal to cylinder in point3D
+	 */
 	public Vector getNormal(Point3D point3D) {
 		Point3D q0 = axisRay.getQ0();
 		Vector dirVector = axisRay.getDir();
 		Point3D secondBasePoint = q0.add(dirVector.scale(height));
+		//if the point is within the cylinder's bases 
 		if(isZero((q0.subtract(point3D)).dotProduct(dirVector))||
 				isZero((secondBasePoint.subtract(point3D)).dotProduct(dirVector)))
 			return dirVector;
+		//same as the infinite tube
 		return super.getNormal(point3D);
 	}
 }
