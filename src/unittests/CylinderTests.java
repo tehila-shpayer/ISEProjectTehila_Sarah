@@ -24,7 +24,7 @@ public class CylinderTests {
 		
 		// ============ Equivalence Partitions Tests ==============
 	    // TC01: normal to point on shell		
-		assertEquals("Bad normal to cylinder from shell", cylinder.getNormal(new Point3D(sqrt3/2,0.5,5)),  new Vector(sqrt3/2, 0.5, 0));	
+		assertEquals("Bad normal to cylinder from surface", cylinder.getNormal(new Point3D(sqrt3/2,0.5,5)),  new Vector(sqrt3/2, 0.5, 0));	
 		
 	    // TC02: normal to point on first base (where the ray shoots from)		
 		assertEquals("Bad normal to cylinder from first base", cylinder.getNormal(new Point3D(0.25, 0.25, 0)),  new Vector(0, 0, 1));	
