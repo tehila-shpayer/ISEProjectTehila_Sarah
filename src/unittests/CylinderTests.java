@@ -17,22 +17,27 @@ public class CylinderTests {
      */
 	@Test
 	public void testGetNormal() {
-		/**
-		// ============ Equivalence Partitions Tests ==============
-	    // TC01: There is a simple single test here
-		Cylinder cylinder = new Cylinder(new Ray(new Point3D(0, 0, 1), new Vector(0, 0, 1)), 1, 10);
 		
-		assertEquals("Bad normal to cylinder", cylinder.getNormal(new Point3D(4, 1, 1)),  new Vector(0, 1, 0));	
+		Ray ray = new Ray(new Point3D(0, 0, 0), new Vector(0,0,1));
+		Cylinder cylinder = new Cylinder(ray, 1, 10);
+		double sqrt3 = Math.sqrt(3);
+		
+		// ============ Equivalence Partitions Tests ==============
+	    // TC01: normal to point on shell		
+		assertEquals("Bad normal to cylinder from shell", cylinder.getNormal(new Point3D(sqrt3/2,0.5,5)),  new Vector(sqrt3/2, 0.5, 0));	
+		
+	    // TC02: normal to point on first base (where the ray shoots from)		
+		assertEquals("Bad normal to cylinder from first base", cylinder.getNormal(new Point3D(0.25, 0.25, 0)),  new Vector(0, 0, 1));	
+		
+	    // TC03: normal to point on second base		
+		assertEquals("Bad normal to cylinder from second base", cylinder.getNormal(new Point3D(0.5,0.5,10)),  new Vector(0, 0, 1));	
 		
 		// ============ Boundary Partitions Tests ==============
-	    // TC02: Connection of the point to the ray head of the cylinder axis 
-		// produces a right angle with the axis
-		assertEquals("Bad normal to cylinder when the point is parallel to the ray's point", new Vector(0, 1, 0), cylinder.getNormal(new Point3D(0, 1, 1)));
-		*/
-		// TC03: The point is on one of the bases of the cylinder
-		Ray ray = new Ray(new Point3D(0, 0, 0), new Vector(0,0,1));
-		Cylinder cylinder2 = new Cylinder(ray, 2, 10);
-		assertTrue("Bad normal to cylinder when the point is on the base", cylinder2.getNormal(new Point3D(0.2, 0.4, 0)).equals(new Vector(0,0,1)) || cylinder2.getNormal(new Point3D(0.2, 0.4, 0)).equals(new Vector(0,0,-1)));
+	    // TC04: normal to point on the center of first base (where the ray shoots from)
+		assertEquals("Bad normal to point on the center of first base (where the ray shoots from)", cylinder.getNormal(new Point3D(0, 0, 0)), new Vector(0, 0, 1));
+			
+	    // TC05: normal to point on the center of second base 	
+		assertEquals("Bad normal to point on the center of second base", cylinder.getNormal(new Point3D(0, 0, 10)), new Vector(0, 0, 1));
 	}
 
 }

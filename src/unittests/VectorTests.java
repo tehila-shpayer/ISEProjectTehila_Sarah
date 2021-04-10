@@ -140,7 +140,10 @@ public class VectorTests {
         // } catch (Exception e) {}
     }
 
-    
+    /**
+     * Test method for
+     * {@link primitives.Vector#lengthSquared(primitives.Vector)}.
+	 */
 	@Test
 	public void testLengthSquared() {
         Vector v1 = new Vector(1, 2, 3);
@@ -168,6 +171,10 @@ public class VectorTests {
 
 	}
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#normalize()}.
+	 */
 	@Test
 	public void testNormalize() {
 		Vector v = new Vector(1, 2, 3);
@@ -183,6 +190,10 @@ public class VectorTests {
         
     }
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#normalized()}.
+	 */
 	@Test
 	public void testNormalized() {
         Vector v = new Vector(1, 2, 3);

@@ -44,6 +44,8 @@ public class Cylinder extends Tube {
 		Point3D q0 = axisRay.getQ0();
 		Vector dirVector = axisRay.getDir();
 		Point3D secondBasePoint = q0.add(dirVector.scale(height));
+		if(q0.equals(point3D) || secondBasePoint.equals(point3D))
+			return dirVector;
 		if(isZero((q0.subtract(point3D)).dotProduct(dirVector))||
 				isZero((secondBasePoint.subtract(point3D)).dotProduct(dirVector)))
 			return dirVector;

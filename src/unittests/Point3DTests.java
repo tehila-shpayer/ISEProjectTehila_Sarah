@@ -22,6 +22,10 @@ public class Point3DTests {
 	
 	}
 	
+	/**
+     * Test method for
+     * {@link primitives.Point3D#subtract(primitives.Point3D)}.
+     */
 	@Test
 	public void testSubtract() {
 		// ============ Equivalence Partitions Tests ==============
@@ -37,6 +41,10 @@ public class Point3DTests {
 	
 	}
 
+	/**
+     * Test method for
+     * {@link primitives.Point3D#distanceSquared(primitives.Point3D)}.
+     */
 	@Test
 	public void testDistanceSquared() {
 		// ============ Equivalence Partitions Tests ==============
