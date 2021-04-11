@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import geometries.Polygon;
+//import geometries.Polygon;
 import geometries.Triangle;
 import primitives.Point3D;
 import primitives.Vector;

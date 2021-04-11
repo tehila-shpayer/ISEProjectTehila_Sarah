@@ -3,8 +3,6 @@ import primitives.*;
 import static java.lang.System.out;
 import static primitives.Util.*;
 
-import geometries.Triangle;
-
 /**
  * Test program for the 1st stage!!!
  *
