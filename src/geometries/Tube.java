@@ -56,7 +56,7 @@ public class Tube implements Geometry {
 		Point3D o = q0;
 		if(!isZero(t))
 			o = q0.add(dirVector.scale(t));
-		return (point.subtract(o)).normalized();
+		return (point.subtract(o)).normalized(); 
     }
 	
 }
