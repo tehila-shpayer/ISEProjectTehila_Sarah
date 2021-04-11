@@ -42,11 +42,15 @@ public class Tube implements Geometry {
 	} 
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Axis Ray: " + this.axisRay.toString() + " Radius: " + this.radius + "";
 	}
 	
+	/**
+	 * Returns normal to tube
+	 * @param point3D - normal from that point
+	 * @return normalized normal to tube in point3D
+	 */
 	@Override
 	public Vector getNormal(Point3D point) {
 		Point3D q0 = axisRay.getQ0();

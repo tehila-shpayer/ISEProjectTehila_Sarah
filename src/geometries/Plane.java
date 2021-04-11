@@ -59,6 +59,11 @@ public class Plane implements Geometry
 		return normal;
 	}
 	
+	/**
+	 * Returns normal to plane
+	 * @param point3D - normal from that point
+	 * @return normalized normal to plane in point3D
+	 */
 	@Override
 	public Vector getNormal(Point3D point) {
 		return normal;

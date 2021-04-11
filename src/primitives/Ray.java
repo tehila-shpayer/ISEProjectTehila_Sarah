@@ -47,8 +47,7 @@ public class Ray {
 	}
 	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "q0: " + this.q0.toString() + " dir: " + this.dir.toString();
 	}
 }

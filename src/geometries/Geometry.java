@@ -7,8 +7,7 @@ import primitives.*;
  * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
  *
  */
-public interface Geometry
-{
+public interface Geometry {
 	public Vector getNormal(Point3D point);
 }
 
