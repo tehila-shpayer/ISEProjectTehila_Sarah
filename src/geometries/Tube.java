@@ -3,7 +3,6 @@ package geometries;
 import static primitives.Util.isZero;
 
 import primitives.*;
-import primitives.Util.*;
 
 /**
  * Class Tube is the basic class representing an infinite cylinder by an axis ray and a radius

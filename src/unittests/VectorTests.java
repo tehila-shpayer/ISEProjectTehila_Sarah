@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 import static primitives.Util.isZero;
 
 import primitives.Vector;
-import primitives.*;
-import primitives.Util.*;
 import org.junit.Test;
 /**
  * Unit tests for primitives.Vector class

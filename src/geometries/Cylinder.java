@@ -2,7 +2,6 @@ package geometries;
 
 import static primitives.Util.isZero;
 import primitives.*;
-import primitives.Util.*;
 
 /**
  * Class Cylinder is the basic class representing a geometrical shape of cylinder
