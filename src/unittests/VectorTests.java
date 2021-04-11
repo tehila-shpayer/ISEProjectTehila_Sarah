@@ -26,6 +26,11 @@ public class VectorTests {
         
 	}
 	
+	/**
+     * Test method
+     * for
+     * {@link primitives.Vector#add(primitives.Vector)}.
+	 */
 	@Test
 	public void testAdd() {
 		Vector v1 = new Vector(1, 2, 3);
@@ -44,6 +49,10 @@ public class VectorTests {
 
     }
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#subtract(primitives.Vector)}.
+	 */
 	@Test
 	public void testSubtract() {
 		Vector v1 = new Vector(1, 2, 3);
@@ -59,6 +68,10 @@ public class VectorTests {
                 IllegalArgumentException.class, () -> v1.subtract(v1));
 	}
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#scale(double)}.
+	 */
 	@Test
 	public void testScale() {
 		Vector v1 = new Vector(1, 2, 3);
@@ -75,6 +88,10 @@ public class VectorTests {
 
 	}
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#dotProduct(primitives.Vector)}.
+	 */
 	@Test
 	public void testDotProduct() {
         Vector v1 = new Vector(1, 2, 3);
@@ -123,7 +140,10 @@ public class VectorTests {
         // } catch (Exception e) {}
     }
 
-
+    /**
+     * Test method for
+     * {@link primitives.Vector#lengthSquared(primitives.Vector)}.
+	 */
 	@Test
 	public void testLengthSquared() {
         Vector v1 = new Vector(1, 2, 3);
@@ -135,6 +155,10 @@ public class VectorTests {
         assertTrue("lengthSquared() wrong value",isZero(v2.lengthSquared() - 73.25));
 	}
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#length(primitives.Vector)}.
+	 */
 	@Test
 	public void testLength() {
         Vector v1 = new Vector(0, 3, 4);
@@ -147,6 +171,10 @@ public class VectorTests {
 
 	}
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#normalize()}.
+	 */
 	@Test
 	public void testNormalize() {
 		Vector v = new Vector(1, 2, 3);
@@ -162,6 +190,10 @@ public class VectorTests {
         
     }
 
+	/**
+     * Test method for
+     * {@link primitives.Vector#normalized()}.
+	 */
 	@Test
 	public void testNormalized() {
         Vector v = new Vector(1, 2, 3);

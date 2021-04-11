@@ -1,6 +1,9 @@
 package geometries;
 
+import static primitives.Util.isZero;
+
 import primitives.*;
+import primitives.Util.*;
 
 /**
  * Class Tube is the basic class representing an infinite cylinder by an axis ray and a radius
@@ -54,8 +57,10 @@ public class Tube implements Geometry {
 		Vector dirVector = axisRay.getDir();
 		Vector toPoint = point.subtract(q0);
 		double t = dirVector.dotProduct(toPoint);
-		Point3D o = q0.add(dirVector.scale(t));
-		return (point.subtract(o)).normalized();
+		Point3D o = q0;
+		if(!isZero(t))
+			o = q0.add(dirVector.scale(t));  
+		return (point.subtract(o)).normalized(); 
     }
 	
 }
