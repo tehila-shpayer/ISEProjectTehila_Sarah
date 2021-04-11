@@ -35,7 +35,7 @@ public class CylinderTests {
 		// ============ Boundary Partitions Tests ==============
 	    // TC04: normal to point on the center of first base (where the ray shoots from)
 		assertEquals("Bad normal to point on the center of first base (where the ray shoots from)", cylinder.getNormal(new Point3D(0, 0, 0)), new Vector(0, 0, 1));
-			
+			 
 	    // TC05: normal to point on the center of second base 	
 		assertEquals("Bad normal to point on the center of second base", cylinder.getNormal(new Point3D(0, 0, 10)), new Vector(0, 0, 1));
 	}
