@@ -3,6 +3,8 @@ import primitives.*;
 import static java.lang.System.out;
 import static primitives.Util.*;
 
+import geometries.Sphere;
+
 /**
  * Test program for the 1st stage!!!
  *
@@ -69,5 +71,9 @@ public final class Main {
              out.println("ERROR: Point - Point does not work correctly");
 
         out.println("If there were no any other outputs - all tests succeeded!");
+        Sphere sphere = new Sphere(new Point3D(1, 0, 0), 1);
+        double sqrt3 = Math.sqrt(3);
+        Point3D p = new Point3D(0.5, 0, sqrt3/2);
+        out.println("new point: " + p.add((new Vector(0,0, -sqrt3/2)).scale(3)));
     }
 }

@@ -2,6 +2,8 @@ package geometries;
 
 import java.util.List;
 
+import static primitives.Util.*;
+
 /**
  * Class Sphere is the class representing a sphere in a space of 3 dimensions
  * The Sphere is represented by a center and a radius
@@ -64,8 +66,25 @@ public class Sphere implements Geometry
 
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
-		// TODO Auto-generated method stub
-		return null;
+		Point3D rayQ0 = ray.getQ0();
+		Vector rayDir = ray.getDir();
+		if(rayQ0.equals(center))
+			return List.of(rayQ0.add(rayDir.scale(radius)));
+		Vector q0ToCenter = center.subtract(rayQ0);
+		double tm = alignZero(rayDir.dotProduct(q0ToCenter)); ;
+		double d = alignZero(Math.sqrt(q0ToCenter.lengthSquared()-tm*tm));
+		if(d>=radius)
+			return null;
+		double th = alignZero(Math.sqrt(radius*radius - d*d));
+		double t1 = alignZero(tm - th);
+		double t2 = alignZero(tm + th);
+		if(t1 <= 0 && t2 <= 0 )
+			return null;
+		if(t1 <= 0 && t2 > 0)
+			return List.of(rayQ0.add(rayDir.scale(t2)));
+		if(t2 <= 0 && t1 > 0)
+			return List.of(rayQ0.add(rayDir.scale(t1)));
+		return List.of(rayQ0.add(rayDir.scale(t1)), rayQ0.add(rayDir.scale(t2)));		
 	}
 }
 
