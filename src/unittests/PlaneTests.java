@@ -61,8 +61,6 @@ public class PlaneTests {
      */
     @Test
     public void testFindIntersections() {
-    	//double sqrt = Math.sqrt((double)1/3);
-    	//Plane plane = new Plane(new Point3D(0, 0, 1) , new Vector(sqrt, sqrt, sqrt));
     	Plane plane = new Plane(new Point3D(0, 0, 1) , new Vector(1,1,1));
 
     	// ============ Equivalence Partitions Tests ==============

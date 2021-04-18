@@ -6,6 +6,8 @@ package geometries;
  * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
 */
 
+import static primitives.Util.isZero;
+
 import java.util.List;
 
 import primitives.*;
@@ -77,7 +79,7 @@ public class Plane implements Geometry
 	}
 	
 	public List<Point3D> findIntersections(Ray ray) {
-		if (ray.getDir().dotProduct(normal)==0)
+		if(isZero(ray.getDir().dotProduct(normal)))
 		{
 			return null;
 		}
