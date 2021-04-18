@@ -6,6 +6,8 @@ package geometries;
  * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
 */
 
+import java.util.List;
+
 import primitives.*;
 
 public class Plane implements Geometry
@@ -59,6 +61,11 @@ public class Plane implements Geometry
 		return normal;
 	}
 	
+	@Override
+	public String toString() {
+		return "q0: " + this.q0.toString() + ", normal: " + this.normal.toString();
+	}
+	
 	/**
 	 * Returns normal to plane
 	 * @param point3D - normal from that point
@@ -69,8 +76,10 @@ public class Plane implements Geometry
 		return normal;
 	}
 	
-	@Override
-	public String toString() {
-		return "q0: " + this.q0.toString() + ", normal: " + this.normal.toString();
+	public List<Point3D> findIntersections(Ray ray) {
+		return null;
 	}
+	
+	
 }
+ 

@@ -1,5 +1,7 @@
 package geometries;
 
+import java.util.List;
+
 /**
  * Class Sphere is the class representing a sphere in a space of 3 dimensions
  * The Sphere is represented by a center and a radius
@@ -58,6 +60,12 @@ public class Sphere implements Geometry
 	@Override
 	public String toString() {
 		return "center: " + this.center.toString() + ", radius: " + this.radius;
+	}
+
+	@Override
+	public List<Point3D> findIntersections(Ray ray) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
