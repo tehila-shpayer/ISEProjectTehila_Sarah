@@ -2,9 +2,12 @@ package unittests;
 import geometries.*;
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
 
 public class PlaneTests {
@@ -53,4 +56,36 @@ public class PlaneTests {
 
 	}
 
-}
+	/**
+     * Test method for {@link geometries.Plane#findIntersections(primitives.Ray)}.
+     */
+    @Test
+    public void testFindIntersections() {
+    	double sqrt = Math.sqrt(1/3);
+    	Plane plane = new Plane(new Point3D(0, 0, 1) , new Vector(sqrt, sqrt, sqrt));
+    	// ============ Equivalence Partitions Tests ==============
+
+    	// TC01: The ray has a simple intersection with the plane
+    	List<Point3D> result = plane.findIntersections(new Ray(new Point3D(-1, 0, 1), new Vector(1, 0, 0)));
+    	assertEquals("Wrong number of points", 1, result.size());
+    	assertEquals("Bad intersaction point", List.of(new Point3D(1, 0, 0)), result);
+    	
+    	// TC02: Ray's line doesn't cross the plane
+        assertNull("Ray's line doesn't cross the plane",
+                plane.findIntersections(new Ray(new Point3D(1, 0, 1), new Vector(1, 0, 0))));
+    	
+    	// =============== Boundary Values Tests ==================
+    	
+        // TC03: Ray is parallel to the plane
+        assertNull("Ray's line parallel to the plane",
+                plane.findIntersections(new Ray(new Point3D(0, 0, 2), new Vector(1, -1, 0))));
+        
+        // TC04: Ray is on the plane
+        assertNull("Ray's line is on the plane",
+                plane.findIntersections(new Ray(new Point3D(0, 0, 1), new Vector(1, -1, 0))));
+        
+        // TC05: Ray is perpendicular to the plane
+        assertNull("Ray's line perpendicular to the plane",
+                plane.findIntersections(new Ray(new Point3D(0, 0, -1), new Vector(1, 1, 1))));
+    }
+ }
