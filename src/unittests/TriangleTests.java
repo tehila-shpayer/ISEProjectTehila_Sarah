@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import geometries.Plane;
 //import geometries.Polygon;
 import geometries.Triangle;
 import primitives.Point3D;
