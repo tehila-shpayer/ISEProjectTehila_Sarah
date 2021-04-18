@@ -77,7 +77,19 @@ public class Plane implements Geometry
 	}
 	
 	public List<Point3D> findIntersections(Ray ray) {
-		return null;
+		if (ray.getDir().dotProduct(normal)==0)
+		{
+			return null;
+		}
+		double t;
+		try {
+			t = (double)normal.dotProduct(q0.subtract(ray.getQ0()))/normal.dotProduct(ray.getDir());
+		}
+		catch (IllegalArgumentException e) {
+			return null;
+		}
+		if (t<=0) return null;
+		return List.of(ray.getQ0().add(ray.getDir().scale(t)));
 	}
 	
 	
