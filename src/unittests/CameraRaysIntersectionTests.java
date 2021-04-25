@@ -1,15 +1,19 @@
 package unittests;
 
-import static org.junit.Assert.assertArrayEquals;
+//import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.List;
 
 import elements.Camera;
-import geometries.*;
-import primitives.*;
-import java.util.List;
+import geometries.Geometry;
+import geometries.Plane;
+import geometries.Sphere;
+import geometries.Triangle;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 
 
 /**
