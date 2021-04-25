@@ -6,6 +6,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Test;
+
 import elements.Camera;
 import geometries.*;
 import primitives.*;
@@ -18,9 +20,19 @@ import java.util.List;
  * @authors Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
  *
  */
+
+/**
+ * Test method for
+ * {@link elements.Camera#constructRayThroughPixel(int, int, int, int)}.
+ * construct ray through pixels through different geometries.
+ */
 public class CameraRaysIntersectionTests {
     // **** Group: vp 3X3 resolution 3X3 distance 1
 
+	/**
+	 * test sphere
+	 */
+	@Test
 	public void testCameraRaysIntersectionWithSphere() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1);
 
@@ -51,6 +63,10 @@ public class CameraRaysIntersectionTests {
 		
 	}
 	
+	/**
+	 * test plane
+	 */
+	@Test
 	public void testCameraRaysIntersectionWithPlane() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1);
 
@@ -68,7 +84,10 @@ public class CameraRaysIntersectionTests {
 		assertEquals("wrong number of intersection points with plane", findAllIntersectionsOfViewPlane(camera, 3, 3, plane), 6);
 
 	}
-	
+	/**
+	 * test triangle
+	 */
+	@Test
 	public void testCameraRaysIntersectionWithTriangle() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1);
 		

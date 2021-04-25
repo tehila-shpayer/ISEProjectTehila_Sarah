@@ -4,8 +4,6 @@ import primitives.Point3D;
 import primitives.Vector;
 import static primitives.Util.*;
 import primitives.*;
-import static java.lang.System.out;
-
 
 /**
  * Class Camera is the class representing a camera in a space of 3 dimensions, 
@@ -51,6 +49,12 @@ public class Camera {
 	 */
 	double distance;
 	
+	/**
+	 * constructor for camera
+	 * @param _location: center point of camera's location
+	 * @param _vTo: Z axis
+	 * @param _vUp: Y axis
+	 */
 	public Camera(Point3D _location, Vector _vTo, Vector _vUp) {
 		if(!isZero(_vTo.dotProduct(_vUp)))
 			throw new IllegalArgumentException("vUp and vTo direction vectors of camera are not orthogonal");
