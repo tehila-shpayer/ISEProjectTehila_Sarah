@@ -83,6 +83,14 @@ public class CameraRaysIntersectionTests {
 
 	}
 	
+	/**
+	 * 
+	 * @param camera
+	 * @param nX
+	 * @param nY
+	 * @param geometry
+	 * @return the number of intersection points between all the ray from the camera and the geometry given
+	 */
 	public int findAllIntersectionsOfViewPlane( Camera camera, int nX, int nY, Geometry geometry) {
 		int count = 0;
 		for(int j = 0;j< nX; j++) {
