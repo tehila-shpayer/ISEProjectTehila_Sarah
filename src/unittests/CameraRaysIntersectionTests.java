@@ -3,7 +3,6 @@ package unittests;
 //import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
@@ -11,8 +10,6 @@ import org.junit.Test;
 import elements.Camera;
 import geometries.*;
 import primitives.*;
-import java.util.List;
-import static java.lang.System.out;
 
 
 /**

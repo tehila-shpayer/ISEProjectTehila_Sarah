@@ -65,6 +65,12 @@ public class Camera {
 		vRight = _vTo.crossProduct(_vUp).normalized();
 	}
 	
+	/**
+	 * sets view plane size - width and height in a builder pattern form
+	 * @param _width: width of view plane
+	 * @param _height: height of view plane
+	 * @return this, the camera with new data
+	 */
 	public Camera setViewPlaneSize(double _width, double _height) {
 		if(_width <= 0 || _height <= 0)
 			throw new IllegalArgumentException("width and height of the view plane must be positive");
@@ -73,11 +79,24 @@ public class Camera {
 		return this;
 	}
 	
+	/**
+	 * sets view plane information - distance
+	 * @param _distance: distance of view plane from camera
+	 * @return this, the camera with new data
+	 */
 	public Camera setDistance(double _distance) {
 		distance = _distance;
 		return this;
 	}
 	
+	/**
+	 * Construction of ray through pixel in the view plane from the camera
+	 * @param nX - number of pixel per row 
+	 * @param nY - number of pixel per column
+	 * @param j - location of pixel on axis X
+	 * @param i - location of pixel on axis Y
+	 * @return the construct ray from camera's location to pixel i,j 
+	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
 		Point3D pCenter = location.add(vTo.scale(distance));
 		double Ry = height / nY;
