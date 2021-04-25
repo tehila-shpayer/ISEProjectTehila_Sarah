@@ -38,7 +38,7 @@ public class CameraRaysIntersectionTests {
 
 	/**
 	 * test sphere
-	 */
+	 */ 
 	@Test
 	public void testCameraRaysIntersectionWithSphere() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setViewPlaneSize(3, 3).setDistance(1);
