@@ -114,19 +114,23 @@ public class CameraRaysIntersectionTests {
 	}
 	
 	/**
+	 * The function gets a camera and a geometry, calculates all the rays from the camera through the view plane and returns the number of intersection points.
 	 * 
-	 * @param camera
-	 * @param nX
-	 * @param nY
-	 * @param geometry
-	 * @return the number of intersection points between all the ray from the camera and the geometry given
+	 * @param camera - the camera (location, size and direction vectors)
+	 * The resolution:
+	 * @param nX - the number of pixels per row
+	 * @param nY - the number of pixels per column
+	 * @param geometry - the geometry in the scene that we want to find intersections with the rays from the camera
+	 * @return count - the number of intersection points between all the ray from the camera and the geometry given
 	 */
 	public int findAllIntersectionsOfViewPlane( Camera camera, int nX, int nY, Geometry geometry) {
 		int count = 0;
 		Ray ray;
 		for(int i = 0; i < nY; i++) {
 			for(int j = 0; j < nX; j++) {
+				//for each pair of index i-j, we construct a ray through this pixel
 				ray = camera.constructRayThroughPixel(nX, nY, j, i);
+				//We find the intersections between the ray and the geometry
 				List<Point3D> intersectionsList = geometry.findIntersections(ray);
 				if(intersectionsList != null)
 					count += intersectionsList.size();
