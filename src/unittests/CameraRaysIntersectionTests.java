@@ -112,8 +112,8 @@ public class CameraRaysIntersectionTests {
 	 */
 	public int findAllIntersectionsOfViewPlane( Camera camera, int nX, int nY, Geometry geometry) {
 		int count = 0;
-		for(int j = 0;j< nX; j++) {
-			for(int i = 0;i< nY; i++) {
+		for(int i = 0; i < nX; i++) {
+			for(int j = 0; j < nY; j++) {
 				Ray ray = camera.constructRayThroughPixel(nX, nY, i, j);
 				List<Point3D> intersectionsList = geometry.findIntersections(ray);
 				if(intersectionsList != null)
