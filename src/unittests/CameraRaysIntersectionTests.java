@@ -6,6 +6,8 @@ import static org.junit.Assert.assertEquals;
 //import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Test;
+
 import elements.Camera;
 import geometries.Geometry;
 import geometries.Plane;
@@ -22,9 +24,19 @@ import primitives.Vector;
  * @authors Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
  *
  */
+
+/**
+ * Test method for
+ * {@link elements.Camera#constructRayThroughPixel(int, int, int, int)}.
+ * construct ray through pixels through different geometries.
+ */
 public class CameraRaysIntersectionTests {
     // **** Group: vp 3X3 resolution 3X3 distance 1
 
+	/**
+	 * test sphere
+	 */
+	@Test
 	public void testCameraRaysIntersectionWithSphere() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1);
 
@@ -55,6 +67,10 @@ public class CameraRaysIntersectionTests {
 		
 	}
 	
+	/**
+	 * test plane
+	 */
+	@Test
 	public void testCameraRaysIntersectionWithPlane() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1);
 
@@ -66,13 +82,16 @@ public class CameraRaysIntersectionTests {
 		plane = new Plane(new Point3D(0, 0, -3), new Vector(0, 1, -1));
 		assertEquals("wrong number of intersection points with plane", findAllIntersectionsOfViewPlane(camera, 3, 3, plane), 9);
 
-		// TC02: Plane after view plane and is inclined 
+		// TC03: Plane after view plane and is inclined 
 		// so that the lower rays cast through the view plane are parallel to the plane (6 points)
 		plane = new Plane(new Point3D(0, 0, -3), new Vector(0, 1, 1));
 		assertEquals("wrong number of intersection points with plane", findAllIntersectionsOfViewPlane(camera, 3, 3, plane), 6);
 
 	}
-	
+	/**
+	 * test triangle
+	 */
+	@Test
 	public void testCameraRaysIntersectionWithTriangle() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1);
 		
@@ -97,9 +116,9 @@ public class CameraRaysIntersectionTests {
 	 */
 	public int findAllIntersectionsOfViewPlane( Camera camera, int nX, int nY, Geometry geometry) {
 		int count = 0;
-		for(int j = 0;j< nX; j++) {
-			for(int i = 0;i< nY; i++) {
-				Ray ray = camera.constructRayThroughPixel(nX, nY, j, i);
+		for(int i = 0; i < nX; i++) {
+			for(int j = 0; j < nY; j++) {
+				Ray ray = camera.constructRayThroughPixel(nX, nY, i, j);
 				List<Point3D> intersectionsList = geometry.findIntersections(ray);
 				if(intersectionsList != null)
 					count += intersectionsList.size();
