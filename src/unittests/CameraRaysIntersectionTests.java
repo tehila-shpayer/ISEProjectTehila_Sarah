@@ -1,6 +1,6 @@
 package unittests;
 
-import static org.junit.Assert.assertArrayEquals;
+//import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
@@ -78,7 +78,7 @@ public class CameraRaysIntersectionTests {
 		plane = new Plane(new Point3D(0, 0, -3), new Vector(0, 1, -1));
 		assertEquals("wrong number of intersection points with plane", findAllIntersectionsOfViewPlane(camera, 3, 3, plane), 9);
 
-		// TC02: Plane after view plane and is inclined 
+		// TC03: Plane after view plane and is inclined 
 		// so that the lower rays cast through the view plane are parallel to the plane (6 points)
 		plane = new Plane(new Point3D(0, 0, -3), new Vector(0, 1, 1));
 		assertEquals("wrong number of intersection points with plane", findAllIntersectionsOfViewPlane(camera, 3, 3, plane), 6);
@@ -114,7 +114,7 @@ public class CameraRaysIntersectionTests {
 		int count = 0;
 		for(int j = 0;j< nX; j++) {
 			for(int i = 0;i< nY; i++) {
-				Ray ray = camera.constructRayThroughPixel(nX, nY, j, i);
+				Ray ray = camera.constructRayThroughPixel(nX, nY, i, j);
 				List<Point3D> intersectionsList = geometry.findIntersections(ray);
 				if(intersectionsList != null)
 					count += intersectionsList.size();
