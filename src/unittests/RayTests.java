@@ -14,9 +14,9 @@ public class RayTests {
 	public void testGetPoint() {
 		// ============ Equivalence Partitions Tests ==============
         // TC01: There is a simple get point calculation
-		Point3D p1 = new Point3D(4, 5, -5);
-		Ray ray1 = new Ray(new Point3D(2, 1, -1) , new Vector(1,2,3));
-		assertEquals("Bad get point calculation", p1, ray1.getPoint(2));
+		Point3D p1 = new Point3D(8, 9, -1);
+		Ray ray1 = new Ray(new Point3D(2, 1, -1) , new Vector(0.6,0.8,0));
+		assertEquals("Bad get point calculation", p1, ray1.getPoint(10));
 		
 		// ============ Boundary Partitions Tests ==============
         // TC02: t scale is zero and q0 is zero
