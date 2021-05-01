@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * Class Ray is the basic class representing a ray -
  * a direction in space that starts in a specific point of Euclidean geometry in Cartesian
@@ -37,6 +39,13 @@ public class Ray {
 		return dir;
 	}
 	
+	public Point3D getPoint(double t) {
+		return q0.add(dir.scale(t));
+	}
+	
+	public Point3D findClosestPoint(List<Point3D> lst) {
+		return null;
+	}
 	@Override
 	public boolean equals(Object obj) {
 	   if (this == obj) return true;

@@ -57,5 +57,19 @@ public class Point3DTests {
         Point3D p2 = new Point3D(4, 5, -2);
         assertTrue("Bad distance squared calculation for equals points", Util.isZero(p2.distanceSquared(new Point3D(4,5,-2))));
 	}
+	
+	@Test
+	public void testDistance() {
+		// ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple distance calculation
+		Point3D p1 = new Point3D(1, 0, -4);
+		double sqrt78 = Math.sqrt(78);
+        assertTrue("Bad points distance", Util.isZero(p1.distance(new Point3D(-4, -2, 3)) - sqrt78 ));
+	
+		// ============ Boundary Partitions Tests ==============
+        // TC02: the points are equals
+        Point3D p2 = new Point3D(4, 5, -2);
+        assertTrue("Bad distance calculation for equals points", Util.isZero(p2.distanceSquared(new Point3D(4,5,-2))));
+	}
 
 }

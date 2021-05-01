@@ -69,7 +69,7 @@ public class Sphere implements Geometry
 		Point3D rayQ0 = ray.getQ0();
 		Vector rayDir = ray.getDir();
 		if(rayQ0.equals(center))
-			return List.of(rayQ0.add(rayDir.scale(radius)));
+			return List.of(ray.getPoint(radius));
 		Vector q0ToCenter = center.subtract(rayQ0);
 		double tm = alignZero(rayDir.dotProduct(q0ToCenter)); ;
 		double d = alignZero(Math.sqrt(q0ToCenter.lengthSquared()-tm*tm));
@@ -81,10 +81,10 @@ public class Sphere implements Geometry
 		if(t1 <= 0 && t2 <= 0 )
 			return null;
 		if(t1 <= 0 && t2 > 0)
-			return List.of(rayQ0.add(rayDir.scale(t2)));
+			return List.of(ray.getPoint(t2));
 		if(t2 <= 0 && t1 > 0)
-			return List.of(rayQ0.add(rayDir.scale(t1)));
-		return List.of(rayQ0.add(rayDir.scale(t1)), rayQ0.add(rayDir.scale(t2)));		
+			return List.of(ray.getPoint(t1));
+		return List.of(ray.getPoint(t1), ray.getPoint(t2));		
 	}
 }
 
