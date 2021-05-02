@@ -34,11 +34,6 @@ public class RayTests {
 		Plane plane = new Plane(new Point3D(1, 1, 3), new Vector(0,0,1));
 		Sphere sphere2 = new Sphere(new Point3D(0, 0, 11), 1);
 		
-		
-		//Sphere sphere1 = new Sphere(Point3D.ZERO, 1);
-		
-		//Sphere sphere3 = new Sphere(new Point3D(0, -3, 0), 1);
-		
 		Ray ray = new Ray(new Point3D(0, 0, -2), new Vector(0, 0, 1));
 		
 		// ============ Equivalence Partitions Tests ==============
