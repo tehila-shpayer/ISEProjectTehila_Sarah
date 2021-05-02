@@ -19,6 +19,9 @@ public class RayTracerBasic extends RayTracerBase{
 		super(scene);
 	}
 	
+	/**
+	 * implementation of super class trace ray method
+	 */
 	public Color TraceRay(Ray ray) {
 		return null;
 	}
