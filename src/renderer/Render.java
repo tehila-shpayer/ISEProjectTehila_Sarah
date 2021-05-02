@@ -36,24 +36,22 @@ public class Render {
 		if (scene == null)
 			throw new MissingResourceException("Render class must have a non-empty scene parameter", "Scene", "" );
 		if (camera == null)
-			throw new MissingResourceException("Render class must have a non-empty scene parameter", "Camera", "" );
+			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
 		if (rayTracerBase == null)
-			throw new MissingResourceException("Render class must have a non-empty scene parameter", "RayTracerBase", "" );
+			throw new MissingResourceException("Render class must have a non-empty rayTracerBase parameter", "RayTracerBase", "" );
 		if (imageWriter == null)
-			throw new MissingResourceException("Render class must have a non-empty scene parameter", "ImageWriter", "" );
+			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
 		
 		throw new UnsupportedOperationException("This operation is yet to be implemented");
 	}
 	
 	public void printGrid(int interval, Color color)  {
+		if(imageWriter == null)
+			throw new MissingResourceException("Render can't print grig with empty image writer parameter", "ImageWriter", null);
 		for(int i = 0; i< imageWriter.getNx(); i++) {
 			for(int j = 0; j < imageWriter.getNy(); j++) {
-				if(i%interval==0&&j%interval==0)
-					imageWriter.writePixel(i, j, new Color(236, 6, 33));
-				else if(i%interval==0 || j%interval == 0) 
-					imageWriter.writePixel(i, j, new Color(212, 25, 135));
-				else 
-					imageWriter.writePixel(i, j, new Color(23, 238, 40));
+				if(i % interval==0 || j % interval == 0) 
+					imageWriter.writePixel(i, j, color);
 			}
 		}
 	}
