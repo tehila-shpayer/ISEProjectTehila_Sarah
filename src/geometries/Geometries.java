@@ -10,11 +10,12 @@ public class Geometries implements Intersectable{
 	List<Intersectable> geometries;
 	
 	public Geometries() {
-		geometries = new ArrayList<Intersectable>();
+		geometries = new LinkedList<Intersectable>();
 	}
 	
 	public Geometries(Intersectable... _geometries) {
-		geometries = List.of(_geometries);
+		geometries = new LinkedList<Intersectable>();
+		geometries.addAll(List.of(_geometries));
 	}
 	
 	public int getNumberOfGeometries() {
@@ -22,7 +23,10 @@ public class Geometries implements Intersectable{
 	}
 	
 	public void add(Intersectable... _geometries) {
-		geometries.addAll(List.of(_geometries));
+		for (Intersectable g: List.of(_geometries)) {
+			if(g != null)
+				geometries.add(g);
+		}
 	}
 
 	@Override

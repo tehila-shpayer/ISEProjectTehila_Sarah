@@ -44,7 +44,12 @@ public class Ray {
 	}
 	
 	public Point3D findClosestPoint(List<Point3D> lst) {
-		return null;
+		Point3D closestPoint = lst.get(0);
+		for (Point3D p: lst) {
+			if(q0.distance(p) < q0.distance(closestPoint))
+				closestPoint = p;
+		}
+		return closestPoint;
 	}
 	@Override
 	public boolean equals(Object obj) {
