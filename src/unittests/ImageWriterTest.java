@@ -11,7 +11,11 @@ public class ImageWriterTest {
 
 	@Test
 	public void testImageWriter() {
+		// ============ Equivalence Partitions Tests ==============
+        // TC01: write an image of a simple colored grid over a colored background
+		
 		ImageWriter imgwrt = new ImageWriter("blue_net", 800, 500);
+		//print grid
 		for(int i = 0; i< imgwrt.getNx(); i++) {
 			for(int j = 0; j < imgwrt.getNy(); j++) {
 				if(i%50==0&&j%50==0)
