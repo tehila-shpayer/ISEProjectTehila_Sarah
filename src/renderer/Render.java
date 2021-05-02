@@ -56,7 +56,7 @@ public class Render {
 		}
 	}
 
-	//a function
+	//
 	public void writeToImage()
 	{
 		//comments
