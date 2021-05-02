@@ -20,6 +20,7 @@ public class GeometriesTests {
 		Sphere sphere = new Sphere(Point3D.ZERO, 1);
 		Point3D point3d = new Point3D(1, 2, 3);
 		Plane plane = new Plane(point3d, new Vector(point3d));
+		//Plane plane2 = new Plane(point3d, new Vector(0,0,1));
 		Geometries geometries1 = new Geometries(sphere);
 		Geometries geometries2 = new Geometries();
 		geometries1.add(plane);
