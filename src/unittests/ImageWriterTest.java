@@ -16,6 +16,7 @@ public class ImageWriterTest {
 		
 		ImageWriter imgwrt = new ImageWriter("blue_net", 800, 500);
 		//print grid
+		//interval = 50 / 800/16 = 50, 500/10 = 50
 		for(int i = 0; i< imgwrt.getNx(); i++) {
 			for(int j = 0; j < imgwrt.getNy(); j++) {
 				if(i%50==0&&j%50==0)
