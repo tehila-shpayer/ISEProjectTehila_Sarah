@@ -47,7 +47,7 @@ public class Render {
 	
 	public void printGrid(int interval, Color color)  {
 		if(imageWriter == null)
-			throw new MissingResourceException("Render can't print grig with empty image writer parameter", "ImageWriter", null);
+			throw new MissingResourceException("Render can't print grid with empty image writer parameter", "ImageWriter", null);
 		for(int i = 0; i< imageWriter.getNx(); i++) {
 			for(int j = 0; j < imageWriter.getNy(); j++) {
 				if(i % interval==0 || j % interval == 0) 
