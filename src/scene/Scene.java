@@ -60,7 +60,7 @@ public class Scene {
 	}
 	
 
-	/**
+	/** 
 	 * 
 	 * @param _geometry - the new geometry to add to the scene
 	 * @return the scene object
