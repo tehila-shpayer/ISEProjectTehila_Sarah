@@ -68,7 +68,7 @@ public class RayTests {
 		Ray ray2 = new Ray(new Point3D(0, 0, -2), new Vector(0, 0, -1));
 		result = geometries.findIntersections(ray2);
 		closestPoint3d = ray.findClosestPoint(result);
-		assertNull("d", closestPoint3d);
+		assertNull("There are no intersection points", closestPoint3d);
 
 	}
 
