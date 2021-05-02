@@ -56,4 +56,9 @@ public class Render {
 		}
 	}
 
+	public void writeToImage()
+	{
+		if (imageWriter == null)
+			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
+	}
 }
