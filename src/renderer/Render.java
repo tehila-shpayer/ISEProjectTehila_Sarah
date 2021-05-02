@@ -10,6 +10,7 @@ import java.util.MissingResourceException;
 
 import elements.Camera;
 import primitives.Color;
+import primitives.Ray;
 import scene.Scene;
 
 public class Render {
@@ -56,7 +57,17 @@ public class Render {
 		if (imageWriter == null)
 			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
 		
-		throw new UnsupportedOperationException("This operation is yet to be implemented");
+		//throw new UnsupportedOperationException("This operation is yet to be implemented");
+		int Nx = imageWriter.getNx();
+		int Ny = imageWriter.getNy();
+
+		for(int i = 0; i < Nx; i++) {
+			for(int j = 0; j < Ny; j++) {
+				Ray ray = camera.constructRayThroughPixel(Nx, Ny, j, i);
+				Color color = rayTracerBase.TraceRay(ray);
+				imageWriter.writePixel(j, i, color);
+			}
+		}
 	}
 	
 	/**
@@ -81,7 +92,6 @@ public class Render {
 	 */
 	public void writeToImage()
 	{
-		//comments
 		if (imageWriter == null)
 			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
 		imageWriter.writeToImage();
