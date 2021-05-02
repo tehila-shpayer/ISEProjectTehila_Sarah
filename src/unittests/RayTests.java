@@ -1,12 +1,16 @@
 package unittests;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import primitives.*;
 
 import org.junit.Test;
 
-import primitives.Point3D;
-import primitives.Util;
+import geometries.Geometries;
+import geometries.Plane;
+import geometries.Sphere;
 
 public class RayTests {
 
@@ -26,7 +30,26 @@ public class RayTests {
 
 	@Test
 	public void testFindClosestPoint() {
-		fail("Not yet implemented");
+		Sphere sphere1 = new Sphere(new Point3D(8, 0, 0), 1d);
+		Plane plane = new Plane(new Point3D(1, 1, 3), new Vector(0,0,1));
+		Sphere sphere2 = new Sphere(new Point3D(0, 0, 11), 1);
+		
+		
+		//Sphere sphere1 = new Sphere(Point3D.ZERO, 1);
+		
+		//Sphere sphere3 = new Sphere(new Point3D(0, -3, 0), 1);
+		
+		Ray ray = new Ray(new Point3D(0, 0, -2), new Vector(0, 0, 1));
+		Geometries geometries = new Geometries(sphere1, plane, sphere2);
+		
+		// TC02: Ray starts before and crosses the sphere (2 points)
+
+		List<Point3D> result = geometries.findIntersections(ray);
+		Point3D closestPoint3d = ray.findClosestPoint(result);
+		
+		assertEquals("wrong number of intersections", new Point3D(0,0,3), closestPoint3d);
+
+
 	}
 
 }
