@@ -3,6 +3,7 @@ package renderer;
 import java.util.MissingResourceException;
 
 import elements.Camera;
+import primitives.Color;
 import scene.Scene;
 
 public class Render {
@@ -33,13 +34,28 @@ public class Render {
 	
 	public void renderImage() {
 		if (scene == null)
-			throw new MissingResourceException("", "", "" );
+			throw new MissingResourceException("Render class must have a non-empty scene parameter", "Scene", "" );
 		if (camera == null)
-			throw new MissingResourceException("", "", "" );
+			throw new MissingResourceException("Render class must have a non-empty scene parameter", "Camera", "" );
 		if (rayTracerBase == null)
-			throw new MissingResourceException("", "", "" );
+			throw new MissingResourceException("Render class must have a non-empty scene parameter", "RayTracerBase", "" );
 		if (imageWriter == null)
-			throw new MissingResourceException("", "", "" );
+			throw new MissingResourceException("Render class must have a non-empty scene parameter", "ImageWriter", "" );
+		
+		throw new UnsupportedOperationException("This operation is yet to be implemented");
+	}
+	
+	public void printGrid(int interval, Color color)  {
+		for(int i = 0; i< imageWriter.getNx(); i++) {
+			for(int j = 0; j < imageWriter.getNy(); j++) {
+				if(i%interval==0&&j%interval==0)
+					imageWriter.writePixel(i, j, new Color(236, 6, 33));
+				else if(i%interval==0 || j%interval == 0) 
+					imageWriter.writePixel(i, j, new Color(212, 25, 135));
+				else 
+					imageWriter.writePixel(i, j, new Color(23, 238, 40));
+			}
+		}
 	}
 
 }
