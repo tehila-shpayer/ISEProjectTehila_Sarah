@@ -30,12 +30,11 @@ public class RenderTests {
 			.setViewPlaneSize(500, 500);
 
 	/**
-	 * Produce a scene with basic 3D model and render it into a jpeg image with a
+	 * Produce a scene with basic 3D model and render it into a png image with a
 	 * grid
 	 */
 	@Test
 	public void basicRenderTwoColorTest() {
-
 		Scene scene = new Scene("Test scene")//
 				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
 				.setBackground(new Color(75, 127, 90));
@@ -53,7 +52,6 @@ public class RenderTests {
 		ImageWriter imageWriter = new ImageWriter("base render test", 1000, 1000);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
-				.setScene(scene) //
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
 
@@ -62,20 +60,19 @@ public class RenderTests {
 		render.writeToImage();
 	}
 
+
 	/**
 	 * Test for XML based scene - for bonus
 	 * the given test was slightly altered
 	 */
 	@Test
 	public void basicRenderXml() {
-		// enter XML file name and parse from XML file into scene object
-		// ...
 		
 		Scene scene = ReadXMLWithDOM.BuildSceneObjectFromXML("XML Test scene", "XMLTestFile.xml");
+		
 		ImageWriter imageWriter = new ImageWriter("xml render test", 1000, 1000);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
-				.setScene(scene) //
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
 
@@ -88,6 +85,36 @@ public class RenderTests {
 		String[] p1str = geometryElement.getAttribute(attribute).split(" ");
 		Point3D p1 = new Point3D(Integer.parseInt(p1str[0]), Integer.parseInt(p1str[1]), Integer.parseInt(p1str[2]));
 		return p1;
+	}
+	
+	/**
+	 * Produce a scene with basic 3D model - including individual lights of the bodies 
+	 * and render it into a png image with a grid
+	 */
+	@Test
+	public void basicRenderMultiColorTest() {
+		Scene scene = new Scene("Test scene")//
+				.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2)); //
+
+		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50) //
+				.setEmission(new Color(java.awt.Color.CYAN)), //
+				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)) // up left
+						.setEmission(new Color(java.awt.Color.GREEN)),
+				new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
+				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)) // down left
+						.setEmission(new Color(java.awt.Color.RED)),
+				new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100)) // down right
+						.setEmission(new Color(java.awt.Color.BLUE)));
+
+		ImageWriter imageWriter = new ImageWriter("color render test", 1000, 1000);
+		Render render = new Render() //
+				.setImageWriter(imageWriter) //
+				.setCamera(camera) //
+				.setRayTracerBase(new RayTracerBasic(scene));
+
+		render.renderImage();
+		render.printGrid(100, new Color(java.awt.Color.WHITE));
+		render.writeToImage();
 	}
 
 }

@@ -40,20 +40,20 @@ public class GeometriesTests {
 		Sphere sphere3 = new Sphere(new Point3D(0, -3, 0), 1);
 		Ray ray1 = new Ray(new Point3D(0, 0, 0.5), new Vector(0, -1, 0));
 		Geometries geometries1 = new Geometries(sphere1, sphere2, sphere3);
-		assertEquals("wrong number of intersections", 3, geometries1.findIntersections(ray1).size());
+		assertEquals("wrong number of intersections", 3, geometries1.findGeoIntersections(ray1).size());
 		
 		// ============ Boundary Partitions Tests ==============
         // TC02: empty collection of geometries (0 points)
 		Geometries geometries2 = new Geometries();
-		assertEquals("intersection with empty collection not empty", null, geometries2.findIntersections(ray1));
+		assertEquals("intersection with empty collection not empty", null, geometries2.findGeoIntersections(ray1));
 		
         // TC03: no intersections with any geometry (0 points)
 		Ray ray2 = new Ray(new Point3D(0, 0, 4), new Vector(0, -1, 0));
-		assertEquals("no intersections with any geometry not 0", null, geometries1.findIntersections(ray2));
+		assertEquals("no intersections with any geometry not 0", null, geometries1.findGeoIntersections(ray2));
 		
         // TC04: intersections with one geometry (1 point)
 		Geometries geometries3 = new Geometries(sphere1,sphere2);
-		assertEquals("wrong number of intersections with one geometry", 1, geometries3.findIntersections(ray1).size());
+		assertEquals("wrong number of intersections with one geometry", 1, geometries3.findGeoIntersections(ray1).size());
 
         // TC05: intersections with all geometries (5 point)
 		Plane plane = new Plane(Point3D.ZERO, new Vector(0,0,1));
@@ -61,7 +61,7 @@ public class GeometriesTests {
 		Sphere sphere5 = new Sphere(new Point3D(0, 0, 20), 4);
 		Ray ray3 = new Ray(new Point3D(0, 0, -2), new Vector(0, 0, 1));
 		Geometries geometries4 = new Geometries(plane, sphere4, sphere5);
-		assertEquals("wrong number of intersections with all geometries", 5, geometries4.findIntersections(ray3).size());
+		assertEquals("wrong number of intersections with all geometries", 5, geometries4.findGeoIntersections(ray3).size());
 		
 		
 	}

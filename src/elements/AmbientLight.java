@@ -23,6 +23,10 @@ public class AmbientLight {
 		intensity = color.scale(kA);
 	}
 	
+	public AmbientLight() {
+		intensity = Color.BLACK;
+	}
+	
 	/**
 	 * simple intensity getter
 	 * @return the intensity

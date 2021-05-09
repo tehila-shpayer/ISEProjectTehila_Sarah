@@ -14,7 +14,7 @@ import primitives.Ray;
 import scene.Scene;
 
 public class Render {
-	Scene scene;
+	//Scene scene;
 	Camera camera;
 	RayTracerBase rayTracerBase;
 	ImageWriter imageWriter;
@@ -23,7 +23,7 @@ public class Render {
 	// ***************** Setters ********************** //
 	// ** all setters implements the Builder Design Pattern **//
 	public Render setScene(Scene _scene) {
-		scene = _scene;
+		//scene = _scene;
 		return this;
 	}
 	
@@ -48,8 +48,6 @@ public class Render {
 	 * The color will go to the appropriate pixel of the image writer (writePixel)
 	 */
 	public void renderImage() {
-		if (scene == null)
-			throw new MissingResourceException("Render class must have a non-empty scene parameter", "Scene", "" );
 		if (camera == null)
 			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
 		if (rayTracerBase == null)

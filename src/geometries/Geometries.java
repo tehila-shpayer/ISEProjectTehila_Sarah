@@ -6,6 +6,8 @@ import java.util.List;
 import primitives.Point3D;
 import primitives.Ray;
 
+import geometries.Intersectable.GeoPoint;
+
 public class Geometries implements Intersectable{
 	List<Intersectable> geometries;
 	
@@ -34,6 +36,19 @@ public class Geometries implements Intersectable{
 		List<Point3D> bigList = new LinkedList<Point3D>();
 		for (Intersectable g: geometries) {
 			List<Point3D> lst = g.findIntersections(ray);
+			if (lst != null)
+				bigList.addAll(lst);
+		}
+		if (bigList.size() == 0)
+			return null;
+		return bigList;
+	}
+	
+	@Override
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		List<GeoPoint> bigList = new LinkedList<GeoPoint>();
+		for (Intersectable g: geometries) {
+			List<GeoPoint> lst = g.findGeoIntersections(ray);
 			if (lst != null)
 				bigList.addAll(lst);
 		}

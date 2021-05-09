@@ -6,8 +6,10 @@ package geometries;
  * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
 */
 
+import java.util.LinkedList;
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -59,6 +61,34 @@ public class Triangle extends Polygon
 		
 		if ((r1 > 0 && r2 > 0 && r3 > 0) || (r1 < 0 && r2 < 0 && r3 < 0))
 			return result;
+
+		return null;
+	}
+	
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		List<GeoPoint> resultOfPlane = plane.findGeoIntersections(ray);
+		if (resultOfPlane == null)
+			return null;
+		List<GeoPoint> result = new LinkedList<GeoPoint>();
+
+		Vector v1 = getVertices().get(0).subtract(ray.getQ0());
+		Vector v2 = getVertices().get(1).subtract(ray.getQ0());
+		Vector v3 = getVertices().get(2).subtract(ray.getQ0());
+		Vector n1 = v1.crossProduct(v2).normalize();
+		Vector n2 = v2.crossProduct(v3).normalize();
+		Vector n3 = v3.crossProduct(v1).normalize();
+		
+		Vector v = ray.getDir();
+		double r1 = alignZero(v.dotProduct(n1));
+		double r2 = alignZero(v.dotProduct(n2));
+		double r3 = alignZero(v.dotProduct(n3));
+		
+		if ((r1 > 0 && r2 > 0 && r3 > 0) || (r1 < 0 && r2 < 0 && r3 < 0)) {
+			for (GeoPoint point: resultOfPlane) {
+				result.add(new GeoPoint(this, point.point));
+			}
+			return result;
+		}
 
 		return null;
 	}

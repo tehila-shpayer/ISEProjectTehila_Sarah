@@ -13,7 +13,7 @@ import static primitives.Util.*;
 
 import primitives.*;
 
-public class Sphere implements Geometry
+public class Sphere extends Geometry
 {
 	/**
      * center - the center point of the sphere
@@ -85,6 +85,29 @@ public class Sphere implements Geometry
 		if(t2 <= 0 && t1 > 0)
 			return List.of(ray.getPoint(t1));
 		return List.of(ray.getPoint(t1), ray.getPoint(t2));		
+	}
+
+	@Override
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		Point3D rayQ0 = ray.getQ0();
+		Vector rayDir = ray.getDir();
+		if(rayQ0.equals(center))
+			return List.of(new GeoPoint(this, ray.getPoint(radius)));
+		Vector q0ToCenter = center.subtract(rayQ0);
+		double tm = alignZero(rayDir.dotProduct(q0ToCenter)); ;
+		double d = alignZero(Math.sqrt(q0ToCenter.lengthSquared()-tm*tm));
+		if(d>=radius)
+			return null;
+		double th = alignZero(Math.sqrt(radius*radius - d*d));
+		double t1 = alignZero(tm - th);
+		double t2 = alignZero(tm + th);
+		if(t1 <= 0 && t2 <= 0 )
+			return null;
+		if(t1 <= 0 && t2 > 0)
+			return List.of(new GeoPoint(this,ray.getPoint(t2)));
+		if(t2 <= 0 && t1 > 0)
+			return List.of(new GeoPoint(this,ray.getPoint(t1)));
+		return List.of(new GeoPoint(this,ray.getPoint(t1)), new GeoPoint(this,ray.getPoint(t2)));		
 	}
 }
 

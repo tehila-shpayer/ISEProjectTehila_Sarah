@@ -6,7 +6,26 @@ import primitives.*;
  * the shapes must have a normal vector in to each point in the Cartesian 3D coordinate system. 
  * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
  */
-public interface Geometry extends Intersectable{
-	public Vector getNormal(Point3D point);
+public abstract class Geometry implements Intersectable{
+	protected Color emission = Color.BLACK;
+	/**
+	 * javadoc com.
+	 * @return
+	 */
+	public Color getEmission() {
+		return this.emission;
+	}
+	
+	/**
+	 * javadoc com.
+	 * @param color
+	 * @return
+	 */
+	public Geometry setEmission(Color color) {
+		this.emission = color;
+		return this;
+	}
+		
+	public abstract Vector getNormal(Point3D point);
 }
 

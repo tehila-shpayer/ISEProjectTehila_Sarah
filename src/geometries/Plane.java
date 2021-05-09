@@ -12,7 +12,7 @@ import java.util.List;
 
 import primitives.*;
 
-public class Plane implements Geometry
+public class Plane extends Geometry
 {
 	/**
      * q0 - a point on the plane
@@ -92,6 +92,24 @@ public class Plane implements Geometry
 		}
 		if (t<=0) return null;
 		return List.of(ray.getPoint(t));
+	}
+
+	@Override
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		
+		if(isZero(ray.getDir().dotProduct(normal)))
+		{
+			return null;
+		}
+		double t;
+		try {
+			t = (double)normal.dotProduct(q0.subtract(ray.getQ0()))/normal.dotProduct(ray.getDir());
+		}
+		catch (IllegalArgumentException e) {
+			return null;
+		}
+		if (t<=0) return null;
+		return List.of(new GeoPoint(this, ray.getPoint(t)));
 	}
 	
 	
