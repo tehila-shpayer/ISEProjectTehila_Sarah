@@ -10,15 +10,17 @@ package scene;
  */
 import elements.AmbientLight;
 import geometries.Geometries;
-import geometries.Geometry;
 import geometries.Intersectable;
 import primitives.Color;
+import java.util.*;
+import elements.*;
 
 public class Scene {
 	public String name = null;
 	public Color background = Color.BLACK;
 	public AmbientLight ambientLight = new AmbientLight();
 	public Geometries geometries = null;
+	public List<LightSource> lights = new LinkedList<LightSource>();
 	
 	public Scene(String _name) {
 		name = _name;	
@@ -59,6 +61,15 @@ public class Scene {
 		return this;
 	}
 	
+	/**
+	 * set the lightSource - a list of light sources
+	 * 
+	 * @return the scene object
+	 */
+	public Scene setLights(List<LightSource> lights) {
+		this.lights = lights;
+		return this;
+	}
 
 	/** 
 	 * 
