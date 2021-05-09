@@ -8,6 +8,7 @@ import primitives.*;
  */
 public abstract class Geometry implements Intersectable{
 	protected Color emission = Color.BLACK;
+	private Material material = new Material();
 	/**
 	 * javadoc com.
 	 * @return
@@ -16,6 +17,10 @@ public abstract class Geometry implements Intersectable{
 		return this.emission;
 	}
 	
+	public Material getMaterial() {
+		return this.material;
+	} 
+	
 	/**
 	 * javadoc com.
 	 * @param color
@@ -23,6 +28,11 @@ public abstract class Geometry implements Intersectable{
 	 */
 	public Geometry setEmission(Color color) {
 		this.emission = color;
+		return this;
+	}
+	
+	public Geometry setMaterial(Material material) {
+		this.material = material;
 		return this;
 	}
 		
