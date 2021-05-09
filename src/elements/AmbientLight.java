@@ -21,7 +21,7 @@ public class AmbientLight extends Light{
 	}
 	
 	/**
-	 * Default ctor
+	 * Default constructor
 	 * initialize the intensity with black
 	 */
 	public AmbientLight() {
