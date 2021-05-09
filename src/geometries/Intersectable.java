@@ -44,7 +44,6 @@ public interface Intersectable {
 	 * @param ray
 	 * @return list of intersection points
 	 */
-	List<Point3D> findIntersections(Ray ray);
     List<GeoPoint> findGeoIntersections(Ray ray);
     
     }

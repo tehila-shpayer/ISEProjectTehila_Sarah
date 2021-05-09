@@ -93,50 +93,50 @@ public class Polygon extends Geometry {
 		return plane.getNormal();
 	}
 
-	@Override
-	public List<Point3D> findIntersections(Ray ray) {
-		List<Point3D> result = plane.findIntersections(ray);
-		if (result == null)
-			return null;
-		
-		List<Vector> vectors = null;
-		List<Vector> normals = null;
-		List<Double> resultsList = null;
-		int n = vertices.size();
-		for (int i = 0; i < n; i++) {
-			
-			vectors.add(i, vertices.get(0).subtract(ray.getQ0()));	
-		}
-		
-		for (int i = 0; i< n-1; i++) {
-			normals.add(i, vectors.get(i).crossProduct(vectors.get(i+1)).normalize());	
-		}
-		normals.add(n-1, vectors.get(n-1).crossProduct(vectors.get(0)).normalize());
-		
-		Vector v = ray.getDir();
-		
-		for (int i = 0; i< n; i++) {
-			resultsList.add(i, alignZero(v.dotProduct(normals.get(i))));	
-		}
-		
-		if (resultsList.get(0)>0)
-		{
-			for (int i = 1; i < n; i++) {
-				if (resultsList.get(i)<=0)
-					return null;
-			}
-			return result;
-		}
-		if (resultsList.get(0) < 0)
-		{
-			for (int i = 1; i < n; i++) {
-				if (resultsList.get(i)>=0)
-					return null;
-			}
-			return result;
-		}
-		return null;
-	}
+//	@Override
+//	public List<Point3D> findIntersections(Ray ray) {
+//		List<Point3D> result = plane.findIntersections(ray);
+//		if (result == null)
+//			return null;
+//		
+//		List<Vector> vectors = null;
+//		List<Vector> normals = null;
+//		List<Double> resultsList = null;
+//		int n = vertices.size();
+//		for (int i = 0; i < n; i++) {
+//			
+//			vectors.add(i, vertices.get(0).subtract(ray.getQ0()));	
+//		}
+//		
+//		for (int i = 0; i< n-1; i++) {
+//			normals.add(i, vectors.get(i).crossProduct(vectors.get(i+1)).normalize());	
+//		}
+//		normals.add(n-1, vectors.get(n-1).crossProduct(vectors.get(0)).normalize());
+//		
+//		Vector v = ray.getDir();
+//		
+//		for (int i = 0; i< n; i++) {
+//			resultsList.add(i, alignZero(v.dotProduct(normals.get(i))));	
+//		}
+//		
+//		if (resultsList.get(0)>0)
+//		{
+//			for (int i = 1; i < n; i++) {
+//				if (resultsList.get(i)<=0)
+//					return null;
+//			}
+//			return result;
+//		}
+//		if (resultsList.get(0) < 0)
+//		{
+//			for (int i = 1; i < n; i++) {
+//				if (resultsList.get(i)>=0)
+//					return null;
+//			}
+//			return result;
+//		}
+//		return null;
+//	}
 
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray) {
