@@ -8,30 +8,23 @@ import primitives.*;
  * 
  * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
 */
-public class AmbientLight {
-	/**
-	 * the intensity is the outcome color of the ambient light
-	 */
-	Color intensity;
+public class AmbientLight extends Light{
 	
 	/**
 	 * the ctor creates the intensity by multiplying the given color with the given attenuation factor.
+	 * the result is sent to the super ctor
 	 * @param color - the color
 	 * @param kA - the attenuation factor
 	 */
 	public AmbientLight(Color color, double kA) {
-		intensity = color.scale(kA);
-	}
-	
-	public AmbientLight() {
-		intensity = Color.BLACK;
+		super(color.scale(kA));
 	}
 	
 	/**
-	 * simple intensity getter
-	 * @return the intensity
+	 * Default ctor
+	 * initialize the intensity with black
 	 */
-	public Color getIntensity() {
-		return intensity;
+	public AmbientLight() {
+		super(Color.BLACK);
 	}
 }
