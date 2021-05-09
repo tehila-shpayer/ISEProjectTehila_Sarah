@@ -1,5 +1,10 @@
 package primitives;
 
+/**
+ * 
+ * @author tehil
+ *
+ */
 public class Material {
 	public double kD = 0;
 	public double kS = 0;
