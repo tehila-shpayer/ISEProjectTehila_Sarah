@@ -77,22 +77,6 @@ public class Plane extends Geometry
 	public Vector getNormal(Point3D point) {
 		return normal;
 	}
-	
-	public List<Point3D> findIntersections(Ray ray) {
-		if(isZero(ray.getDir().dotProduct(normal)))
-		{
-			return null;
-		}
-		double t;
-		try {
-			t = (double)normal.dotProduct(q0.subtract(ray.getQ0()))/normal.dotProduct(ray.getDir());
-		}
-		catch (IllegalArgumentException e) {
-			return null;
-		}
-		if (t<=0) return null;
-		return List.of(ray.getPoint(t));
-	}
 
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray) {

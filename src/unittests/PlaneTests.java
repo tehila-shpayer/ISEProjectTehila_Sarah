@@ -1,5 +1,7 @@
 package unittests;
 import geometries.*;
+import geometries.Intersectable.GeoPoint;
+
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -66,33 +68,37 @@ public class PlaneTests {
     	// ============ Equivalence Partitions Tests ==============
 
     	// TC01: The ray has a simple intersection with the plane
-    	List<Point3D> result = plane.findIntersections(new Ray(new Point3D(-1, 0, 1), new Vector(1, 0, 0)));
+    	List<GeoPoint> result = plane.findGeoIntersections(new Ray(new Point3D(-1, 0, 1), new Vector(1, 0, 0)));
+        List<Point3D> pointsList = List.of(result.get(0).point);
+        
     	assertEquals("Wrong number of points", 1, result.size());
-    	assertEquals("Bad intersaction point", List.of(new Point3D(0, 0, 1)), result);
+    	assertEquals("Bad intersaction point", List.of(new Point3D(0, 0, 1)), pointsList);
     	
     	// TC02: Ray's line doesn't cross the plane
         assertNull("Ray's line doesn't cross the plane",
-                plane.findIntersections(new Ray(new Point3D(1, 0, 1), new Vector(1, 0, 0))));
+                plane.findGeoIntersections(new Ray(new Point3D(1, 0, 1), new Vector(1, 0, 0))));
     	
     	// =============== Boundary Values Tests ==================
     	
         // TC03: Ray is parallel to the plane
         assertNull("Ray's line parallel to the plane",
-                plane.findIntersections(new Ray(new Point3D(0, 0, 2), new Vector(1, -1, 0))));
+                plane.findGeoIntersections(new Ray(new Point3D(0, 0, 2), new Vector(1, -1, 0))));
         
         // TC04: Ray is on the plane
         assertNull("Ray's line is on the plane",
-                plane.findIntersections(new Ray(new Point3D(0, 0, 1), new Vector(1, -1, 0))));
+                plane.findGeoIntersections(new Ray(new Point3D(0, 0, 1), new Vector(1, -1, 0))));
         
         // TC05: Ray is perpendicular to the plane
+        result = plane.findGeoIntersections(new Ray(new Point3D(0, 0, -1), new Vector(1, 1, 1)));
+        pointsList = List.of(result.get(0).point);
         assertEquals("Ray's line perpendicular to the plane", List.of(new Point3D((double)2/3, (double)2/3, -(double)1/3)),
-                plane.findIntersections(new Ray(new Point3D(0, 0, -1), new Vector(1, 1, 1))));
+                pointsList);
         
         // TC06: Ray's point is on the plane
         assertNull("Ray's point is on the plane",
-                plane.findIntersections(new Ray(new Point3D(1, 0, 0), new Vector(1, 2, 3))));
+                plane.findGeoIntersections(new Ray(new Point3D(1, 0, 0), new Vector(1, 2, 3))));
         // TC06: Ray's point is on the plane and equals to the plane's point
         assertNull("Ray's point is on the plane and is equals to the plane's point",
-                plane.findIntersections(new Ray(new Point3D(0, 0, 1), new Vector(1, 2, 3))));
+                plane.findGeoIntersections(new Ray(new Point3D(0, 0, 1), new Vector(1, 2, 3))));
     }
  }

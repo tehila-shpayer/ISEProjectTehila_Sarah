@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import elements.Camera;
 import geometries.*;
+import geometries.Intersectable.GeoPoint;
 import primitives.*;
 import java.util.List;
 
@@ -115,7 +116,7 @@ public class CameraRaysIntersectionTests {
 		for(int i = 0; i < nX; i++) {
 			for(int j = 0; j < nY; j++) {
 				Ray ray = camera.constructRayThroughPixel(nX, nY, i, j);
-				List<Point3D> intersectionsList = geometry.findIntersections(ray);
+				List<GeoPoint> intersectionsList = geometry.findGeoIntersections(ray);
 				if(intersectionsList != null)
 					count += intersectionsList.size();
 			}

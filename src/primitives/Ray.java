@@ -44,16 +44,16 @@ public class Ray {
 		return q0.add(dir.scale(t));
 	}
 	
-	public Point3D findClosestPoint(List<Point3D> lst) {
-		if(lst == null)
-			return null;
-		Point3D closestPoint = lst.get(0);
-		for (Point3D p: lst) {
-			if(q0.distance(p) < q0.distance(closestPoint))
-				closestPoint = p;
-		}
-		return closestPoint;
-	}
+//	public Point3D findClosestPoint(List<Point3D> lst) {
+//		if(lst == null)
+//			return null;
+//		Point3D closestPoint = lst.get(0);
+//		for (Point3D p: lst) {
+//			if(q0.distance(p) < q0.distance(closestPoint))
+//				closestPoint = p;
+//		}
+//		return closestPoint;
+//	}
 	
 	public GeoPoint findClosestGeoPoint(List<GeoPoint> lst) {
 		if(lst == null)

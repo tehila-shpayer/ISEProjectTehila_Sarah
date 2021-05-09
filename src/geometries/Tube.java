@@ -65,11 +65,6 @@ public class Tube extends Geometry {
     }
 
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {
-		return null;
-	}
-
-	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		// TODO Auto-generated method stub
 		return null;
