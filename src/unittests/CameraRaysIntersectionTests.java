@@ -76,7 +76,7 @@ public class CameraRaysIntersectionTests {
 		assertEquals("wrong number of intersection points with plane", findAllIntersectionsOfViewPlane(camera, 3, 3, plane), 9);
 
 		// TC02: Plane after view plane and is inclined (9 points)
-		plane = new Plane(new Point3D(0, 0, -3), new Vector(0, 1, -1));
+		plane = new Plane(new Point3D(0, 0, -3), new Vector(0, 0.5, -1));
 		assertEquals("wrong number of intersection points with plane", findAllIntersectionsOfViewPlane(camera, 3, 3, plane), 9);
 
 		// TC03: Plane after view plane and is inclined 
@@ -127,88 +127,3 @@ public class CameraRaysIntersectionTests {
 }
 
 
-//public class CameraRaysIntersectionTests {
-//    @Test
-//    public void testConstructRayThroughPixelAndSphere() {
-//        //TC01: sphere is after view plane and camera and is captured by one pixel
-//        Camera camera1 = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Sphere sphere1=new Sphere(new Point3D(0,0,-3),1);
-//        assertEquals(2,sumOfIntersections(camera1,3,3,sphere1));
-//
-//        //TC02: sphere is after view plane and camera and is captured by all pixels
-//        Camera camera2 = new Camera(new Point3D(0, 0, 0.5), new Vector(0,0,-1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Sphere sphere2=new Sphere(new Point3D(0,0,-2.5),2.5);
-//        assertEquals(18,sumOfIntersections(camera2,3,3,sphere2));
-//
-//        //TC03: sphere is after view plane and camera and is captured by part of the pixels
-//        Camera camera3 = new Camera(new Point3D(0, 0, 0.5), new Vector(0,0,-1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Sphere sphere3=new Sphere(new Point3D(0,0,-2),2);
-//        assertEquals(10,sumOfIntersections(camera3,3,3,sphere3));
-//
-//        //TC04: camera is inside of the sphere
-//        Camera camera4 = new Camera(Point3D.ZERO, new Vector(0,0,-1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Sphere sphere4=new Sphere(new Point3D(0,0,-1),4);
-//        assertEquals(9,sumOfIntersections(camera4,3,3,sphere4));
-//
-//        //TC05: sphere is before view plane
-//        Camera camera5 = new Camera(Point3D.ZERO, new Vector(0,0,-1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Sphere sphere5=new Sphere(new Point3D(0,0,1),0.5);
-//        assertEquals(0,sumOfIntersections(camera5,3,3,sphere5));
-//    }
-//    
-//    @Test
-//    public void testConstructRayThroughPixelAndPlane() {
-//        //TC01: Plane is after view plane and camera
-//        Camera camera1 = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Plane plane1=new Plane(new Point3D(0,0,-3),new Vector(0,0,1));
-//        assertEquals(9,sumOfIntersections(camera1,3,3,plane1));
-//
-//        //TC02: Plane is after view plane and camera and plane is sideways
-//        Camera camera2 = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Plane plane2=new Plane(new Point3D(0,0,-10),new Vector(0,-1,10));
-//        assertEquals(9,sumOfIntersections(camera2,3,3,plane2));
-//
-//        //TC03: Plane is after view plane and camera and plane is sideways
-//        Camera camera3 = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Plane plane3=new Plane(new Point3D(0,0,-10),new Vector(0,-10,10));
-//        assertEquals(6,sumOfIntersections(camera3,3,3,plane3));
-//    }
-//    @Test
-//    public void testConstructRayThroughPixelAndTriangle() {
-//        //TC01: Triangle is after view plane and camera and captured by one pixel
-//        Camera camera1 = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Triangle triangle1=new Triangle(new Point3D(0,1,-2),new Point3D(1,-1,-2),new Point3D(-1,-1,-2));
-//        assertEquals(1,sumOfIntersections(camera1,3,3,triangle1));
-//
-//        //TC02: Triangle is after view plane and camera and captured by two pixels
-//        Camera camera2 = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)).setDistance(1).setViewPlaneSize(3,3);
-//        Triangle triangle2=new Triangle(new Point3D(0,20,-2),new Point3D(1,-1,-2),new Point3D(-1,-1,-2));
-//        assertEquals(2,sumOfIntersections(camera2,3,3,triangle2));
-//
-//    }
-//
-//    /**
-//     *
-//     * @param camera
-//     * @param Nx
-//     * @param Ny
-//     * @param geometry
-//     * @return
-//     */
-//    public int sumOfIntersections(Camera camera, int Nx, int Ny, Geometry geometry){
-//        int count =0;
-//        for(int i=0;i<Nx;i++){
-//            for(int j=0;j<Ny;j++){
-//                Ray ray=camera.constructRayThroughPixel(Nx,Ny,j,i);
-//                List<GeoPoint> findInt=geometry.findGeoIntersections(ray);
-//                if(findInt!=null)
-//                {
-//                    count+=findInt.size();
-//                }
-//            }
-//        }
-//        return count;
-//    }
-//
-//
-//}
