@@ -3,6 +3,8 @@ package geometries;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import geometries.Intersectable.GeoPoint;
 import primitives.*;
 import static primitives.Util.*;
 
@@ -188,6 +190,12 @@ public class Polygon extends Geometry {
 			return result;
 		}
 		return null;
+	}
+	
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance)
+	{
+		// TODO Auto-generated method stub
+				return null;
 	}
 
 }

@@ -58,4 +58,9 @@ public class PointLight extends Light implements LightSource {
 		double d = p.distance(position);
 		return  1/(double)(kC+ kL*d + kQ*d*d);
 	}
+	
+	@Override
+	public double getDistance(Point3D p){
+		return position.distance(p);
+	}
 }

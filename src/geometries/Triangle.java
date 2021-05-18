@@ -69,4 +69,32 @@ public class Triangle extends Polygon
 
 		return null;
 	}
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance){
+
+		List<GeoPoint> resultOfPlane = plane.findGeoIntersections(ray, maxDistance);
+		if (resultOfPlane == null)
+			return null;
+		List<GeoPoint> result = new LinkedList<GeoPoint>();
+
+		Vector v1 = getVertices().get(0).subtract(ray.getQ0());
+		Vector v2 = getVertices().get(1).subtract(ray.getQ0());
+		Vector v3 = getVertices().get(2).subtract(ray.getQ0());
+		Vector n1 = v1.crossProduct(v2).normalize();
+		Vector n2 = v2.crossProduct(v3).normalize();
+		Vector n3 = v3.crossProduct(v1).normalize();
+		
+		Vector v = ray.getDir();
+		double r1 = alignZero(v.dotProduct(n1));
+		double r2 = alignZero(v.dotProduct(n2));
+		double r3 = alignZero(v.dotProduct(n3));
+		
+		if ((r1 > 0 && r2 > 0 && r3 > 0) || (r1 < 0 && r2 < 0 && r3 < 0)) {
+			for (GeoPoint point: resultOfPlane) {
+				result.add(new GeoPoint(this, point.point));
+			}
+			return result;
+		}
+
+		return null;
+	}
 }
