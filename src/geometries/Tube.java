@@ -4,6 +4,7 @@ import static primitives.Util.isZero;
 
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
 import primitives.*;
 
 /**
@@ -68,6 +69,11 @@ public class Tube extends Geometry {
 	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance)
+	{
+		// TODO Auto-generated method stub
+				return null;
 	}
 	
 }

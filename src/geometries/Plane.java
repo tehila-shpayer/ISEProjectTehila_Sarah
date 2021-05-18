@@ -11,6 +11,7 @@ import static primitives.Util.isZero;
 import java.util.List;
 
 import primitives.*;
+import static primitives.Util.*;
 
 public class Plane extends Geometry
 {
@@ -79,6 +80,26 @@ public class Plane extends Geometry
 	}
 
 	@Override
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+		
+		if(isZero(ray.getDir().dotProduct(normal)))
+		{
+			return null;
+		}
+		double t;
+		try {
+			t = (double)normal.dotProduct(q0.subtract(ray.getQ0()))/normal.dotProduct(ray.getDir());
+		}
+		catch (IllegalArgumentException e) {
+			return null;
+		}
+		if (t<=0) return null;
+		if (alignZero(t - maxDistance) > 0)
+			return null;
+		return List.of(new GeoPoint(this, ray.getPoint(t)));
+	}
+	
+	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		
 		if(isZero(ray.getDir().dotProduct(normal)))
@@ -95,7 +116,6 @@ public class Plane extends Geometry
 		if (t<=0) return null;
 		return List.of(new GeoPoint(this, ray.getPoint(t)));
 	}
-	
 	
 }
  

@@ -14,6 +14,8 @@ import scene.Scene;
  *
  */
 public class RayTracerBasic extends RayTracerBase{
+	
+	private static final double DELTA = 0.1;
 	/**
 	 * ctor - initializing the scene parameter
 	 * uses super ctor
@@ -32,6 +34,16 @@ public class RayTracerBasic extends RayTracerBase{
 			return scene.background;
 		GeoPoint closestPoint = ray.findClosestGeoPoint(intersections);
 		return calcColor(closestPoint, ray);
+	}
+	
+	private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
+		
+		Vector lightDirection = l.scale(-1); // from point to light source
+		Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
+		Point3D point = geopoint.point.add(delta);
+		Ray lightRay = new Ray(point, lightDirection);
+		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, light.getDistance(geopoint.point));
+		return (intersections == null);
 	}
 	
 	private Color calcColor(GeoPoint point3d, Ray ray) {
@@ -53,8 +65,11 @@ public class RayTracerBasic extends RayTracerBase{
 			Vector l = lightSource.getL(intersection.point);
 			double nl = alignZero(n.dotProduct(l));
 			if (nl * nv > 0) { // sign(nl) == sing(nv)
-				Color lightIntensity = lightSource.getIntensity(intersection.point);
-				color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+				if (unshaded(lightSource, l, n, intersection))
+					{
+						Color lightIntensity = lightSource.getIntensity(intersection.point);
+						color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+					}
 			}
 		}
 		return color;
