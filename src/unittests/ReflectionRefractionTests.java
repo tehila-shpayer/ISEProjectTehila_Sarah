@@ -32,7 +32,7 @@ public class ReflectionRefractionTests {
 		scene.geometries.add( //
 				new Sphere(new Point3D(0, 0, -50), 50) //
 						.setEmission(new Color(java.awt.Color.BLUE)) //
-						.setMaterial(new Material().setkD(0.4).setkS(0.3).setnShininess(100).setKt(0.3)),
+						.setMaterial(new Material().setkD(0.4).setkS(0.3).setnShininess(100).setkT(0.3)),
 				new Sphere(new Point3D(0, 0, -50), 25) //
 						.setEmission(new Color(java.awt.Color.RED)) //
 						.setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100)));
@@ -61,7 +61,7 @@ public class ReflectionRefractionTests {
 		scene.geometries.add( //
 				new Sphere(new Point3D(-950, -900, -1000), 400) //
 						.setEmission(new Color(0, 0, 100)) //
-						.setMaterial(new Material().setkD(0.25).setkS(0.25).setnShininess(20).setKt(0.5)),
+						.setMaterial(new Material().setkD(0.25).setkS(0.25).setnShininess(20).setkT(0.5)),
 				new Sphere(new Point3D(-950, -900, -1000), 200) //
 						.setEmission(new Color(100, 20, 20)) //
 						.setMaterial(new Material().setkD(0.25).setkS(0.25).setnShininess(20)),
