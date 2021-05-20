@@ -7,7 +7,7 @@ import geometries.Intersectable.GeoPoint;
 import primitives.*;
 import static primitives.Util.*;
 import scene.Scene;
-
+import primitives.Material;
 /**
  * the RayTracerBasic implements the class RayTracerBase and implements the traceRay method.
  * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
@@ -16,6 +16,8 @@ import scene.Scene;
 public class RayTracerBasic extends RayTracerBase{
 	
 	private static final double DELTA = 0.1;
+	private static final int MAX_CALC_COLOR_LEVEL = 10;
+	private static final double MIN_CALC_COLOR_K = 0.001;
 	/**
 	 * ctor - initializing the scene parameter
 	 * uses super ctor
@@ -84,6 +86,23 @@ public class RayTracerBasic extends RayTracerBase{
 		return lightIntensity.scale(kd*Math.abs(l.dotProduct(n)));
 	}
 
+	private Color calcGlobalEffects(GeoPoint geopoint, Ray ray, int level, double k) {
+		Color color = Color.BLACK;
+		Material material = geopoint.geometry.getMaterial();
+		double kr = material.kR, kkr = k * kr;
+		if (kkr > MIN_CALC_COLOR_K) {
+			Ray reflectedRay = constructReflectedRay(n, geopoint.point, inRay);
+			GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
+			color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
+		}
+		double kt = material.kT, kkt = k * kt;
+		if (kkt > MIN_CALC_COLOR_K) {
+		Ray refractedRay = constructRefractedRay(n, geopoint.point, inRay);
+		GeoPoint refractedPoint = findClosestIntersection(refractedRay);
+		color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
+		}
+		return color;
+		}
 
 
 }
