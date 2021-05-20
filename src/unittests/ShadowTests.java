@@ -5,7 +5,7 @@ import org.junit.Test;
 import elements.*;
 import geometries.*;
 import primitives.*;
-import renderer.*;
+import renderer.*; 
 import scene.Scene;
 
 /**
