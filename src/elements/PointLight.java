@@ -56,7 +56,7 @@ public class PointLight extends Light implements LightSource {
 	
 	public double calcScalar(Point3D p) {
 		double d = p.distance(position);
-		return  1/(double)(kC+ kL*d + kQ*d*d);
+		return  (double)(1/(double)(kC+ kL*d + kQ*d*d));
 	}
 	
 	@Override
