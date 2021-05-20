@@ -11,9 +11,6 @@ public class Material {
 	public int nShininess = 0;
 	public double kT = 0;
 	public double kR = 0;
-	
-	private static final int MAX_CALC_COLOR_LEVEL = 10;
-	private static final double MIN_CALC_COLOR_K = 0.001;
 
 
 	

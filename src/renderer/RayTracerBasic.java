@@ -90,6 +90,7 @@ public class RayTracerBasic extends RayTracerBase{
 		Color color = Color.BLACK;
 		Material material = geopoint.geometry.getMaterial();
 		double kr = material.kR, kkr = k * kr;
+		Vector n = geopoint.geometry.getNormal(geopoint.point);
 		if (kkr > MIN_CALC_COLOR_K) {
 			Ray reflectedRay = constructReflectedRay(n, geopoint.point, inRay);
 			GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
