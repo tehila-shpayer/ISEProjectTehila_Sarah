@@ -70,6 +70,8 @@ public class Vector {
      * @return the new vector resulted in the scalar multiplication
      */
     public Vector scale(double a) {
+    	if(head.equals(Point3D.ZERO))
+    		System.out.println(head);
 		return new Vector(a*head.getX(), a*head.getY(), a*head.getZ());
 	}
     
