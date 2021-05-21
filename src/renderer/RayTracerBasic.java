@@ -14,6 +14,7 @@ import scene.Scene;
 public class RayTracerBasic extends RayTracerBase{
 	
 	private static final double DELTA = 0.1;
+	private static final double INITIAL_K = 1.0;
 	private static final int MAX_CALC_COLOR_LEVEL = 10;
 	private static final double MIN_CALC_COLOR_K = 0.001;
 	/**
@@ -71,7 +72,7 @@ public class RayTracerBasic extends RayTracerBase{
 	}
 		
 	private Color calcColor(GeoPoint geopoint, Ray ray) {
-		return calcColor(geopoint, ray, MAX_CALC_COLOR_LEVEL, 0.01)
+		return calcColor(geopoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
 		.add(scene.ambientLight.getIntensity());
 	}
 	
