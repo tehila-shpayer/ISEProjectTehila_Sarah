@@ -13,7 +13,6 @@ import scene.Scene;
  */
 public class RayTracerBasic extends RayTracerBase{
 	
-	private static final double DELTA = 0.1;
 	private static final double INITIAL_K = 1.0;
 	private static final int MAX_CALC_COLOR_LEVEL = 10;
 	private static final double MIN_CALC_COLOR_K = 0.001;
@@ -40,19 +39,13 @@ public class RayTracerBasic extends RayTracerBase{
 		return calcColor(clossestGeoPoint, ray);
 	}
 	
-	private Ray getDelta(Point3D head, Vector direction, Vector normal) {
-		Vector delta = normal.scale(normal.dotProduct(direction) > 0 ? DELTA : - DELTA);
-		Point3D point = head.add(delta);
-		return new Ray(point, direction);
-	}
-	
 	private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
 		
 		Vector lightDirection = l.scale(-1); // from point to light source
 //		Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
 //		Point3D point = geopoint.point.add(delta);
 //		Ray lightRay = new Ray(point, lightDirection);
-		Ray lightRay = getDelta(geopoint.point, lightDirection, n);
+		Ray lightRay = new Ray(geopoint.point, lightDirection, n);
 		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, light.getDistance(geopoint.point));
 		if (intersections == null) 
 			return true;
@@ -138,7 +131,7 @@ public class RayTracerBasic extends RayTracerBase{
 	}
 
 	private Ray constructRefractedRay(Vector n, Point3D point, Ray ray) {
-		Vector v = getDelta(point, ray.getDir(), n).getDir();
+		Vector v = new Ray(point, ray.getDir(), n).getDir();
 		double cosi = v.scale(-1).dotProduct(n);
 		double cosr = n.scale(-1).dotProduct(v);
 		Vector direction;
@@ -151,9 +144,11 @@ public class RayTracerBasic extends RayTracerBase{
 	}
 
 	private Ray constructReflectedRay(Vector n, Point3D point, Ray ray) {
-		Ray deltaRay = getDelta(point, ray.getDir(), n);
+		Ray deltaRay = new Ray(point, ray.getDir(), n);
 		Vector v = deltaRay.getDir();
-		Vector vector = v.subtract(((v.crossProduct(n)).crossProduct(n)).scale(2)).normalized();
+		if(isZero(v.dotProduct(n)))
+			return new Ray(point, v);
+		Vector vector = v.subtract(n.scale(2*v.dotProduct(n))).normalized();
 		Ray reflectedRay = new Ray(point, vector);
 		return reflectedRay;
 	}
