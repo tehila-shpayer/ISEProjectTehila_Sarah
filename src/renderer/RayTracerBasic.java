@@ -107,7 +107,7 @@ public class RayTracerBasic extends RayTracerBase{
 
 	private Color calcGlobalEffects(GeoPoint geopoint, Ray ray, int level, double k) {
 		Color color = Color.BLACK;
-		if(geopoint == null) return scene.background;
+//		if(geopoint == null) return scene.background;
 		Material material = geopoint.geometry.getMaterial();
 		double kr = material.kR;
 		double kkr = k * kr;
