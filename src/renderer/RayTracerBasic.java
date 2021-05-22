@@ -13,6 +13,7 @@ import scene.Scene;
  */
 public class RayTracerBasic extends RayTracerBase{
 	
+	private static final double DELTA = 0.1;
 	private static final double INITIAL_K = 1.0;
 	private static final int MAX_CALC_COLOR_LEVEL = 10;
 	private static final double MIN_CALC_COLOR_K = 0.001;
@@ -54,6 +55,7 @@ public class RayTracerBasic extends RayTracerBase{
 			if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0 && gp.geometry.getMaterial().kT == 0)
 				return false;
 		}
+		
 		return true;
 	}
 	
@@ -149,6 +151,7 @@ public class RayTracerBasic extends RayTracerBase{
 		if(isZero(v.dotProduct(n)))
 			return new Ray(point, v);
 		Vector vector = v.subtract(n.scale(2*v.dotProduct(n))).normalized();
+//		Vector vector = v.subtract(v.crossProduct(n).crossProduct(n).scale(2)).normalized();
 		Ray reflectedRay = new Ray(point, vector);
 		return reflectedRay;
 	}
