@@ -59,6 +59,8 @@ public class RayTracerBasic extends RayTracerBase{
 		return true;
 	}
 	
+	
+	
 	private Color calcColor(GeoPoint point3d, Ray ray, int level, double k) {
 		Color color = point3d.geometry.getEmission().add(calcLocalEffects(point3d, ray));
 		if (level == 1 || point3d == null)
@@ -134,7 +136,8 @@ public class RayTracerBasic extends RayTracerBase{
 	}
 
 	private Ray constructRefractedRay(Vector n, Point3D point, Ray ray) {
-		Vector v = new Ray(point, ray.getDir(), n).getDir();
+		Ray deltaRay = new Ray(point, ray.getDir(), n);
+		Vector v = deltaRay.getDir();
 		double cosi = v.scale(-1).dotProduct(n);
 		double cosr = n.scale(-1).dotProduct(v);
 		Vector direction;
@@ -142,7 +145,7 @@ public class RayTracerBasic extends RayTracerBase{
 			direction = (n.scale(cosi-cosr)).subtract(v);
 		else
 			direction = v.scale(-1);
-		Ray refractedRay = new Ray(point, direction);
+		Ray refractedRay = new Ray(deltaRay.getQ0(), direction);
 		return refractedRay;
 	}
 
@@ -152,7 +155,6 @@ public class RayTracerBasic extends RayTracerBase{
 		if(isZero(v.dotProduct(n)))
 			return new Ray(point, v);
 		Vector vector = v.subtract(n.scale(2*v.dotProduct(n))).normalized();
-//		Vector vector = v.subtract(v.crossProduct(n).crossProduct(n).scale(2)).normalized();
 		Ray reflectedRay = new Ray(deltaRay.getQ0(), vector);
 		return reflectedRay;
 	}
