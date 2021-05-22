@@ -153,7 +153,7 @@ public class RayTracerBasic extends RayTracerBase{
 			return new Ray(point, v);
 		Vector vector = v.subtract(n.scale(2*v.dotProduct(n))).normalized();
 //		Vector vector = v.subtract(v.crossProduct(n).crossProduct(n).scale(2)).normalized();
-		Ray reflectedRay = new Ray(point, vector);
+		Ray reflectedRay = new Ray(deltaRay.getQ0(), vector);
 		return reflectedRay;
 	}
 
