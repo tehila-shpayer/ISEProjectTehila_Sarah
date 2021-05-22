@@ -127,7 +127,7 @@ public class RayTracerBasic extends RayTracerBase{
 			color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
 		}
 		return color;
-	}
+	} 
 
 	private GeoPoint findClosestIntersection(Ray refractedRay) {
 		return refractedRay.findClosestGeoPoint(scene.geometries.findGeoIntersections(refractedRay));
