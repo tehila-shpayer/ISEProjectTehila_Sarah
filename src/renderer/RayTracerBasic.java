@@ -141,19 +141,18 @@ public class RayTracerBasic extends RayTracerBase{
 		if (!isZero(cosr-cosr))
 			direction = (n.scale(cosi-cosr)).subtract(v);
 		else
-			direction = v.scale(-1);
-		Ray refractedRay = new Ray(point, direction);
+			direction = ray.getDir();
+		Ray refractedRay = new Ray(point, direction, n);
 		return refractedRay;
 	}
 
 	private Ray constructReflectedRay(Vector n, Point3D point, Ray ray) {
-		Ray deltaRay = new Ray(point, ray.getDir(), n);
-		Vector v = deltaRay.getDir();
+		Vector v = ray.getDir();
 		if(isZero(v.dotProduct(n)))
 			return new Ray(point, v);
 		Vector vector = v.subtract(n.scale(2*v.dotProduct(n))).normalized();
 //		Vector vector = v.subtract(v.crossProduct(n).crossProduct(n).scale(2)).normalized();
-		Ray reflectedRay = new Ray(deltaRay.getQ0(), vector);
+		Ray reflectedRay = new Ray(point, vector, n);
 		return reflectedRay;
 	}
 
