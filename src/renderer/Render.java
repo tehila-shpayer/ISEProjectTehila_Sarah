@@ -61,9 +61,16 @@ public class Render {
 
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
+				if(i==320 &&j == 320) {
+					Ray ray = camera.constructRayThroughPixel(Nx, Ny, j, i);
+					Color color = rayTracerBase.TraceRay(ray);
+					imageWriter.writePixel(j, i, color);
+				}
+				else {
 				Ray ray = camera.constructRayThroughPixel(Nx, Ny, j, i);
 				Color color = rayTracerBase.TraceRay(ray);
 				imageWriter.writePixel(j, i, color);
+				}
 			}
 		}
 	}
