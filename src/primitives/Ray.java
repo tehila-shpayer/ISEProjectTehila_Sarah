@@ -11,6 +11,11 @@ import geometries.Intersectable.GeoPoint;
 */
 public class Ray {
 
+	/**
+	 * DELTA - Determines the distance the head of the ray moves in the constructor that receive a normal
+     * q0 - the ray head
+     * dir - the direction of the ray
+     */
 	private static final double DELTA = 0.1;
 
 	Point3D q0;
@@ -26,6 +31,14 @@ public class Ray {
 		this.dir = dirVector.normalized();
 	}
 	
+	/**
+	 * The constructor receives a 3D point, a vector and a normal.
+	 * It creates a ray using the direction vector and the point, but moves the point by DELTA in the normal direction.
+	 * The reason: to avoid self-shadowing and self-reflection
+	 * @param head - the basic head point
+	 * @param direction - ray direction
+	 * @param normal - the normal to the point on the geometry
+	 */
 	public Ray(Point3D head, Vector direction, Vector normal) {
 		Vector dVector = direction.normalized();
 		Vector delta = normal.scale(normal.dotProduct(dVector) > 0 ? DELTA : - DELTA);
@@ -66,6 +79,12 @@ public class Ray {
 //		return closestPoint;
 //	}
 	
+	/**
+	 * The function receive a list of point,
+	 * calculates the distances of each one from the ray and return the closest one
+	 * @param lst - a list of intersection point between the ray and the geometries
+	 * @return closestPoint - the closest point to the ray
+	 */
 	public GeoPoint findClosestGeoPoint(List<GeoPoint> lst) {
 		if(lst == null)
 			return null;
