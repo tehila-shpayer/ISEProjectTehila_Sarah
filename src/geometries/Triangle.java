@@ -41,7 +41,8 @@ public class Triangle extends Polygon
 	public String toString() {
 		return super.toString();
 	}
-		
+	
+	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		List<GeoPoint> resultOfPlane = plane.findGeoIntersections(ray);
 		if (resultOfPlane == null)
@@ -69,6 +70,8 @@ public class Triangle extends Polygon
 
 		return null;
 	}
+	
+	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance){
 
 		List<GeoPoint> resultOfPlane = plane.findGeoIntersections(ray, maxDistance);

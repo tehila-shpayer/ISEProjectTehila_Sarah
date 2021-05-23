@@ -59,9 +59,10 @@ public interface Intersectable {
 	}
 		
 	/**
-	 * The method receives a ray and returns all intersection points with the geometry
-	 * @param ray
-	 * @return list of intersection points
+	 * The method receives a ray and returns intersection points with the geometry that are in the range determinated by the maxDistance
+	 * @param ray - the ray of intersection
+	 * @param maxDistance - the maximum distance in which we search intersection points
+	 * @return list of intersection points that are close enough
 	 */
       List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 

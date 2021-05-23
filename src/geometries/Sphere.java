@@ -78,6 +78,7 @@ public class Sphere extends Geometry
 		double th = alignZero(Math.sqrt(radius*radius - d*d));
 		double t1 = alignZero(tm - th);
 		double t2 = alignZero(tm + th);
+		//A list of conditions that verify that the points are indeed intersection points and are within the desired range
 		if((t1 <= 0 && t2 <= 0 )&&((alignZero(t1 - maxDistance) > 0) && (alignZero(t2 - maxDistance) > 0)))
 			return null;
 		if((t1 <= 0 && t2 > 0)&&((alignZero(t1 - maxDistance) > 0) && (alignZero(t2 - maxDistance) <= 0)))

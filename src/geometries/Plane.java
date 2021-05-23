@@ -95,6 +95,7 @@ public class Plane extends Geometry
 			return null;
 		}
 		if (t<=0) return null;
+		//A test that verifies that the point is indeed a point of intersection and is within the desired range
 		if (alignZero(t - maxDistance) > 0)
 			return null;
 		return List.of(new GeoPoint(this, ray.getPoint(t)));
