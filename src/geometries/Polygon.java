@@ -141,61 +141,92 @@ public class Polygon extends Geometry {
 //	}
 
 	@Override
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
-		List<GeoPoint> resultOfPlane = plane.findGeoIntersections(ray);
-		List<GeoPoint> result = new LinkedList<GeoPoint>();
-		if (resultOfPlane == null)
-			return null;
-		
-		List<Vector> vectors = null;
-		List<Vector> normals = null;
-		List<Double> resultsList = null;
-		int n = vertices.size();
-		for (int i = 0; i < n; i++) {
-			
-			vectors.add(i, vertices.get(0).subtract(ray.getQ0()));	
-		}
-		
-		for (int i = 0; i< n-1; i++) {
-			normals.add(i, vectors.get(i).crossProduct(vectors.get(i+1)).normalize());	
-		}
-		normals.add(n-1, vectors.get(n-1).crossProduct(vectors.get(0)).normalize());
-		
-		Vector v = ray.getDir();
-		
-		for (int i = 0; i< n; i++) {
-			resultsList.add(i, alignZero(v.dotProduct(normals.get(i))));	
-		}
-		
-		if (resultsList.get(0)>0)
-		{
-			for (int i = 1; i < n; i++) {
-				if (resultsList.get(i)<=0)
-					return null;
-			}
-			for (GeoPoint point: resultOfPlane) {
-				result.add(new GeoPoint(this, point.point));
-			}
-			return result;
-		}
-		if (resultsList.get(0) < 0)
-		{
-			for (int i = 1; i < n; i++) {
-				if (resultsList.get(i)>=0)
-					return null;
-			}
-			for (GeoPoint point: resultOfPlane) {
-				result.add(new GeoPoint(this, point.point));
-			}
-			return result;
-		}
-		return null;
-	}
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        List<GeoPoint> result = plane.findGeoIntersections(ray);
+
+        if (result == null) {
+            return result;
+        }
+
+        result=List.of(new GeoPoint(this,result.get(0).point));
+
+        Point3D P0 = ray.getQ0();//the start ray point
+        Vector v = ray.getDir();
+
+        Point3D P1 = vertices.get(1);
+        Point3D P2 = vertices.get(0);
+
+        Vector v1 = P1.subtract(P0); //vector from the ray start point to the polygon vertices
+        Vector v2 = P2.subtract(P0);//vector from the ray start point to the polygon vertices
+
+        double sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+
+        if (isZero(sign)) {//out of the polygon
+            return null;
+        }
+
+        boolean positive = sign > 0;
+
+        //iterate through all vertices of the polygon
+        for (int i = vertices.size() - 1; i > 0; --i) { //foreach vertices
+            v1 = v2;
+            v2 = vertices.get(i).subtract(P0);//vector from the ray start point to the polygon vertices
+
+            sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign)) {//out of the polygon
+                return null;
+            }
+
+            if (positive != (sign > 0)) {//out of the polygon
+                return null;
+            }
+        }
+
+        return result;    }
 	
 	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance)
 	{
-		// TODO Auto-generated method stub
-				return null;
+		List<GeoPoint> result = plane.findGeoIntersections(ray, maxDistance);
+
+        if (result == null) {
+            return result;
+        }
+
+        result=List.of(new GeoPoint(this,result.get(0).point));
+
+        Point3D P0 = ray.getQ0();//the start ray point
+        Vector v = ray.getDir();
+
+        Point3D P1 = vertices.get(1);
+        Point3D P2 = vertices.get(0);
+
+        Vector v1 = P1.subtract(P0); //vector from the ray start point to the polygon vertices
+        Vector v2 = P2.subtract(P0);//vector from the ray start point to the polygon vertices
+
+        double sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+
+        if (isZero(sign)) {//out of the polygon
+            return null;
+        }
+
+        boolean positive = sign > 0;
+
+        //iterate through all vertices of the polygon
+        for (int i = vertices.size() - 1; i > 0; --i) { //foreach vertices
+            v1 = v2;
+            v2 = vertices.get(i).subtract(P0);//vector from the ray start point to the polygon vertices
+
+            sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign)) {//out of the polygon
+                return null;
+            }
+
+            if (positive != (sign > 0)) {//out of the polygon
+                return null;
+            }
+        }
+
+        return result;    
 	}
 
 }

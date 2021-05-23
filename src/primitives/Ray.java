@@ -27,10 +27,11 @@ public class Ray {
 	}
 	
 	public Ray(Point3D head, Vector direction, Vector normal) {
-		Vector delta = normal.scale(normal.dotProduct(direction) > 0 ? DELTA : - DELTA);
+		Vector dVector = direction.normalized();
+		Vector delta = normal.scale(normal.dotProduct(dVector) > 0 ? DELTA : - DELTA);
 		Point3D point = head.add(delta);
 		this.q0 = point;
-		this.dir = direction.normalized();
+		this.dir = dVector;
 		
 	}
 	
