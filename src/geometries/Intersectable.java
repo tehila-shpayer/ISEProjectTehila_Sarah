@@ -10,24 +10,36 @@ import geometries.Intersectable.GeoPoint;
  */
 public interface Intersectable {
 	/**
-	 * javadoc com.
-	 * @author tehil
-	 *
+	 * public static class within  Intersectable to represent an intersection point
+	 * including the geometry it is intersected with.
+	 * The purpose is to access material characteristics of geometry.
+	 * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
 	 */
 	public static class GeoPoint {
+		
+		/**
+	     * @param geometry - the geometry that the point is on.
+		 */
 	    public Geometry geometry;
+	    
+	    /**
+	     * @param point - the represented point
+	     */
 	    public Point3D point;
 	    
 	    /**
-	     * javadoc com.
-	     * @param geometry
-	     * @param point3d
+	     * ctor for GeoPoint
+	     * @param geometry - the geometry that the point is on.
+	     * @param point - the represented point
 	     */
-	    public GeoPoint(Geometry geometry, Point3D point3d) {
+	    public GeoPoint(Geometry geometry, Point3D point) {
 	    	this.geometry = geometry;
-	    	this.point = point3d;
+	    	this.point = point;
 	    }
 	    
+	    /**
+	     * override of built in equals method
+	     */
 	    @Override
 		public boolean equals(Object obj)
 		{
@@ -39,6 +51,11 @@ public interface Intersectable {
 		}
 	}
 
+	/**
+	 * Default implementations of Geometry findGeoIntersections that includes maxDistance param.
+	 * @param ray - ray of intersection
+	 * @return result of findGeoIntersections with infinite maxDistance
+	 */
 	default List<GeoPoint> findGeoIntersections(Ray ray) {
 		return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
 	}
@@ -49,6 +66,5 @@ public interface Intersectable {
 	 * @return list of intersection points
 	 */
       List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
-    //List<GeoPoint> findGeoIntersections(Ray ray);
 
     }
