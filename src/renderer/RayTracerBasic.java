@@ -60,11 +60,11 @@ public class RayTracerBasic extends RayTracerBase{
 		double ktr = 1.0;
 		for (GeoPoint gp : intersections) {
 			if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0) {
-				ktr *= gp.geometry.getMaterial().kT; //the more transparency the less shadow
+				ktr *= gp.geometry.getMaterial().getkT(); //the more transparency the less shadow
 				if (ktr < MIN_CALC_COLOR_K) return 0.0;
 			}
 		}
-		return ktr;
+		return alignZero(ktr);
 	}
 	
 	/**
