@@ -1,6 +1,5 @@
 package renderer;
 
-import java.util.List;
 import static primitives.Util.*;
 import elements.LightSource;
 import geometries.Intersectable.GeoPoint;
@@ -60,11 +59,11 @@ public class RayTracerBasic extends RayTracerBase{
 		double ktr = 1.0;
 		for (GeoPoint gp : intersections) {
 			if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0) {
-				ktr *= gp.geometry.getMaterial().kT; //the more transparency the less shadow
+				ktr *= gp.geometry.getMaterial().getkT(); //the more transparency the less shadow
 				if (ktr < MIN_CALC_COLOR_K) return 0.0;
 			}
 		}
-		return ktr;
+		return alignZero(ktr);
 	}
 	
 	/**
@@ -168,7 +167,7 @@ public class RayTracerBasic extends RayTracerBase{
 	private Color calcGlobalEffects(GeoPoint geopoint, Ray ray, int level, double k) {
 		Color color = Color.BLACK;
 		Material material = geopoint.geometry.getMaterial();
-		double kr = material.kR;
+		double kr = material.getkR();
 		double kkr = k * kr; //in each recursive iteration the impact of the reflection decreases
 		Vector n = geopoint.geometry.getNormal(geopoint.point);
 		if (kkr > MIN_CALC_COLOR_K) {
@@ -177,7 +176,7 @@ public class RayTracerBasic extends RayTracerBase{
 			if(reflectedPoint == null) return color.add(scene.background);
 			color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
 		}
-		double kt = material.kT;
+		double kt = material.getkT();
 		double kkt = k * kt; //in each recursive iteration the impact of the refraction decreases
 		if (kkt > MIN_CALC_COLOR_K) {
 			Ray refractedRay = constructRefractedRay(n, geopoint.point, ray);
@@ -206,17 +205,16 @@ public class RayTracerBasic extends RayTracerBase{
 	 * @return refracted ray
 	 */
 	private Ray constructRefractedRay(Vector n, Point3D point, Ray ray) {
-		Vector v = new Ray(point, ray.getDir(), n).getDir();
-		double cosi = v.scale(-1).dotProduct(n);
-		double cosr = n.scale(-1).dotProduct(v);
-		Vector direction;
-		if (!isZero(cosr-cosr))
-			direction = (n.scale(cosi-cosr)).subtract(v);
-		else
-			direction = ray.getDir();
-		Ray refractedRay = new Ray(point, direction, n);//use the constructor with the normal for moving the head a little
-
-		return refractedRay;
+//		Vector v = new Ray(point, ray.getDir(), n).getDir();
+//		double cosi = v.scale(-1).dotProduct(n);
+//		double cosr = n.scale(-1).dotProduct(v);
+//		Vector direction;
+//		if (!isZero(cosr-cosr))
+//			direction = (n.scale(cosi-cosr)).subtract(v);
+//		else
+//			direction = ray.getDir();
+		//use the constructor with the normal for moving the head a little
+		return new Ray(point, ray.getDir().normalized(), n);
 	}
 
 	/**\
