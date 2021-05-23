@@ -34,7 +34,7 @@ public class RayTracerBasic extends RayTracerBase{
 			return scene.background;
 		return calcColor(clossestGeoPoint, ray);
 	}
-	
+	//tehila
 	private double transparency(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
 		Vector lightDirection = l.scale(-1); // from point to light source
 		Ray lightRay = new Ray(geopoint.point, lightDirection, n);
@@ -96,7 +96,7 @@ public class RayTracerBasic extends RayTracerBase{
 	private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
 		return lightIntensity.scale(kd*Math.abs(l.dotProduct(n)));
 	}
-
+//sara
 	private Color calcGlobalEffects(GeoPoint geopoint, Ray ray, int level, double k) {
 		Color color = Color.BLACK;
 		Material material = geopoint.geometry.getMaterial();
