@@ -79,6 +79,7 @@ public class Plane extends Geometry
 		return normal;
 	}
 
+
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 		

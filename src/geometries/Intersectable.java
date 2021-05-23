@@ -39,6 +39,7 @@ public interface Intersectable {
 		}
 	}
 
+	
 	default List<GeoPoint> findGeoIntersections(Ray ray) {
 		return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
 	}

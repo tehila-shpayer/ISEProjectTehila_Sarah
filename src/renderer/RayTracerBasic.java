@@ -199,6 +199,12 @@ public class RayTracerBasic extends RayTracerBase{
 		return reflectedRay;
 	}
 	
+	/**
+	 * 
+	 * @param v - the direction of the ray which intersect the surface
+	 * @param n - normal to the intersection point on the surface
+	 * @return the r vector - the vector obtained from returning the vector from the ray to the surface at the angle at which it arrived
+	 */
 	private Vector calcVectorR(Vector v, Vector n) {
 		return v.subtract(n.scale(2*v.dotProduct(n))).normalized();
 	}
