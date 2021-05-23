@@ -7,9 +7,9 @@ package primitives;
  */
 public class Material {
 	/**
-	 * kD - Diffusive 
-	 * kS - Specular reflection, the mirror-like reflection of light from a surface.
-	 * nShininess = 0;
+	 * kD - attenuation factor for Diffuse Reflection- the reflection of light from a surface
+	 * kS - attenuation factor for Specular Reflection, the mirror-like reflection of light from a surface.
+	 * nShininess - the shining level of the material
 	 * kT - Transparency level
 	 * kR - level of reflection
 	 */
@@ -33,6 +33,13 @@ public class Material {
 		return kS;
 	}
 	
+	public double getkT() {
+		return kT;
+	}
+	
+	public double getkR() {
+		return kR;
+	}
 	
 	// ***************** Setters ********************** //
 		// ** all setters implements the Builder Design Pattern **//
