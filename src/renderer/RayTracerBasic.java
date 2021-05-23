@@ -13,6 +13,14 @@ import scene.Scene;
  */
 public class RayTracerBasic extends RayTracerBase{
 	
+	/**
+	 * INITIAL_K - the initial intensity of impact of secondary rays (in percentage: 1 = 100%)
+	 * MAX_CALC_COLOR_LEVEL - The maximum number of times a recursion is performed for reflection and transparency calculations.
+	 * 					After a few times the effect becomes negligible.
+	 * MIN_CALC_COLOR_K - the minimum percentage of intensity of impact.
+	 * 					 if k is lower than this constant, the recursion is stopped (because the impact is negligible)
+	 */
+	
 	private static final double INITIAL_K = 1.0;
 	private static final int MAX_CALC_COLOR_LEVEL = 10;
 	private static final double MIN_CALC_COLOR_K = 0.001;
@@ -148,7 +156,15 @@ public class RayTracerBasic extends RayTracerBase{
 	private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
 		return lightIntensity.scale(kd*Math.abs(l.dotProduct(n)));
 	}
-//sara
+
+	/**
+	 * calculation of global effects on the color
+	 * @param geopoint - The point for which the color is calculated
+	 * @param ray - the ray from the camera to the point
+	 * @param level - current level of depth in recursion
+	 * @param k - the current intensity of impact of secondary rays
+	 * @return color - the color calculated for the point according to the reflection and refraction effects
+	 */
 	private Color calcGlobalEffects(GeoPoint geopoint, Ray ray, int level, double k) {
 		Color color = Color.BLACK;
 		Material material = geopoint.geometry.getMaterial();
@@ -199,6 +215,12 @@ public class RayTracerBasic extends RayTracerBase{
 		return reflectedRay;
 	}
 	
+	/**
+	 * 
+	 * @param v - the direction of the ray which intersect the surface
+	 * @param n - normal to the intersection point on the surface
+	 * @return the r vector - the vector obtained from returning the vector from the ray to the surface at the angle at which it arrived
+	 */
 	private Vector calcVectorR(Vector v, Vector n) {
 		return v.subtract(n.scale(2*v.dotProduct(n))).normalized();
 	}

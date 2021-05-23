@@ -2,8 +2,6 @@ package geometries;
 
 import primitives.*;
 import java.util.List;
-
-import geometries.Intersectable.GeoPoint;
 /**
  * Interface Intersectable is to represent intersectable shapes 
  * @author Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
