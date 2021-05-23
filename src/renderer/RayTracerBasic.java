@@ -162,14 +162,14 @@ public class RayTracerBasic extends RayTracerBase{
 	 * @param geopoint - The point for which the color is calculated
 	 * @param ray - the ray from the camera to the point
 	 * @param level - current level of depth in recursion
-	 * @param k - the current intensity of impact of secondary rays
+	 * @param k - the intensity of impact of secondary rays
 	 * @return color - the color calculated for the point according to the reflection and refraction effects
 	 */
 	private Color calcGlobalEffects(GeoPoint geopoint, Ray ray, int level, double k) {
 		Color color = Color.BLACK;
 		Material material = geopoint.geometry.getMaterial();
 		double kr = material.kR;
-		double kkr = k * kr;
+		double kkr = k * kr; //in each recursive iteration the impact of the reflection decreases
 		Vector n = geopoint.geometry.getNormal(geopoint.point);
 		if (kkr > MIN_CALC_COLOR_K) {
 			Ray reflectedRay = constructReflectedRay(n, geopoint.point, ray);
@@ -178,7 +178,7 @@ public class RayTracerBasic extends RayTracerBase{
 			color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
 		}
 		double kt = material.kT;
-		double kkt = k * kt;
+		double kkt = k * kt; //in each recursive iteration the impact of the refraction decreases
 		if (kkt > MIN_CALC_COLOR_K) {
 			Ray refractedRay = constructRefractedRay(n, geopoint.point, ray);
 			GeoPoint refractedPoint = findClosestIntersection(refractedRay);
@@ -188,11 +188,23 @@ public class RayTracerBasic extends RayTracerBase{
 		return color;
 	} 
 
+	/**
+	 * 
+	 * @param refractedRay
+	 * @return the closest intersection point to the refracted ray
+	 */
 	private GeoPoint findClosestIntersection(Ray refractedRay) {
 		return refractedRay.findClosestGeoPoint(scene.geometries.findGeoIntersections(refractedRay));
 	
 	}
 
+	/**
+	 * calculate the refracted ray from the intersection point (in the same direction of the ray)
+	 * @param n - normal to the intersection point on the surface
+	 * @param point - the specific point of which the color is calculated
+	 * @param ray - the ray from the camera to the point
+	 * @return refracted ray
+	 */
 	private Ray constructRefractedRay(Vector n, Point3D point, Ray ray) {
 		Vector v = new Ray(point, ray.getDir(), n).getDir();
 		double cosi = v.scale(-1).dotProduct(n);
@@ -202,24 +214,32 @@ public class RayTracerBasic extends RayTracerBase{
 			direction = (n.scale(cosi-cosr)).subtract(v);
 		else
 			direction = ray.getDir();
-		Ray refractedRay = new Ray(point, direction, n);
+		Ray refractedRay = new Ray(point, direction, n);//use the constructor with the normal for moving the head a little
+
 		return refractedRay;
 	}
 
+	/**\
+	 * calculate the reflected ray from the intersection point
+	 * @param n - normal to the intersection point on the surface
+	 * @param point - the specific point of which the color is calculated
+	 * @param ray - the ray from the camera to the point
+	 * @return reflected ray
+	 */
 	private Ray constructReflectedRay(Vector n, Point3D point, Ray ray) {
 		Vector v = ray.getDir();
 		if(isZero(v.dotProduct(n)))
 			return new Ray(point, v);
 		Vector vector = calcVectorR(v, n);
-		Ray reflectedRay = new Ray(point, vector, n);
+		Ray reflectedRay = new Ray(point, vector, n); //use the constructor with the normal for moving the head a little
 		return reflectedRay;
 	}
 	
 	/**
-	 * 
+	 * calculate the vector r - obtained from returning the vector from the ray to the surface at the angle at which it arrived
 	 * @param v - the direction of the ray which intersect the surface
 	 * @param n - normal to the intersection point on the surface
-	 * @return the r vector - the vector obtained from returning the vector from the ray to the surface at the angle at which it arrived
+	 * @return the r vector
 	 */
 	private Vector calcVectorR(Vector v, Vector n) {
 		return v.subtract(n.scale(2*v.dotProduct(n))).normalized();
