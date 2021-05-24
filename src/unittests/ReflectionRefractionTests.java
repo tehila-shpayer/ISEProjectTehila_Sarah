@@ -172,18 +172,18 @@ public class ReflectionRefractionTests {
 	                    .setEmission(new Color(java.awt.Color.BLUE)) //
 	                    .setMaterial(new Material().setkD(0.6).setkS(0.2).setnShininess(100).setkR(0)),
 	                    
-//	            new Triangle(new Point3D(-40, -20, -120), new Point3D(-30, -40, -120), new Point3D(-40, -20, -110)) //
-//	                    .setEmission(new Color(java.awt.Color.BLUE)) //
-//	                    .setMaterial(new Material().setkD(0.6).setkS(0.2).setnShininess(100).setkT(0.6)),
-//	            new Triangle(new Point3D(-40, -20, -120), new Point3D(-30, -40, -120), new Point3D(-40, -20, -130)) //
-//	                    .setEmission(new Color(java.awt.Color.BLUE)) //
-//	                    .setMaterial(new Material().setkD(0.6).setkS(0.2).setnShininess(100).setkT(0.6)),
-//	            new Triangle(new Point3D(-40, -20, -120), new Point3D(-50, 0, -120), new Point3D(-40, -20, -110)) //
-//	                    .setEmission(new Color(java.awt.Color.BLUE)) //
-//	                    .setMaterial(new Material().setkD(0.6).setkS(0.2).setnShininess(100).setkT(0.6)),
-//	    	    new Triangle(new Point3D(-40, -20, -120), new Point3D(-50, 0, -120), new Point3D(-40, -20, -130)) //
-//	                    .setEmission(new Color(java.awt.Color.BLUE)) //
-//	                    .setMaterial(new Material().setkD(0.6).setkS(0.2).setnShininess(100).setkT(0.6)),	       
+	            new Triangle(new Point3D(-40, -20, -100), new Point3D(-30, -40, -100), new Point3D(-40, -20, -90)) //
+	                    .setEmission(new Color(java.awt.Color.black)) //
+	                    .setMaterial(new Material().setkD(0.6).setkS(0.2).setnShininess(100).setkR(1)),
+	            new Triangle(new Point3D(-40, -20, -100), new Point3D(-30, -40, -100), new Point3D(-40, -20, -110)) //
+	                    .setEmission(new Color(java.awt.Color.black)) //
+	                    .setMaterial(new Material().setkD(0.6).setkS(0.2).setnShininess(100).setkR(1)),
+	            new Triangle(new Point3D(-40, -20, -100), new Point3D(-50, 0, -100), new Point3D(-40, -20, -90)) //
+	                    .setEmission(new Color(java.awt.Color.black)) //
+	                    .setMaterial(new Material().setkD(0.6).setkS(0.2).setnShininess(100).setkR(1)),
+	    	    new Triangle(new Point3D(-40, -20, -100), new Point3D(-50, 0, -100), new Point3D(-40, -20, -110)) //
+	                    .setEmission(new Color(java.awt.Color.black)) //
+	                    .setMaterial(new Material().setkD(0.6).setkS(0.2).setnShininess(100).setkR(1)),	       
 	                    
 	    	    new Triangle(new Point3D(125, 50, -100), new Point3D(125, 43, -100), new Point3D(125, 50, -93)) //
 	                    .setEmission(new Color(java.awt.Color.BLUE)) //
