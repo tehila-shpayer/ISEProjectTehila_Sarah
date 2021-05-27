@@ -109,7 +109,7 @@ public class Camera {
 		Point3D pIJ = pCenter;
 		if (xj != 0) pIJ = pIJ.add(vRight.scale(xj));
 		if (yi != 0) pIJ = pIJ.add(vUp.scale(yi));
-		return new Ray(location, pIJ.subtract(location));
+		return new Ray(location, pIJ.subtract(location)); 
 	}
 	
 	public List<Ray> constructRayThroughPixel(int nX, int nY, int j, int i, int N) {
