@@ -3,7 +3,6 @@ import primitives.*;
 import static java.lang.System.out;
 import static primitives.Util.*;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import geometries.Sphere;
 
@@ -73,7 +72,7 @@ public final class Main {
              out.println("ERROR: Point - Point does not work correctly");
 
         out.println("If there were no any other outputs - all tests succeeded!");
-//        Vector vector = new Point3D(30, -40, -150).subtract(new Point3D(-45, 0, -195));
+        Vector vector = new Point3D(30, -40, -150).subtract(new Point3D(-45, 0, -195));
 //        Vector vector2 = new Vector(0, -1, 0);
 //        out.println(vector.crossProduct(vector2));
         
@@ -82,7 +81,7 @@ public final class Main {
 //        Vector vector2 = vector.scale(-1); //green to yellow
 //        out.println(vector2); //yellow to green
 //        out.println(new Point3D(30, -40, -150).add(vector2.scale(200))); //position
-        out.println(new Point3D(914, 826, -130).subtract(new Point3D(-45, 0, -195)));
+//        out.println(new Point3D(914, 826, -130).subtract(new Point3D(-45, 0, -195)));
 
     }
 }

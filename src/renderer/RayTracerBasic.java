@@ -205,15 +205,6 @@ public class RayTracerBasic extends RayTracerBase{
 	 * @return refracted ray
 	 */
 	private Ray constructRefractedRay(Vector n, Point3D point, Ray ray) {
-//		Vector v = new Ray(point, ray.getDir(), n).getDir();
-//		double cosi = v.scale(-1).dotProduct(n);
-//		double cosr = n.scale(-1).dotProduct(v);
-//		Vector direction;
-//		if (!isZero(cosr-cosr))
-//			direction = (n.scale(cosi-cosr)).subtract(v);
-//		else
-//			direction = ray.getDir();
-		//use the constructor with the normal for moving the head a little
 		return new Ray(point, ray.getDir().normalized(), n);
 	}
 
