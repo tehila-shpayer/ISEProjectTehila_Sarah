@@ -1,8 +1,11 @@
 package elements;
 
-import primitives.Point3D;
-import primitives.Vector;
 import static primitives.Util.*;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import geometries.Intersectable;
 import primitives.*;
 
 /**
@@ -106,9 +109,40 @@ public class Camera {
 		Point3D pIJ = pCenter;
 		if (xj != 0) pIJ = pIJ.add(vRight.scale(xj));
 		if (yi != 0) pIJ = pIJ.add(vUp.scale(yi));
-//		Ray ray = new Ray(location, pIJ.subtract(location));
-//		System.out.print(ray);
-//		return ray;
+		return new Ray(location, pIJ.subtract(location));
+	}
+	
+	public List<Ray> constructRayThroughPixel(int nX, int nY, int j, int i, int N) {
+		Point3D pCenter = location.add(vTo.scale(distance));
+		double Ry = height / nY;
+		double Rx = width / nX;
+		double yi = -(double)(i - ((nY - 1) /(double)2)) * Ry;
+		double xj = (double)(j - (nX - 1) /(double)2) * Rx;
+		Point3D pIJ = pCenter;
+		if (xj != 0) pIJ = pIJ.add(vRight.scale(xj));
+		if (yi != 0) pIJ = pIJ.add(vUp.scale(yi));
+		Ray ray;
+		var lst = new LinkedList<Ray>();
+		lst.addAll(List.of(new Ray(location, pIJ.subtract(location))));
+		for(int Pi = 0; Pi < N; Pi++) {
+			for(int Pj = 0; Pj < N; Pj++) {
+				ray = constructRaysThroughPixel(Rx, Ry, Pj+j, Pi+i, N);
+				if(ray != null)
+					lst.add(ray);
+			}
+		}
+	    return lst;
+	}
+	
+	public Ray constructRaysThroughPixel(double nX, double nY, int j, int i, int N) {
+		Point3D pCenter = location.add(vTo.scale(distance));
+		double Ry = nY / N;
+		double Rx = nX / N;
+		double yi = -(double)(i - ((N - 1) /(double)2)) * Ry;
+		double xj = (double)(j - (N - 1) /(double)2) * Rx;
+		Point3D pIJ = pCenter;
+		if (xj != 0) pIJ = pIJ.add(vRight.scale(xj));
+		if (yi != 0) pIJ = pIJ.add(vUp.scale(yi));
 		return new Ray(location, pIJ.subtract(location));
 	}
   

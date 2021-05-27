@@ -47,6 +47,28 @@ public class Render {
 	 * for each pixel of the ViewPlane a beam will be built and for each beam we will get a color from the rayTracer
 	 * The color will go to the appropriate pixel of the image writer (writePixel)
 	 */
+//	public void renderImage() {
+//		if (camera == null)
+//			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
+//		if (rayTracerBase == null)
+//			throw new MissingResourceException("Render class must have a non-empty rayTracerBase parameter", "RayTracerBase", "" );
+//		if (imageWriter == null)
+//			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
+//		
+//		//throw new UnsupportedOperationException("This operation is yet to be implemented");
+//		int Nx = imageWriter.getNx();
+//		int Ny = imageWriter.getNy();
+//
+//		for(int i = 0; i < Nx; i++) {
+//			for(int j = 0; j < Ny; j++) {
+//				Ray ray = camera.constructRayThroughPixel(Nx, Ny, j, i);
+//				Color color = rayTracerBase.TraceRay(ray);
+//				imageWriter.writePixel(j, i, color);
+//				}
+//			}
+//		}
+//	}
+	
 	public void renderImage() {
 		if (camera == null)
 			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
@@ -58,22 +80,26 @@ public class Render {
 		//throw new UnsupportedOperationException("This operation is yet to be implemented");
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy();
-
+		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-				if(i==320 &&j == 320) {
-					Ray ray = camera.constructRayThroughPixel(Nx, Ny, j, i);
-					Color color = rayTracerBase.TraceRay(ray);
+				if(i==250&&j==250) {
+					for (Ray ray: camera.constructRayThroughPixel(Nx, Ny, j, i,3)) {
+						color.add(rayTracerBase.TraceRay(ray));
+					}
+					color.scale(1/81);
 					imageWriter.writePixel(j, i, color);
 				}
 				else {
-				Ray ray = camera.constructRayThroughPixel(Nx, Ny, j, i);
-				Color color = rayTracerBase.TraceRay(ray);
-				imageWriter.writePixel(j, i, color);
+					for (Ray ray: camera.constructRayThroughPixel(Nx, Ny, j, i,3))
+						color.add(rayTracerBase.TraceRay(ray));
+					color.scale(1/9);
+					imageWriter.writePixel(j, i, color);
+					}
 				}
 			}
 		}
-	}
+
 	
 	/**
 	 * Creates a grid of lines without overriding the image
