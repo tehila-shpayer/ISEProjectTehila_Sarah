@@ -113,6 +113,15 @@ public class Camera {
 		return new Ray(location, pIJ.subtract(location));  
 	}
 	
+	/**
+	 * 
+	 * @param nX - number of pixel per row
+	 * @param nY - number of pixel per column
+	 * @param j - location of pixel on axis X
+	 * @param i - location of pixel on axis Y
+	 * @param N - 
+	 * @return
+	 */
 	public List<Ray> constructRayThroughPixel(int nX, int nY, int j, int i, int N) {
 		Point3D pCenter = location.add(vTo.scale(distance));
 		double Ry = height / nY;
