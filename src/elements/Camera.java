@@ -249,7 +249,7 @@ public class Camera {
 	
 	/**
 	 * 
-	 * @return
+	 * @return  f
 	 */
 	public Point3D getPCenter() { return location.add(vTo.scale(distance));
  }
