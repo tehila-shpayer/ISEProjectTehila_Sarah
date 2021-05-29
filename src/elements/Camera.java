@@ -1,6 +1,7 @@
 package elements;
 
 import static primitives.Util.*;
+import java.util.Random;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -124,11 +125,23 @@ public class Camera {
 		Ray ray;
 		var lst = new LinkedList<Ray>();
 		lst.addAll(List.of(new Ray(location, pIJ.subtract(location))));
+		Random rand = new Random();
 		for(int Pi = 0; Pi < N; Pi++) {
 			for(int Pj = 0; Pj < N; Pj++) {
-				ray = constructRaysThroughPixel(Rx, Ry, Pj+j, Pi+i, N);
-				if(ray != null)
-					lst.add(ray);
+
+		        // Generate Random doubles
+		        double dX = rand.nextDouble();
+		        double dY = rand.nextDouble();
+		        boolean bX = rand.nextBoolean();
+		        boolean bY = rand.nextBoolean();
+		        dX = bX? dX : -dX;
+		        dY = bY? dY : -dY;
+		        yi = Ry/2 * dY;
+				xj = Rx/2 *dX;
+		        Point3D rndP = pIJ.add(vRight.scale(yi));
+				rndP = rndP.add(vUp.scale(xj));
+				
+				lst.add(new Ray(location, rndP.subtract(location)));
 			}
 		}
 	    return lst;

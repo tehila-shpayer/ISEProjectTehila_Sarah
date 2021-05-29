@@ -67,7 +67,7 @@ public class Render {
 //				}
 //			}
 //		}
-//	}
+	
 	
 	public void renderImage() {
 		if (camera == null)
@@ -83,20 +83,11 @@ public class Render {
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-				if(i==250&&j==250) {
-					for (Ray ray: camera.constructRayThroughPixel(Nx, Ny, j, i,3)) {
-						color.add(rayTracerBase.TraceRay(ray));
-					}
-					color.scale(1/81);
-					imageWriter.writePixel(j, i, color);
-				}
-				else {
-					for (Ray ray: camera.constructRayThroughPixel(Nx, Ny, j, i,3))
-						color.add(rayTracerBase.TraceRay(ray));
-					color.scale(1/9);
+					for (Ray ray: camera.constructRayThroughPixel(Nx, Ny, j, i,9))
+						color = color.add(rayTracerBase.TraceRay(ray));
+					color = color.reduce(82);
 					imageWriter.writePixel(j, i, color);
 					}
-				}
 			}
 		}
 
