@@ -16,6 +16,7 @@ import scene.Scene;
 
 public class Render {
 	
+	//N_RENDER - The square root of the number of rays sent through each pixel
 	private static final int N_RENDER = 4;
 	
 	Camera camera;
