@@ -253,13 +253,13 @@ public class ReflectionRefractionTests {
 				.setkL(0.00001).setkQ(0.000001));
 
 
-		ImageWriter imageWriter = new ImageWriter("ourPicture", 600, 600);
+		ImageWriter imageWriter = new ImageWriter("ourPictureDepthOfField", 600, 600);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
 
-		render.renderImage();
+		render.renderImageFocus();
 		render.writeToImage();
 	}//end
 }

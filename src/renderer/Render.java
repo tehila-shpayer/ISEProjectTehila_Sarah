@@ -1,4 +1,5 @@
 package renderer;
+import java.util.LinkedList;
 /**
  * Render class - Creates from the scene the color matrix of the image.
  * The class contain fields of ImageWriter, Scene, Camera and Ray Tracer.
@@ -14,7 +15,9 @@ import primitives.Ray;
 import scene.Scene;
 
 public class Render {
-	//Scene scene;
+	
+	private static final int N_RENDER = 4;
+	
 	Camera camera;
 	RayTracerBase rayTracerBase;
 	ImageWriter imageWriter;
@@ -23,7 +26,6 @@ public class Render {
 	// ***************** Setters ********************** //
 	// ** all setters implements the Builder Design Pattern **//
 	public Render setScene(Scene _scene) {
-		//scene = _scene;
 		return this;
 	}
 	
@@ -42,6 +44,7 @@ public class Render {
 		return this;
 	}
 	
+<<<<<<< HEAD
 	
 	/**
 	 * for each pixel of the ViewPlane a beam will be built and for each beam we will get a color from the rayTracer
@@ -69,6 +72,8 @@ public class Render {
 //		}
 	
 	
+=======
+>>>>>>> branch 'master' of https://github.com/tehila-shpayer/ISEProjectTehila_Sarah.git
 	public void renderImage() {
 		if (camera == null)
 			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
@@ -77,17 +82,47 @@ public class Render {
 		if (imageWriter == null)
 			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
 		
-		//throw new UnsupportedOperationException("This operation is yet to be implemented");
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy();
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
+<<<<<<< HEAD
 					for (Ray ray: camera.constructRayThroughPixel(Nx, Ny, j, i,9))
 						color = color.add(rayTracerBase.TraceRay(ray));
 					color = color.reduce(82);
 					imageWriter.writePixel(j, i, color);
 					}
+=======
+				for (Ray ray: camera.constructRayThroughPixelSuperSamplingGrid(Nx, Ny, j, i,N_RENDER))
+					color = color.add(rayTracerBase.TraceRay(ray));
+				color = color.reduce(N_RENDER*N_RENDER);
+				imageWriter.writePixel(j, i, color);
+				}
+			}
+		}
+	
+	public void renderImageFocus() {
+		if (camera == null)
+			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
+		if (rayTracerBase == null)
+			throw new MissingResourceException("Render class must have a non-empty rayTracerBase parameter", "RayTracerBase", "" );
+		if (imageWriter == null)
+			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
+		
+		int Nx = imageWriter.getNx();
+		int Ny = imageWriter.getNy();
+		Color color = new Color(0,0,0);
+		camera = camera.setAperture(5, 6);
+		for(int i = 0; i < Nx; i++) {
+			for(int j = 0; j < Ny; j++) {
+				var lst = camera.getApertureRays(Nx, Ny, j, i);
+				for (Ray ray: lst)
+					color = color.add(rayTracerBase.TraceRay(ray));
+				color = color.reduce(4);
+				imageWriter.writePixel(j, i, color);
+				}
+>>>>>>> branch 'master' of https://github.com/tehila-shpayer/ISEProjectTehila_Sarah.git
 			}
 		}
 
