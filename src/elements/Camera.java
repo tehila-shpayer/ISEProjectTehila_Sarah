@@ -1,7 +1,6 @@
 package elements;
 
 import static primitives.Util.*;
-import java.util.Random;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,10 +19,7 @@ import primitives.*;
 */
 
 public class Camera {
-	
-//	private static final int FOCAL_DISTANCE = 40;
-//	private static final int APERTURE_LENGTH = 40;
-	
+		
 	Aperture aperture;
 	
 	public Camera setAperture(double d, double l) {
@@ -141,21 +137,7 @@ public class Camera {
 		return new Ray(location, pIJ.subtract(location));  
 	}
 	
-<<<<<<< HEAD
-	/**
-	 * 
-	 * @param nX - number of pixel per row
-	 * @param nY - number of pixel per column
-	 * @param j - location of pixel on axis X
-	 * @param i - location of pixel on axis Y
-	 * @param N - 
-	 * @return
-	 */
-	public List<Ray> constructRayThroughPixel(int nX, int nY, int j, int i, int N) {
-		Point3D pCenter = location.add(vTo.scale(distance));
-=======
 	public Point3D calcPIJ(Point3D pCenter, double width, double height, int nX, int nY, int j, int i) {
->>>>>>> branch 'master' of https://github.com/tehila-shpayer/ISEProjectTehila_Sarah.git
 		double Ry = height / nY;
 		double Rx = width / nX;
 		double yi = -(double)(i - ((nY - 1) /(double)2)) * Ry;
@@ -173,33 +155,11 @@ public class Camera {
 		double Rx = width / nX;
 		Ray ray;
 		var lst = new LinkedList<Ray>();
-<<<<<<< HEAD
-		lst.addAll(List.of(new Ray(location, pIJ.subtract(location))));
-		Random rand = new Random();
-=======
->>>>>>> branch 'master' of https://github.com/tehila-shpayer/ISEProjectTehila_Sarah.git
 		for(int Pi = 0; Pi < N; Pi++) {
 			for(int Pj = 0; Pj < N; Pj++) {
-<<<<<<< HEAD
-
-		        // Generate Random doubles
-		        double dX = rand.nextDouble();
-		        double dY = rand.nextDouble();
-		        boolean bX = rand.nextBoolean();
-		        boolean bY = rand.nextBoolean();
-		        dX = bX? dX : -dX;
-		        dY = bY? dY : -dY;
-		        yi = Ry/2 * dY;
-				xj = Rx/2 *dX;
-		        Point3D rndP = pIJ.add(vRight.scale(yi));
-				rndP = rndP.add(vUp.scale(xj));
-				
-				lst.add(new Ray(location, rndP.subtract(location)));
-=======
 				ray = constructRaysThroughPixel(Ry, Rx, N, Pj, Pi, pIJ);
 				if(ray != null)
 					lst.add(ray);
->>>>>>> branch 'master' of https://github.com/tehila-shpayer/ISEProjectTehila_Sarah.git
 			}
 		}
 	    return lst;		
