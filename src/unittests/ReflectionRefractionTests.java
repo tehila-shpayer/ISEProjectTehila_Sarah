@@ -121,10 +121,10 @@ public class ReflectionRefractionTests {
 //		render.writeToImage();
 //	}//end
 	
-	/**
-	 * Produce a picture of a two triangles lighted by a spot light with a partially
-	 * transparent Sphere producing partial shadow
-	 */
+//	/**
+//	 * Produce a picture of a two triangles lighted by a spot light with a partially
+//	 * transparent Sphere producing partial shadow
+//	 */
 	@Test
 	public void ourPicture() {
 		Camera camera = new Camera(new Point3D(689, 777, -100), new Vector(-597, -754, -46), new Vector(0, -46, 754)) //

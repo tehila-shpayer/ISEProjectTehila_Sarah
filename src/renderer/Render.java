@@ -23,8 +23,8 @@ public class Render {
 	ImageWriter imageWriter;
 	
 	
-	// ***************** Setters ********************** //
-	// ** all setters implements the Builder Design Pattern **//
+	// ****** Setters ********* //
+	// * all setters implements the Builder Design Pattern *//
 	public Render setScene(Scene _scene) {
 		return this;
 	}
