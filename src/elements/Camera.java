@@ -4,8 +4,10 @@ import static primitives.Util.*;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
-import geometries.Intersectable;
+import geometries.Geometry;
+import geometries.Intersectable.GeoPoint;
 import primitives.*;
 
 /**
@@ -17,6 +19,38 @@ import primitives.*;
 */
 
 public class Camera {
+	
+//	private static final int FOCAL_DISTANCE = 40;
+//	private static final int APERTURE_LENGTH = 40;
+	
+	Aperture aperture;
+	
+	public Camera setAperture(double d, double l) {
+		if(d <= 0 || l <= 0)
+			throw new IllegalArgumentException("width and height of the view plane must be positive");
+		aperture = new Aperture(d, l);
+		return this;
+	}
+	
+	public List<Ray> getApertureRays(int nX, int nY, int j, int i) {
+		Ray ray = constructRayThroughPixel(nX, nY, j, i);
+		Point3D pcenter = calcPIJ(getPCenter(), width, height, nX, nY, j, i);
+		Point3D pointFocal = pcenter.add(ray.getDir().scale(aperture.distanceToFocal));
+		pcenter = pcenter.add(vTo.scale(-distance/2));
+		double l = aperture.length;
+		var lstr = new LinkedList<Ray>();
+		Point3D p1 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
+		Point3D p2 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/2));
+		Point3D p3 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/2));
+		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
+		var lstp = List.of(p1, p2, p3, p4);
+		for (Point3D p: lstp)
+		{
+			lstr.add(new Ray(p,pointFocal.subtract(p)));
+		}
+		return lstr;
+	}
+	
 	/**
 	 * location: center point of camera
 	 */
@@ -101,19 +135,12 @@ public class Camera {
 	 * @return the construct ray from camera's location to pixel i,j 
 	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
-		Point3D pCenter = location.add(vTo.scale(distance));
-		double Ry = height / nY;
-		double Rx = width / nX;
-		double yi = -(double)(i - ((nY - 1) /(double)2)) * Ry;
-		double xj = (double)(j - (nX - 1) /(double)2) * Rx;
-		Point3D pIJ = pCenter;
-		if (xj != 0) pIJ = pIJ.add(vRight.scale(xj));
-		if (yi != 0) pIJ = pIJ.add(vUp.scale(yi));
+		Point3D pCenter = getPCenter();
+        Point3D pIJ = calcPIJ(pCenter, width, height, nX, nY, j, i);
 		return new Ray(location, pIJ.subtract(location));  
 	}
 	
-	public List<Ray> constructRayThroughPixel(int nX, int nY, int j, int i, int N) {
-		Point3D pCenter = location.add(vTo.scale(distance));
+	public Point3D calcPIJ(Point3D pCenter, double width, double height, int nX, int nY, int j, int i) {
 		double Ry = height / nY;
 		double Rx = width / nX;
 		double yi = -(double)(i - ((nY - 1) /(double)2)) * Ry;
@@ -121,29 +148,65 @@ public class Camera {
 		Point3D pIJ = pCenter;
 		if (xj != 0) pIJ = pIJ.add(vRight.scale(xj));
 		if (yi != 0) pIJ = pIJ.add(vUp.scale(yi));
+		return pIJ;  
+	}
+	
+	public List<Ray> constructRayThroughPixelSuperSamplingGrid(int nX, int nY, int j, int i, int N) {		
+		Point3D pCenter = getPCenter();
+		Point3D pIJ = calcPIJ(pCenter, width, height, nX, nY, j, i);
+		double Ry = height / nY;
+		double Rx = width / nX;
 		Ray ray;
 		var lst = new LinkedList<Ray>();
-		lst.addAll(List.of(new Ray(location, pIJ.subtract(location))));
 		for(int Pi = 0; Pi < N; Pi++) {
 			for(int Pj = 0; Pj < N; Pj++) {
-				ray = constructRaysThroughPixel(Rx, Ry, Pj+j, Pi+i, N);
+				ray = constructRaysThroughPixel(Ry, Rx, N, Pj, Pi, pIJ);
 				if(ray != null)
 					lst.add(ray);
+			}
+		}
+	    return lst;		
+	}
+	
+	
+	public List<Ray> constructRayThroughPixelSuperSamplingRandom(int nX, int nY, int j, int i, int N) {
+		Point3D pCenter =getPCenter();
+		double Ry = height / nY;
+		double Rx = width / nX;
+		double yi = -(double)(i - ((nY - 1) /(double)2)) * Ry;
+		double xj = (double)(j - (nX - 1) /(double)2) * Rx;
+		Point3D pIJ = pCenter;
+		if (xj != 0) pIJ = pIJ.add(vRight.scale(xj));
+		if (yi != 0) pIJ = pIJ.add(vUp.scale(yi));
+		var lst = new LinkedList<Ray>();
+		lst.addAll(List.of(new Ray(location, pIJ.subtract(location))));
+		Random rand = new Random();
+		for(int Pi = 0; Pi < N; Pi++) {
+			for(int Pj = 0; Pj < N; Pj++) {
+
+		        // Generate Random doubles
+		        double dX = rand.nextDouble();
+		        double dY = rand.nextDouble();
+		        boolean bX = rand.nextBoolean();
+		        boolean bY = rand.nextBoolean();
+		        dX = bX? dX : -dX;
+		        dY = bY? dY : -dY;
+		        yi = Ry/2 * dY;
+				xj = Rx/2 *dX;
+		        Point3D rndP = pIJ.add(vRight.scale(yi));
+				rndP = rndP.add(vUp.scale(xj));
+				
+				lst.add(new Ray(location, rndP.subtract(location)));
 			}
 		}
 	    return lst;
 	}
 	
-	public Ray constructRaysThroughPixel(double nX, double nY, int j, int i, int N) {
-		Point3D pCenter = location.add(vTo.scale(distance));
-		double Ry = nY / N;
-		double Rx = nX / N;
-		double yi = -(double)(i - ((N - 1) /(double)2)) * Ry;
-		double xj = (double)(j - (N - 1) /(double)2) * Rx;
-		Point3D pIJ = pCenter;
-		if (xj != 0) pIJ = pIJ.add(vRight.scale(xj));
-		if (yi != 0) pIJ = pIJ.add(vUp.scale(yi));
-		return new Ray(location, pIJ.subtract(location));
+	public Ray constructRaysThroughPixel(double width, double height, int N, int j, int i, Point3D point3d) {
+		Point3D pIJ = calcPIJ(point3d, width, height, N, N, j, i);
+		return new Ray(location, pIJ.subtract(location));  
 	}
-  
+	
+	public Point3D getPCenter() { return location.add(vTo.scale(distance));
+ }
 }
