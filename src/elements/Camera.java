@@ -19,10 +19,7 @@ import primitives.*;
 */
 
 public class Camera {
-	
-//	private static final int FOCAL_DISTANCE = 40;
-//	private static final int APERTURE_LENGTH = 40;
-	
+		
 	Aperture aperture;
 	
 	public Camera setAperture(double d, double l) {
