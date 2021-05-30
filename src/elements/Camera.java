@@ -139,6 +139,18 @@ public class Camera {
 		return new Ray(location, pIJ.subtract(location));  
 	}
 	
+	/**
+	 * The function get the dimension of a view plane and a central point and i,j indexes of one pixel in the view plane.
+	 * It calculates the central point of the given pixel.
+	 * @param pCenter - the central point of the current view plane
+	 * @param width - the width of the current view plane
+	 * @param height - the height of the current view plane
+	 * @param nX - number of pixel per row 
+	 * @param nY - number of pixel per column
+	 * @param j - location of pixel on axis X
+	 * @param i - location of pixel on axis Y
+	 * @return the center point of the pixel
+	 */
 	public Point3D calcPIJ(Point3D pCenter, double width, double height, int nX, int nY, int j, int i) {
 		double Ry = height / nY;
 		double Rx = width / nX;
@@ -150,6 +162,16 @@ public class Camera {
 		return pIJ;  
 	}
 	
+	/**
+	 * The function construct a beam of rays from the camera to one pixel
+	 * Using the Grid System
+	 * @param nX - number of pixel per row 
+	 * @param nY - number of pixel per column
+	 * @param j - location of pixel on axis X
+	 * @param i - location of pixel on axis Y
+	 * @param N - The square root of the number of rays sent through each pixel
+	 * @return a beam of rays from the camera trough the pixel
+	 */
 	public List<Ray> constructRayThroughPixelSuperSamplingGrid(int nX, int nY, int j, int i, int N) {		
 		Point3D pCenter = getPCenter();
 		Point3D pIJ = calcPIJ(pCenter, width, height, nX, nY, j, i);
@@ -157,8 +179,10 @@ public class Camera {
 		double Rx = width / nX;
 		Ray ray;
 		var lst = new LinkedList<Ray>();
+		//Divides the pixel into a grid
 		for(int Pi = 0; Pi < N; Pi++) {
 			for(int Pj = 0; Pj < N; Pj++) {
+				//for each "mini pixel" in the grid, we send a ray from the camera trough it
 				ray = constructRaysThroughPixel(Ry, Rx, N, Pj, Pi, pIJ);
 				if(ray != null)
 					lst.add(ray);
@@ -167,7 +191,16 @@ public class Camera {
 	    return lst;		
 	}
 	
-	
+	/**
+	 * The function construct a beam of rays from the camera to one pixel
+	 * Using the Random System
+	 * @param nX - number of pixel per row 
+	 * @param nY - number of pixel per column
+	 * @param j - location of pixel on axis X
+	 * @param i - location of pixel on axis Y
+	 * @param N - The square root of the number of rays sent through each pixel
+	 * @return a beam of rays from the camera trough the pixel
+	 */
 	public List<Ray> constructRayThroughPixelSuperSamplingRandom(int nX, int nY, int j, int i, int N) {
 		Point3D pCenter =getPCenter();
 		double Ry = height / nY;
@@ -201,11 +234,25 @@ public class Camera {
 	    return lst;
 	}
 	
+	/**
+	 * get the dimension of one pixel and the index of the current "mini-pixel" in the grid and construct a ray through it
+	 * @param width - the width of the current view plane
+	 * @param height - the height of the current view plane
+	 * @param N - The square root of the number of rays sent through each pixel
+	 * @param j - location of pixel on axis X
+	 * @param i - location of pixel on axis Y
+	 * @param point3d - the central point of the original pixel
+	 * @return a ray from the camera to the pixel according to the specific indexes
+	 */
 	public Ray constructRaysThroughPixel(double width, double height, int N, int j, int i, Point3D point3d) {
 		Point3D pIJ = calcPIJ(point3d, width, height, N, N, j, i);
 		return new Ray(location, pIJ.subtract(location));  
 	}
 	
+	/**
+	 * 
+	 * @return  f
+	 */
 	public Point3D getPCenter() { return location.add(vTo.scale(distance));
  }
 }
