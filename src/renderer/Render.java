@@ -45,6 +45,10 @@ public class Render {
 		return this;
 	}
 	
+/**
+ * The function is responsible of the whole process of rendering the image.
+ * It call other function to produce rays, to calculate the color of each pixel, and to write it to the image.
+ */
 	public void renderImage() {
 		if (camera == null)
 			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
