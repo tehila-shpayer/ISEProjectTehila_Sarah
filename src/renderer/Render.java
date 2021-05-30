@@ -76,7 +76,7 @@ public class Render {
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy();
 		Color color = new Color(0,0,0);
-		camera = camera.setAperture(5, 6);
+		camera = camera.setAperture(100, 20);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
 				var lst = camera.getApertureRays(Nx, Ny, j, i);

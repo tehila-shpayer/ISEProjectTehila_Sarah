@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import geometries.Geometry;
+import geometries.Plane;
 import geometries.Intersectable.GeoPoint;
 import primitives.*;
 
@@ -32,8 +33,11 @@ public class Camera {
 	public List<Ray> getApertureRays(int nX, int nY, int j, int i) {
 		Ray ray = constructRayThroughPixel(nX, nY, j, i);
 		Point3D pcenter = calcPIJ(getPCenter(), width, height, nX, nY, j, i);
-		Point3D pointFocal = pcenter.add(ray.getDir().scale(aperture.distanceToFocal));
-		pcenter = pcenter.add(vTo.scale(-distance/2));
+		Point3D pointFocalPlane = pcenter.add(vTo.scale(aperture.distanceToFocal));
+		Plane focalPlane = new Plane(pointFocalPlane, vTo);
+//		Point3D focalPoint = pcenter.add(vTo.scale(aperture.distanceToFocal));
+		Point3D focalPoint = focalPlane.findGeoIntersections(ray).get(0).point;
+//		pcenter = pcenter.add(vTo.scale(-distance/2));
 		double l = aperture.length;
 		var lstr = new LinkedList<Ray>();
 		Point3D p1 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
@@ -42,9 +46,7 @@ public class Camera {
 		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
 		var lstp = List.of(p1, p2, p3, p4); 
 		for (Point3D p: lstp)
-		{
-			lstr.add(new Ray(p,pointFocal.subtract(p)));
-		}
+			lstr.add(new Ray(p,focalPoint.subtract(p)));
 		return lstr;
 	}
 	
