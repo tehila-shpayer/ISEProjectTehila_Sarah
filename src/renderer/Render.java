@@ -79,7 +79,7 @@ public class Render {
 			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
 		
 		int Nx = imageWriter.getNx();
-		int Ny = imageWriter.getNy();
+		int Ny = imageWriter.getNy(); 
 		Color color = new Color(0,0,0);
 		camera = camera.setAperture(100, 20);
 		for(int i = 0; i < Nx; i++) {
