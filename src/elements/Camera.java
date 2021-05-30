@@ -37,7 +37,7 @@ public class Camera {
 		Plane focalPlane = new Plane(pointFocalPlane, vTo);
 //		Point3D focalPoint = pcenter.add(vTo.scale(aperture.distanceToFocal));
 		Point3D focalPoint = focalPlane.findGeoIntersections(ray).get(0).point;
-//		pcenter = pcenter.add(vTo.scale(-distance/2));
+		pcenter = pcenter.add(vTo.scale(-distance*27));
 		double l = aperture.length;
 		var lstr = new LinkedList<Ray>();
 		Point3D p1 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
