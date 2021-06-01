@@ -61,7 +61,7 @@ public class FocusTests {
 	Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 			.setViewPlaneSize(150, 150) //
 			.setDistance(1000) //
-			.setAperture(400, 10);
+			.setAperture(200, 10);
 
 	Geometry sphere1 = new Sphere(new Point3D(0, 0, -50), 15) //
 			.setEmission(new Color(java.awt.Color.BLUE)) //

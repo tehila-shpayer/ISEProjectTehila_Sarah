@@ -26,6 +26,6 @@ public class Aperture {
 	 */
 	public Aperture(double distance, double length) {
 		this.distanceToFocal = distance;
-		this.length = length;		
+		this.length = length;
 	}
 }
