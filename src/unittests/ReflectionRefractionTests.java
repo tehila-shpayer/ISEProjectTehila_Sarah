@@ -128,7 +128,7 @@ public class ReflectionRefractionTests {
 	@Test
 	public void ourPicture() {
 		Camera camera = new Camera(new Point3D(689, 777, -100), new Vector(-597, -754, -46), new Vector(0, -46, 754)) //
-				.setViewPlaneSize(225, 225).setDistance(1000);
+				.setViewPlaneSize(225, 225).setDistance(1000).setAperture(100, 10);
 
 		scene.setAmbientLight(new AmbientLight(new Color(209, 240, 251), 0.15));
 
@@ -253,13 +253,13 @@ public class ReflectionRefractionTests {
 				.setkL(0.00001).setkQ(0.000001));
 
 
-		ImageWriter imageWriter = new ImageWriter("ourPictureDepthOfField2", 600, 600);
+		ImageWriter imageWriter = new ImageWriter("ourPictureDepthOfField1", 600, 600);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
 
-		render.renderImage();
+		render.renderImageFocus();
 		render.writeToImage();
 	}//end
 }

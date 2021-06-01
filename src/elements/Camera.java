@@ -39,14 +39,22 @@ public class Camera {
 		Point3D focalPoint = focalPlane.findGeoIntersections(ray).get(0).point;
 		pcenter = pcenter.add(vTo.scale(-distance));
 		double l = aperture.length;
+		Point3D pIJ;
 		var lstr = new LinkedList<Ray>();
-		Point3D p1 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
-		Point3D p2 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/2));
-		Point3D p3 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/2));
-		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
-		var lstp = List.of(p1, p2, p3, p4); 
-		for (Point3D p: lstp)
-			lstr.add(new Ray(p,focalPoint.subtract(p)));
+		for(int Pi = 0; Pi < 6; Pi++) {
+			for(int Pj = 0; Pj < 6; Pj++) {
+				pIJ = calcPIJ(pcenter, l, l, 6, 6, j, i);
+				ray = new Ray(pIJ, focalPoint.subtract(pIJ));
+				lstr.add(ray);
+			}
+		}
+//		Point3D p1 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
+//		Point3D p2 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/2));
+//		Point3D p3 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/2));
+//		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
+//		var lstp = List.of(p1, p2, p3, p4); 
+//		for (Point3D p: lstp)
+//			lstr.add(new Ray(p,focalPoint.subtract(p)));
 		return lstr;
 	}
 	
@@ -238,14 +246,14 @@ public class Camera {
 	 * get the dimension of one pixel and the index of the current "mini-pixel" in the grid and construct a ray through it
 	 * @param width - the width of the current view plane
 	 * @param height - the height of the current view plane
-	 * @param N - The square root of the number of rays sent through each pixel
+	 * @param N - The Resolution
 	 * @param j - location of pixel on axis X
 	 * @param i - location of pixel on axis Y
 	 * @param point3d - the central point of the original pixel
 	 * @return a ray from the camera to the pixel according to the specific indexes
 	 */
-	public Ray constructRaysThroughPixel(double width, double height, int N, int j, int i, Point3D point3d) {
-		Point3D pIJ = calcPIJ(point3d, width, height, N, N, j, i);
+	public Ray constructRaysThroughPixel(double width, double height, int N, int j, int i, Point3D pCenter) {
+		Point3D pIJ = calcPIJ(pCenter, width, height, N, N, j, i);
 		return new Ray(location, pIJ.subtract(location));  
 	}
 	

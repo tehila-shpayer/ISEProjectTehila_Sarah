@@ -26,9 +26,6 @@ public class Render {
 	
 	// ****** Setters ********* //
 	// * all setters implements the Builder Design Pattern *//
-	public Render setScene(Scene _scene) {
-		return this;
-	}
 	
 	public Render setCamera(Camera _camera) {
 		camera = _camera;
@@ -81,13 +78,12 @@ public class Render {
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy(); 
 		Color color = new Color(0,0,0);
-		camera = camera.setAperture(100, 20);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
 				var lst = camera.getApertureRays(Nx, Ny, j, i);
 				for (Ray ray: lst)
 					color = color.add(rayTracerBase.TraceRay(ray));
-				color = color.reduce(4);
+				color = color.reduce(36);
 				imageWriter.writePixel(j, i, color);
 				}
 			}
