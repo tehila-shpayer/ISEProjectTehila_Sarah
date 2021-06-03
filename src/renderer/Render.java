@@ -83,7 +83,7 @@ public class Render {
 				var lst = camera.getApertureRays(Nx, Ny, j, i);
 				for (Ray ray: lst)
 					color = color.add(rayTracerBase.TraceRay(ray));
-				color = color.reduce(36);
+				color = color.reduce(600);
 				imageWriter.writePixel(j, i, color);
 				}
 			}

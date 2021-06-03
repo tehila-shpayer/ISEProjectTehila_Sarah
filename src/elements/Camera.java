@@ -37,24 +37,46 @@ public class Camera {
 		Plane focalPlane = new Plane(pointFocalPlane, vTo);
 //		Point3D focalPoint = pcenter.add(vTo.scale(aperture.distanceToFocal));
 		Point3D focalPoint = focalPlane.findGeoIntersections(ray).get(0).point;
-		pcenter = pcenter.add(vTo.scale(-distance));
 		double l = aperture.length;
-		Point3D pIJ;
+//		pcenter = pcenter.add(vTo.scale(-distance/2));
+		pcenter = location;
 		var lstr = new LinkedList<Ray>();
-		for(int Pi = 0; Pi < 6; Pi++) {
-			for(int Pj = 0; Pj < 6; Pj++) {
-				pIJ = calcPIJ(pcenter, l, l, 6, 6, j, i);
-				ray = new Ray(pIJ, focalPoint.subtract(pIJ));
-				lstr.add(ray);
+		var lstp = new LinkedList<Point3D>();
+		Random rand = new Random();
+		Point3D p1 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/2));
+		Point3D p2 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
+		Point3D p3 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/2));
+		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
+		 lstp.addAll(List.of(p1, p2, p3, p4)); 
+		for (int a= 0;a<150; a++) {
+			double dX = rand.nextDouble()*l;
+			if(dX != 0)
+			{
+				Point3D point3d =p1.add(vRight.scale(dX));
+			lstp.add(point3d);
+			lstp.add(p2.add(vUp.scale(-dX)));
+			lstp.add(p3.add(vRight.scale(-dX)));
+			lstp.add(p4.add(vUp.scale(dX)));
+			}
+			else {
+				a--;
 			}
 		}
-//		Point3D p1 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
-//		Point3D p2 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/2));
-//		Point3D p3 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/2));
-//		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
-//		var lstp = List.of(p1, p2, p3, p4); 
-//		for (Point3D p: lstp)
-//			lstr.add(new Ray(p,focalPoint.subtract(p)));
+//		
+//		Point3D p11 = pcenter.add(vRight.scale(l/4)).add(vUp.scale(-l/2));
+//		Point3D p21 = pcenter.add(vRight.scale(-l/4)).add(vUp.scale(-l/2));
+//		Point3D p31 = pcenter.add(vRight.scale(l/4)).add(vUp.scale(-l/2));
+//		Point3D p41 = pcenter.add(vRight.scale(-l/4)).add(vUp.scale(-l/2));
+//		Point3D p12 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/4));
+//		Point3D p22 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/4));
+//		Point3D p32 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/4));
+//		Point3D p42 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/4));
+//		Point3D p13 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/4));
+//		Point3D p23 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/4));
+//		Point3D p33 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/4));
+//		Point3D p43 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/4));
+		for (Point3D p: lstp)
+			lstr.add(new Ray(p,focalPoint.subtract(p)));
 		return lstr;
 	}
 	

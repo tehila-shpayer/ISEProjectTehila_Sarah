@@ -58,24 +58,24 @@ public class FocusTests {
 	public void Focus2() {
 		
 	Scene scene1 = new Scene("Test scene");
-	Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+	Camera camera1 = new Camera(new Point3D(0, 0, 800), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 			.setViewPlaneSize(150, 150) //
-			.setDistance(1000) //
-			.setAperture(200, 10);
+			.setDistance(800) //
+			.setAperture(90, 17);
 
-	Geometry sphere1 = new Sphere(new Point3D(0, 0, -50), 15) //
+	Geometry sphere1 = new Sphere(new Point3D(0, 0, -90), 15) //
 			.setEmission(new Color(java.awt.Color.BLUE)) //
 			.setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100));
-	Geometry sphere2 = new Sphere(new Point3D(15, 15, -60), 15) //
+	Geometry sphere2 = new Sphere(new Point3D(15, 10, -160), 15) //
 			.setEmission(new Color(java.awt.Color.GREEN)) //
 			.setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100));
-	Geometry sphere3 = new Sphere(new Point3D(30, 30, -70), 15) //
+	Geometry sphere3 = new Sphere(new Point3D(30, 20, -280), 15) //
 			.setEmission(new Color(java.awt.Color.YELLOW)) //
 			.setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100));
-	Geometry sphere4 = new Sphere(new Point3D(-15, -15, -40), 15) //
+	Geometry sphere4 = new Sphere(new Point3D(-15, -10, -20), 15) //
 			.setEmission(new Color(java.awt.Color.RED)) //
 			.setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100));
-	Geometry sphere5 = new Sphere(new Point3D(-30, -30, -30), 15) //
+	Geometry sphere5 = new Sphere(new Point3D(-30, -20, 100), 15) //
 			.setEmission(new Color(java.awt.Color.CYAN)) //
 			.setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100));
 	scene1.geometries.add(sphere1, sphere2, sphere3, sphere4, sphere5);
@@ -88,8 +88,8 @@ public class FocusTests {
 			.setImageWriter(imageWriter) //
 			.setCamera(camera1) //
 			.setRayTracerBase(new RayTracerBasic(scene1));
-	//render.renderImage();
-	//render.writeToImage();
+//	render.renderImage();
+//	render.writeToImage();
 	
 	ImageWriter imageWriter2 = new ImageWriter("focus3", 500, 500);
 	Render render2 = new Render()//
