@@ -195,7 +195,7 @@ public class RayTracerBasic extends RayTracerBase{
 	private GeoPoint findClosestIntersection(Ray refractedRay) {
 		return refractedRay.findClosestGeoPoint(scene.geometries.findGeoIntersections(refractedRay));
 	
-	}
+	} 
 
 	/**
 	 * calculate the refracted ray from the intersection point (in the same direction of the ray)
