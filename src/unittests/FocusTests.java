@@ -50,8 +50,8 @@ public class FocusTests {
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
 
-		render.renderImageFocus();
-		render.writeToImage();
+//		render.renderImageFocus();
+//		render.writeToImage();
 	}//end
 
 	@Test
@@ -88,8 +88,8 @@ public class FocusTests {
 			.setImageWriter(imageWriter) //
 			.setCamera(camera1) //
 			.setRayTracerBase(new RayTracerBasic(scene1));
-//	render.renderImage();
-//	render.writeToImage();
+	render.renderImage();
+	render.writeToImage();
 	
 	ImageWriter imageWriter2 = new ImageWriter("focus3", 500, 500);
 	Render render2 = new Render()//

@@ -20,66 +20,12 @@ import primitives.*;
 */
 
 public class Camera {
-		
+	
+	/**
+	 * aperture: aperture part of camera - to generate focus in picture
+	 */
 	Aperture aperture;
-	
-	public Camera setAperture(double d, double l) {
-		if(d <= 0 || l <= 0)
-			throw new IllegalArgumentException("width and height of the view plane must be positive");
-		aperture = new Aperture(d, l);
-		return this;
-	}
-	
-	public List<Ray> getApertureRays(int nX, int nY, int j, int i) {
-		Ray ray = constructRayThroughPixel(nX, nY, j, i);
-		Point3D pcenter = calcPIJ(getPCenter(), width, height, nX, nY, j, i);
-		Point3D pointFocalPlane = pcenter.add(vTo.scale(aperture.distanceToFocal));
-		Plane focalPlane = new Plane(pointFocalPlane, vTo);
-//		Point3D focalPoint = pcenter.add(vTo.scale(aperture.distanceToFocal));
-		Point3D focalPoint = focalPlane.findGeoIntersections(ray).get(0).point;
-		double l = aperture.length;
-//		pcenter = pcenter.add(vTo.scale(-distance/2));
-		pcenter = location;
-		var lstr = new LinkedList<Ray>();
-		var lstp = new LinkedList<Point3D>();
-		Random rand = new Random();
-		Point3D p1 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/2));
-		Point3D p2 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
-		Point3D p3 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/2));
-		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
-		 lstp.addAll(List.of(p1, p2, p3, p4)); 
-		for (int a= 0;a<150; a++) {
-			double dX = rand.nextDouble()*l;
-			if(dX != 0)
-			{
-				Point3D point3d =p1.add(vRight.scale(dX));
-			lstp.add(point3d);
-			lstp.add(p2.add(vUp.scale(-dX)));
-			lstp.add(p3.add(vRight.scale(-dX)));
-			lstp.add(p4.add(vUp.scale(dX)));
-			}
-			else {
-				a--;
-			}
-		}
-//		
-//		Point3D p11 = pcenter.add(vRight.scale(l/4)).add(vUp.scale(-l/2));
-//		Point3D p21 = pcenter.add(vRight.scale(-l/4)).add(vUp.scale(-l/2));
-//		Point3D p31 = pcenter.add(vRight.scale(l/4)).add(vUp.scale(-l/2));
-//		Point3D p41 = pcenter.add(vRight.scale(-l/4)).add(vUp.scale(-l/2));
-//		Point3D p12 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/4));
-//		Point3D p22 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/4));
-//		Point3D p32 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/4));
-//		Point3D p42 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/4));
-//		Point3D p13 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/4));
-//		Point3D p23 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/4));
-//		Point3D p33 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/4));
-//		Point3D p43 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/4));
-		for (Point3D p: lstp)
-			lstr.add(new Ray(p,focalPoint.subtract(p)));
-		return lstr;
-	}
-	
+		
 	/**
 	 * location: center point of camera
 	 */
@@ -142,6 +88,18 @@ public class Camera {
 			throw new IllegalArgumentException("width and height of the view plane must be positive");
 		width = _width;
 		height = _height;
+		return this;
+	}
+	
+	/**
+	 * sets aperture information - length, focal distance
+	 * @param d: distance of focal plane from view plane  
+	 * @return this, the camera with new data
+	 */
+	public Camera setAperture(double d, double l) {
+		if(d <= 0 || l <= 0)
+			throw new IllegalArgumentException("width and height of the view plane must be positive");
+		aperture = new Aperture(d, l);
 		return this;
 	}
 	
@@ -264,6 +222,52 @@ public class Camera {
 	    return lst;
 	}
 	
+	/**
+	 * The method constructs rays from the aperture to the focal point in the scene.
+	 * First we calculate the 4 vertices of the aperture,
+	 * with random numbers we find more points on the aperture's edges -
+	 * From each point we construct a ray to the focal point.
+     * @param nX - number of pixel per row 
+	 * @param nY - number of pixel per column
+	 * @param j - location of pixel on axis X
+	 * @param i - location of pixel on axis Y
+	 * @return all calculated aperture rays for pixel i,j
+	 */
+	public List<Ray> getApertureRays(int nX, int nY, int j, int i) {
+		Ray ray = constructRayThroughPixel(nX, nY, j, i);
+		Point3D pcenter = calcPIJ(getPCenter(), width, height, nX, nY, j, i);
+		Point3D pointFocalPlane = pcenter.add(vTo.scale(aperture.distanceToFocal));
+		Plane focalPlane = new Plane(pointFocalPlane, vTo);
+		Point3D focalPoint = focalPlane.findGeoIntersections(ray).get(0).point;
+		double l = aperture.length;
+		pcenter = location;
+		var lstr = new LinkedList<Ray>();
+		var lstp = new LinkedList<Point3D>();
+		Random rand = new Random();
+		Point3D p1 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(l/2));
+		Point3D p2 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
+		Point3D p3 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/2));
+		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
+		 lstp.addAll(List.of(p1, p2, p3, p4)); 
+		for (int a= 0;a<150; a++) {
+			double dX = rand.nextDouble()*l;
+			if(dX != 0)
+			{
+				Point3D point3d =p1.add(vRight.scale(dX));
+			lstp.add(point3d);
+			lstp.add(p2.add(vUp.scale(-dX)));
+			lstp.add(p3.add(vRight.scale(-dX)));
+			lstp.add(p4.add(vUp.scale(dX)));
+			}
+			else {
+				a--;
+			}
+		}
+		for (Point3D p: lstp)
+			lstr.add(new Ray(p,focalPoint.subtract(p)));
+		return lstr;
+	}
+
 	/**
 	 * get the dimension of one pixel and the index of the current "mini-pixel" in the grid and construct a ray through it
 	 * @param width - the width of the current view plane
