@@ -62,7 +62,13 @@ public class Render {
 				for (Ray ray: camera.constructRayThroughPixelSuperSamplingGrid(Nx, Ny, j, i,N_RENDER))
 					color = color.add(rayTracerBase.TraceRay(ray));
 				color = color.reduce(N_RENDER*N_RENDER);
-				imageWriter.writePixel(j, i, color);
+				if(i==100 && j==400) {
+					Ray ray1 = camera.constructRayThroughPixel(Nx, Ny, j, i);
+					Color pixelColor = rayTracerBase.TraceRay(ray1);
+					imageWriter.writePixel(j, i, pixelColor);
+				}
+				else 
+					imageWriter.writePixel(j, i, color);
 				}
 			}
 		}

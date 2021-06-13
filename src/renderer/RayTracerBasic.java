@@ -231,6 +231,9 @@ public class RayTracerBasic extends RayTracerBase{
 	 * @return the r vector
 	 */
 	private Vector calcVectorR(Vector v, Vector n) {
+		double a = v.dotProduct(n);
+		Vector b = n.scale(a);
+		Vector c = v.subtract(b);
 		return v.subtract(n.scale(2*v.dotProduct(n))).normalized();
 	}
 }
