@@ -60,9 +60,9 @@ public class Render {
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-				for (Ray ray: camera.constructRayThroughPixelSuperSamplingGrid(Nx, Ny, j, i,N_RENDER))
+				for (Ray ray: camera.constructRayThroughPixelSuperSamplingGrid(Nx, Ny, j, i,N_SUPER_SAMPLING))
 					color = color.add(rayTracerBase.TraceRay(ray));
-				color = color.reduce(N_RENDER*N_RENDER);
+				color = color.reduce(N_SUPER_SAMPLING*N_SUPER_SAMPLING);
 				if(i==100 && j==400) {
 					Ray ray1 = camera.constructRayThroughPixel(Nx, Ny, j, i);
 					Color pixelColor = rayTracerBase.TraceRay(ray1);
@@ -87,7 +87,7 @@ public class Render {
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-				var lst = camera.getApertureRays(Nx, Ny, j, i);
+				var lst = camera.getApertureRays(Nx, Ny, j, i, N_DEPTH_OF_FIELD);
 				for (Ray ray: lst)
 					color = color.add(rayTracerBase.TraceRay(ray));
 				color = color.reduce(600);

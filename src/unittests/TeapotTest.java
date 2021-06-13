@@ -3,7 +3,6 @@ package unittests;
 import org.junit.Test;
 
 import elements.*;
-import elements.lighting.*;
 import geometries.*;
 import primitives.*;
 import renderer.*;
