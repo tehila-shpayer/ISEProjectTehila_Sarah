@@ -20,7 +20,7 @@ import primitives.*;
 */
 
 public class Camera {
-	
+		
 	/**
 	 * aperture: aperture part of camera - to generate focus in picture
 	 */
@@ -113,6 +113,13 @@ public class Camera {
 		return this;
 	}
 	
+	public double getRx(int nX) {
+		return width / nX;
+	}
+	
+	public double getRy(int nY) {
+		return height / nY;
+	}
 	/**
 	 * Construction of ray through pixel in the view plane from the camera
 	 * @param nX - number of pixel per row 
@@ -122,8 +129,7 @@ public class Camera {
 	 * @return the construct ray from camera's location to pixel i,j 
 	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
-		Point3D pCenter = getPCenter();
-        Point3D pIJ = calcPIJ(pCenter, width, height, nX, nY, j, i);
+        Point3D pIJ = calcPIJ(nX, nY, j, i);
 		return new Ray(location, pIJ.subtract(location));  
 	}
 	
@@ -150,6 +156,9 @@ public class Camera {
 		return pIJ;  
 	}
 	
+	public Point3D calcPIJ(int nX, int nY, int j, int i) {
+		return calcPIJ(getPCenter(), width, height, nX, nY, j, i);
+	}
 	/**
 	 * The function construct a beam of rays from the camera to one pixel
 	 * Using the Grid System
@@ -177,6 +186,19 @@ public class Camera {
 			}
 		}
 	    return lst;		
+	}
+	
+	public List<Ray> constructRayThroughPixelAdaptiveSuperSamplingGrid(Point3D pCenter, double w, double h) {	
+		var lstr = new LinkedList<Ray>();
+		var lstp = new LinkedList<Point3D>();
+		Point3D p1 = pCenter.add(vRight.scale(-w/2)).add(vUp.scale(h/2));
+		Point3D p2 = pCenter.add(vRight.scale(w/2)).add(vUp.scale(h/2));
+		Point3D p3 = pCenter.add(vRight.scale(w/2)).add(vUp.scale(-h/2));
+		Point3D p4 = pCenter.add(vRight.scale(-w/2)).add(vUp.scale(-h/2));
+		lstp.addAll(List.of(p1,p2,p3,p4));
+		for(Point3D p: lstp)
+			lstr.add(new Ray(location, p.subtract(location)));
+		return lstr;
 	}
 	
 	/**
