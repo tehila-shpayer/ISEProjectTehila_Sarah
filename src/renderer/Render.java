@@ -1,5 +1,6 @@
 package renderer;
 import java.util.LinkedList;
+import java.util.List;
 /**
  * Render class - Creates from the scene the color matrix of the image.
  * The class contain fields of ImageWriter, Scene, Camera and Ray Tracer.
@@ -19,8 +20,8 @@ import scene.Scene;
 public class Render {
 	
 	//N_RENDER - The square root of the number of rays sent through each pixel
-	private static final int N_SUPER_SAMPLING = 9;
-	private static final int N_DEPTH_OF_FIELD = 4;
+	private static final int N_SUPER_SAMPLING = 8;
+	private static final int N_DEPTH_OF_FIELD = 5;
 	private static final int MAX_LEVEL_ADAPTIVE_SS = 4;
 	
 	Camera camera;
@@ -188,6 +189,15 @@ public class Render {
 		}
 	}
 
+	private void exceptions() {
+		if (imageWriter == null)
+			throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, IMAGE_WRITER_COMPONENT);
+		if (camera == null)
+			throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, CAMERA_COMPONENT);
+		if (rayTracerBase == null)
+			throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, RAY_TRACER_COMPONENT);
+
+	}
 
 	// ****** Setters ********* //
 	// * all setters implements the Builder Design Pattern *//
@@ -260,13 +270,7 @@ public class Render {
 	 * the Renderer object
 	 */
 	public void renderImage() {
-		if (imageWriter == null)
-			throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, IMAGE_WRITER_COMPONENT);
-		if (camera == null)
-			throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, CAMERA_COMPONENT);
-		if (rayTracerBase == null)
-			throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, RAY_TRACER_COMPONENT);
-
+		exceptions();
 		final int nX = imageWriter.getNx();
 		final int nY = imageWriter.getNy();
 		if (threadsCount == 0)
@@ -282,13 +286,7 @@ public class Render {
     * It call other function to produce rays, to calculate the color of each pixel, and to write it to the image.
     */
 	public void renderImageSuperSumpling() {
-		if (camera == null)
-			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
-		if (rayTracerBase == null)
-			throw new MissingResourceException("Render class must have a non-empty rayTracerBase parameter", "RayTracerBase", "" );
-		if (imageWriter == null)
-			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
-		
+		exceptions();		
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy();
 		Color color = new Color(0,0,0);
@@ -303,35 +301,28 @@ public class Render {
 		}
 	
 	public void renderImageAdaptiveSuperSumpling() {
-		if (camera == null)
-			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
-		if (rayTracerBase == null)
-			throw new MissingResourceException("Render class must have a non-empty rayTracerBase parameter", "RayTracerBase", "" );
-		if (imageWriter == null)
-			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
-		
+		exceptions();
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy();
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-				if (i==200 && j==145)
-					color = Color.BLACK;
-				color = CalcColorAdaptive(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS);
-				if(i==400&&j==100)
-					color = new Color(java.awt.Color.RED);
+//				if (i==200 && j==145)
+//					color = Color.BLACK;
+				color = CalcColorAdaptive(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS, true);
 				imageWriter.writePixel(j, i, color);
 			}
 		}
 	}
-	
-	public Color CalcColorAdaptive(Point3D pCenter, double w, double h, int level) {
+			
+	public Color CalcColorAdaptive(Point3D pCenter, double w, double h, int level, boolean up,Color...colorList) {
 		var lstc = new LinkedList<Color>();
-		for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGrid(pCenter, w, h)) {
-			lstc.add(rayTracerBase.TraceRay(ray));
+		var lstcNextIteration = new LinkedList<Color>();
+		if(level == MAX_LEVEL_ADAPTIVE_SS) {
+			for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGridFirstTime(pCenter, w, h)) 
+				lstc.add(rayTracerBase.TraceRay(ray));
 		}
-		//if(Color.equalsList(lstc))
-			//return lstc.get(0);
+		lstc.addAll(List.of(colorList));
 		
 		boolean flag = true;
 		for(int i=0;i<3; i++) {
@@ -350,9 +341,18 @@ public class Render {
 				color = color.add(c.reduce(4));
 			return color;
 		}
+		
+		for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGrid(pCenter, w, h)) 
+			lstcNextIteration.add(rayTracerBase.TraceRay(ray));
+		
+		int index = 0;
+		Color centerColor = rayTracerBase.TraceRay(camera.constructRayToPoint(pCenter));
 		for(int i = 0;i<2;i++) {
-			for(int j = 0;j<2;j++) 
-				color = color.add(CalcColorAdaptive(camera.calcPIJ(pCenter, w, h, 2, 2, j, i), w/2, h/2, level - 1).reduce(4));
+			for(int j = 0;j<2;j++) {
+				color = color.add(CalcColorAdaptive(camera.calcPIJ(pCenter, w, h, 2, 2, j, i), w/2, h/2,
+						level - 1, i==j, centerColor, lstc.get(index), lstcNextIteration.get(index), lstcNextIteration.get((index+1)%4)).reduce(4));
+				index++;
+			}
 		}
 		return color;			
 	}
@@ -360,13 +360,7 @@ public class Render {
 
 	
 	public void renderImageFocus() {
-		if (camera == null)
-			throw new MissingResourceException("Render class must have a non-empty camera parameter", "Camera", "" );
-		if (rayTracerBase == null)
-			throw new MissingResourceException("Render class must have a non-empty rayTracerBase parameter", "RayTracerBase", "" );
-		if (imageWriter == null)
-			throw new MissingResourceException("Render class must have a non-empty imageWriter parameter", "ImageWriter", "" );
-		
+		exceptions();
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy(); 
 		Color color = new Color(0,0,0);

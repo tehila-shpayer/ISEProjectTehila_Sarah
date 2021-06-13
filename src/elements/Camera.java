@@ -5,7 +5,6 @@ import static primitives.Util.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
 import geometries.Geometry;
 import geometries.Plane;
 import geometries.Intersectable.GeoPoint;
@@ -188,13 +187,28 @@ public class Camera {
 	    return lst;		
 	}
 	
-	public List<Ray> constructRayThroughPixelAdaptiveSuperSamplingGrid(Point3D pCenter, double w, double h) {	
+	public List<Ray> constructRayThroughPixelAdaptiveSuperSamplingGridFirstTime(Point3D pCenter, double w, double h) {	
+		Point3D p1 = pCenter.add(vRight.scale(w/2)).add(vUp.scale(h/2));
+		Point3D p2 = pCenter.add(vRight.scale(-w/2)).add(vUp.scale(-h/2));
+		Point3D p3 = pCenter.add(vRight.scale(-w/2)).add(vUp.scale(h/2));
+		Point3D p4 = pCenter.add(vRight.scale(w/2)).add(vUp.scale(-h/2));
 		var lstr = new LinkedList<Ray>();
 		var lstp = new LinkedList<Point3D>();
-		Point3D p1 = pCenter.add(vRight.scale(-w/2)).add(vUp.scale(h/2));
-		Point3D p2 = pCenter.add(vRight.scale(w/2)).add(vUp.scale(h/2));
-		Point3D p3 = pCenter.add(vRight.scale(w/2)).add(vUp.scale(-h/2));
-		Point3D p4 = pCenter.add(vRight.scale(-w/2)).add(vUp.scale(-h/2));
+		lstp.addAll(List.of(p1,p2, p3,p4));
+		for(Point3D p: lstp)
+			lstr.add(new Ray(location, p.subtract(location)));
+		return lstr;
+	}
+	
+	public List<Ray> constructRayThroughPixelAdaptiveSuperSamplingGrid(Point3D pCenter, double w, double h) {
+	
+		Point3D p1 = pCenter.add(vRight.scale(-w/2));
+		Point3D p2 = pCenter.add(vUp.scale(h/2));
+		Point3D p3 = pCenter.add(vRight.scale(w/2));
+		Point3D p4 = pCenter.add(vUp.scale(-h/2));
+
+		var lstr = new LinkedList<Ray>();
+		var lstp = new LinkedList<Point3D>();
 		lstp.addAll(List.of(p1,p2,p3,p4));
 		for(Point3D p: lstp)
 			lstr.add(new Ray(location, p.subtract(location)));
@@ -308,6 +322,7 @@ public class Camera {
 	 * 
 	 * @return  f
 	 */
-	public Point3D getPCenter() { return location.add(vTo.scale(distance));
- }
+	public Point3D getPCenter() { return location.add(vTo.scale(distance));}
+	
+	public Ray constructRayToPoint(Point3D p) { return new Ray(location, p.subtract(location)); }
 }

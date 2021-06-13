@@ -66,7 +66,7 @@ public class ShadowTests {
 //				.setRayTracerBase(new RayTracerBasic(scene));
 //		render.renderImage();
 //		render.writeToImage();
-//		
+		
 //		Render render1 = new Render(). //
 //				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle1SS", 400, 400)) //
 //				.setCamera(camera) //
