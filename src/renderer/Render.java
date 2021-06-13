@@ -315,6 +315,8 @@ public class Render {
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
 				color = CalcColorAdaptive(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS);
+				if(i==400&&j==100)
+					color = new Color(java.awt.Color.RED);
 				imageWriter.writePixel(j, i, color);
 			}
 		}
