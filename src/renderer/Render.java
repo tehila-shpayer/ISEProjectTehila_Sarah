@@ -9,6 +9,7 @@ import java.util.LinkedList;
  */
 import java.util.MissingResourceException;
 
+
 import elements.Camera;
 import primitives.Color;
 import primitives.Point3D;
@@ -20,7 +21,7 @@ public class Render {
 	//N_RENDER - The square root of the number of rays sent through each pixel
 	private static final int N_SUPER_SAMPLING = 4;
 	private static final int N_DEPTH_OF_FIELD = 4;
-	private static final int MAX_LEVEL_ADAPTIVE_SS = 7;
+	private static final int MAX_LEVEL_ADAPTIVE_SS = 4;
 	
 	Camera camera;
 	RayTracerBase rayTracerBase;
@@ -314,6 +315,8 @@ public class Render {
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
+				if (i==200 && j==145)
+					color = Color.BLACK;
 				color = CalcColorAdaptive(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS);
 				imageWriter.writePixel(j, i, color);
 			}
@@ -325,8 +328,20 @@ public class Render {
 		for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGrid(pCenter, w, h)) {
 			lstc.add(rayTracerBase.TraceRay(ray));
 		}
-		if(Color.equalsList(lstc))
+		//if(Color.equalsList(lstc))
+			//return lstc.get(0);
+		
+		boolean flag = true;
+		for(int i=0;i<3; i++) {
+	        if(!(lstc.get(i)).equals(lstc.get(i+1)))
+	        {
+	        	flag = false;
+	        	break;
+	        }
+	    }
+		if (flag)
 			return lstc.get(0);
+		
 		Color color = new Color(0,0,0);
 		if (level == 1) {
 			for(Color c: lstc)
