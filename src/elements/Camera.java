@@ -233,7 +233,7 @@ public class Camera {
 	 * @param i - location of pixel on axis Y
 	 * @return all calculated aperture rays for pixel i,j
 	 */
-	public List<Ray> getApertureRays(int nX, int nY, int j, int i) {
+	public List<Ray> getApertureRays(int nX, int nY, int j, int i, int N) {
 		Ray ray = constructRayThroughPixel(nX, nY, j, i);
 		Point3D pcenter = calcPIJ(getPCenter(), width, height, nX, nY, j, i);
 		Point3D pointFocalPlane = pcenter.add(vTo.scale(aperture.distanceToFocal));
@@ -248,16 +248,15 @@ public class Camera {
 		Point3D p2 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(l/2));
 		Point3D p3 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/2));
 		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
-		 lstp.addAll(List.of(p1, p2, p3, p4)); 
-		for (int a= 0;a<150; a++) {
+		lstp.addAll(List.of(p1, p2, p3, p4)); 
+		for (int a= 0;a<N/4; a++) {
 			double dX = rand.nextDouble()*l;
 			if(dX != 0)
-			{
-				Point3D point3d =p1.add(vRight.scale(dX));
-			lstp.add(point3d);
-			lstp.add(p2.add(vUp.scale(-dX)));
-			lstp.add(p3.add(vRight.scale(-dX)));
-			lstp.add(p4.add(vUp.scale(dX)));
+			{			
+				lstp.add(p1.add(vRight.scale(dX)));
+				lstp.add(p2.add(vUp.scale(-dX)));
+				lstp.add(p3.add(vRight.scale(-dX)));
+				lstp.add(p4.add(vUp.scale(dX)));
 			}
 			else {
 				a--;

@@ -17,7 +17,8 @@ import scene.Scene;
 public class Render {
 	
 	//N_RENDER - The square root of the number of rays sent through each pixel
-	private static final int N_RENDER = 4;
+	private static final int N_SUPER_SAMPLING = 4;
+	private static final int N_DEPTH_OF_FIELD = 4;
 	
 	Camera camera;
 	RayTracerBase rayTracerBase;
@@ -27,18 +28,18 @@ public class Render {
 	// ****** Setters ********* //
 	// * all setters implements the Builder Design Pattern *//
 	
-	public Render setCamera(Camera _camera) {
-		camera = _camera;
+	public Render setCamera(Camera camera) {
+		this.camera = camera;
 		return this;
 	}
 	
-	public Render setRayTracerBase(RayTracerBase _rayTracerBase) {
-		rayTracerBase = _rayTracerBase;
+	public Render setRayTracerBase(RayTracerBase rayTracerBase) {
+		this.rayTracerBase = rayTracerBase;
 		return this;
 	}
 	
-	public Render setImageWriter(ImageWriter _imageWriter) {
-		imageWriter = _imageWriter;
+	public Render setImageWriter(ImageWriter imageWriter) {
+		this.imageWriter = imageWriter;
 		return this;
 	}
 	
@@ -59,9 +60,9 @@ public class Render {
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-				for (Ray ray: camera.constructRayThroughPixelSuperSamplingGrid(Nx, Ny, j, i,N_RENDER))
+				for (Ray ray: camera.constructRayThroughPixelSuperSamplingGrid(Nx, Ny, j, i,N_SUPER_SAMPLING))
 					color = color.add(rayTracerBase.TraceRay(ray));
-				color = color.reduce(N_RENDER*N_RENDER);
+				color = color.reduce(N_SUPER_SAMPLING*N_SUPER_SAMPLING);
 				imageWriter.writePixel(j, i, color);
 				}
 			}
@@ -80,10 +81,10 @@ public class Render {
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-				var lst = camera.getApertureRays(Nx, Ny, j, i);
+				var lst = camera.getApertureRays(Nx, Ny, j, i, N_DEPTH_OF_FIELD);
 				for (Ray ray: lst)
 					color = color.add(rayTracerBase.TraceRay(ray));
-				color = color.reduce(600);
+				color = color.reduce(N_DEPTH_OF_FIELD);
 				imageWriter.writePixel(j, i, color);
 				}
 			}
