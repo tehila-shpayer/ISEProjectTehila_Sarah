@@ -76,16 +76,7 @@ public class ReflectionRefractionTests {
 								.setMaterial(new Material().setkR(0.5)));
 
 		scene.lights.add(new SpotLight(new Color(1020, 400, 400), new Point3D(-750, -750, -150), new Vector(-1, -1, -4)) //
-				.setkL(0.00001).setkQ(0.000005));
-
-		ImageWriter imageWriter = new ImageWriter("reflectionTwoSpheresMirroredSS", 500, 500);
-		Render render = new Render() //
-				.setImageWriter(imageWriter) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-
-		render.renderImageSuperSumpling();
-		render.writeToImage();
+				.setkL(0.00001).setkQ(0.000005));;
 		
 		ImageWriter imageWriter2 = new ImageWriter("reflectionTwoSpheresMirroredSSA", 500, 500);
 		Render render2 = new Render() //
@@ -93,18 +84,8 @@ public class ReflectionRefractionTests {
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
 
-		render2.renderImageAdaptiveSuperSumpling();
+		render2.renderImageSuperSumpling();
 		render2.writeToImage();
-		
-		ImageWriter imageWriter3 = new ImageWriter("reflectionTwoSpheresMirrored", 500, 500);
-		Render render3 = new Render() //
-				.setImageWriter(imageWriter3) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-
-		render3.renderImage();
-		render3.writeToImage();
-
 	}
 
 //	/**

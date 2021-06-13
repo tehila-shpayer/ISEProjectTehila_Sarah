@@ -19,7 +19,7 @@ import scene.Scene;
 public class Render {
 	
 	//N_RENDER - The square root of the number of rays sent through each pixel
-	private static final int N_SUPER_SAMPLING = 4;
+	private static final int N_SUPER_SAMPLING = 9;
 	private static final int N_DEPTH_OF_FIELD = 4;
 	private static final int MAX_LEVEL_ADAPTIVE_SS = 4;
 	
@@ -318,6 +318,8 @@ public class Render {
 				if (i==200 && j==145)
 					color = Color.BLACK;
 				color = CalcColorAdaptive(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS);
+				if(i==400&&j==100)
+					color = new Color(java.awt.Color.RED);
 				imageWriter.writePixel(j, i, color);
 			}
 		}
