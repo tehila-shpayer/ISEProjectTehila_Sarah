@@ -84,7 +84,7 @@ public class ReflectionRefractionTests {
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
 
-		render2.renderImageAdaptiveSuperSumpling();
+		render2.renderImageSuperSumpling();
 		render2.writeToImage();
 	}
 

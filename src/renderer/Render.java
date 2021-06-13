@@ -18,7 +18,7 @@ import scene.Scene;
 public class Render {
 	
 	//N_RENDER - The square root of the number of rays sent through each pixel
-	private static final int N_SUPER_SAMPLING = 4;
+	private static final int N_SUPER_SAMPLING = 9;
 	private static final int N_DEPTH_OF_FIELD = 4;
 	private static final int MAX_LEVEL_ADAPTIVE_SS = 7;
 	
