@@ -74,12 +74,23 @@ public class ShadowTests {
 		render1.renderImageSuperSumpling();
 		render1.writeToImage();
 		
+//		Render render1 = new Render(). //
+//				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle1SS", 400, 400)) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//		render1.renderImageSuperSumpling();
+//		render1.writeToImage();
+		//without improve, 32x32: 100s
+
+		
 		Render render2 = new Render(). //
 				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle1SSA", 400, 400)) //
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
 		render2.renderImageAdaptiveSuperSumpling();
 		render2.writeToImage();
+		//with improve, level 6 (32x32): 69s
+
 	}
 	
 	/**

@@ -26,33 +26,6 @@ public class ReflectionRefractionTests {
 	 * Produce a picture of a sphere lighted by a spot light
 	 */
 	@Test
-	public void twoSpheres() {
-		Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-				.setViewPlaneSize(150, 150).setDistance(1000);
-
-		scene.geometries.add( //
-				new Sphere(new Point3D(0, 0, -50), 50) //
-						.setEmission(new Color(java.awt.Color.BLUE)) //
-						.setMaterial(new Material().setkD(0.4).setkS(0.3).setnShininess(100).setkT(0.3)),
-				new Sphere(new Point3D(0, 0, -50), 25) //
-						.setEmission(new Color(java.awt.Color.RED)) //
-						.setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100)));
-		scene.lights.add( //
-				new SpotLight(new Color(1000, 600, 0), new Point3D(-100, -100, 500), new Vector(-1, -1, -2)) //
-						.setkL(0.0004).setkQ(0.0000006));
-
-		Render render = new Render() //
-				.setImageWriter(new ImageWriter("refractionTwoSpheres", 500, 500)) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-		render.renderImage();
-		render.writeToImage();
-	}
-
-	/**
-	 * Produce a picture of a sphere lighted by a spot light
-	 */
-	@Test
 	public void twoSpheresOnMirrors() {
 		Camera camera = new Camera(new Point3D(0, 0, 10000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 				.setViewPlaneSize(2500, 2500).setDistance(10000); //
@@ -87,7 +60,7 @@ public class ReflectionRefractionTests {
 		render2.renderImageSuperSumpling();
 		render2.writeToImage();
 	}
-
+	
 	/**
 	 * Produce a picture of a two triangles lighted by a spot light with a partially
 	 * transparent Sphere producing partial shadow
@@ -128,7 +101,7 @@ public class ReflectionRefractionTests {
 	@Test
 	public void ourPicture() {
 		Camera camera = new Camera(new Point3D(689, 777, -100), new Vector(-597, -754, -46), new Vector(0, -46, 754)) //
-				.setViewPlaneSize(225, 225).setDistance(1000).setAperture(100, 10);
+				.setViewPlaneSize(337, 225).setDistance(1200).setAperture(100, 10);
 
 		scene.setAmbientLight(new AmbientLight(new Color(209, 240, 251), 0.15));
 
@@ -252,14 +225,42 @@ public class ReflectionRefractionTests {
 		scene.lights.add(new PointLight(new Color(60,60,60), new Point3D(215, 368, 0))//
 				.setkL(0.00001).setkQ(0.000001));
 
-
-		ImageWriter imageWriter = new ImageWriter("ourPictureDepthOfField1", 600, 600);
-		Render render = new Render() //
-				.setImageWriter(imageWriter) //
+//		ImageWriter imageWriter = new ImageWriter("ourPictureSS", 600, 600);
+//		Render render = new Render() //
+//				.setImageWriter(imageWriter) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//
+//		render.renderImageAdaptiveSuperSumpling();
+//		render.writeToImage();
+		//639.6s, N = 4 (4X4 rays in each pixel)ù
+		
+//		ImageWriter imageWriter2 = new ImageWriter("ourPictureAdaptiveSS", 600, 600);
+//		Render render2 = new Render() //
+//				.setImageWriter(imageWriter2) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//
+//		render2.renderImageAdaptiveSuperSumpling();
+//		render2.writeToImage();
+		//602.9s, level = 3
+		
+//		ImageWriter imageWriter2 = new ImageWriter("ourPictureRectangle", 900, 600);
+//		Render render2 = new Render() //
+//				.setImageWriter(imageWriter2) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//
+//		render2.renderImage();
+//		render2.writeToImage();
+		
+		ImageWriter imageWriter2 = new ImageWriter("ourPictureBackground", 900, 600);
+		Render render2 = new Render() //
+				.setImageWriter(imageWriter2) //
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
 
-		render.renderImageFocus();
-		render.writeToImage();
+		render2.renderImageAdaptiveSuperSumpling();
+		render2.writeToImage();
 	}//end
 }
