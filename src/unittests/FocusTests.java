@@ -44,14 +44,14 @@ public class FocusTests {
 		scene.lights.add(new PointLight(new Color(700, 400, 400), new Point3D(0, 5, 0))); //
 		scene.lights.add(new DirectionalLight(new Color(700, 400, 400), new Vector(0, -1, 0))); //
 
-		ImageWriter imageWriter = new ImageWriter("DepthOfField", 600, 600);
-		Render render = new Render() //
-				.setImageWriter(imageWriter) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-
-		render.renderImageFocus();
-		render.writeToImage();
+//		ImageWriter imageWriter = new ImageWriter("DepthOfField", 600, 600);
+//		Render render = new Render() //
+//				.setImageWriter(imageWriter) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//
+//		render.renderImageFocus();
+//		render.writeToImage();
 	}//end
 
 	@Test
@@ -83,13 +83,13 @@ public class FocusTests {
 	//scene1.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
 	scene1.lights.add(new DirectionalLight(new Color(300, 300, 0), new Vector(-1, 0, -1)));
 
-	ImageWriter imageWriter = new ImageWriter("focus2", 500, 500);
-	Render render = new Render()//
-			.setImageWriter(imageWriter) //
-			.setCamera(camera1) //
-			.setRayTracerBase(new RayTracerBasic(scene1));
-	render.renderImageAdaptiveSuperSumpling();
-	render.writeToImage();
+//	ImageWriter imageWriter = new ImageWriter("focus2", 500, 500);
+//	Render render = new Render()//
+//			.setImageWriter(imageWriter) //
+//			.setCamera(camera1) //
+//			.setRayTracerBase(new RayTracerBasic(scene1));
+//	render.renderImageAdaptiveSuperSumpling();
+//	render.writeToImage();
 	
 	ImageWriter imageWriter2 = new ImageWriter("focus3", 500, 500);
 	Render render2 = new Render()//

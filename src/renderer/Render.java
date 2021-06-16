@@ -21,7 +21,7 @@ public class Render {
 	
 	//N_RENDER - The square root of the number of rays sent through each pixel
 	private static final int N_SUPER_SAMPLING = 4;
-	private static final int N_DEPTH_OF_FIELD = 5;
+	private static final int N_DEPTH_OF_FIELD = 150;
 	private static final int MAX_LEVEL_ADAPTIVE_SS = 4;
 	
 	private int threadsCount = 0;
@@ -436,7 +436,7 @@ public class Render {
 				var lst = camera.getApertureRays(Nx, Ny, j, i, N_DEPTH_OF_FIELD);
 				for (Ray ray: lst)
 					color = color.add(rayTracerBase.TraceRay(ray));
-				color = color.reduce(600);
+				color = color.reduce(N_DEPTH_OF_FIELD*4);
 				imageWriter.writePixel(j, i, color);
 				}
 			}
