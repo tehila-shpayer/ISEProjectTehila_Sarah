@@ -21,7 +21,7 @@ public class Render {
 	
 	//N_RENDER - The square root of the number of rays sent through each pixel
 	private static final int N_SUPER_SAMPLING = 4;
-	private static final int N_DEPTH_OF_FIELD = 5;
+	private static final int N_DEPTH_OF_FIELD = 150;
 	private static final int MAX_LEVEL_ADAPTIVE_SS = 4;
 	
 	private int threadsCount = 0;
@@ -318,17 +318,6 @@ public class Render {
 		}
 	}
 	
-///**
-// * * Calculation of color of a specific point from a shooted ray (without ambient light)
-//	 * color is calculated based on the implementation of Phong model of light.
-//	 * private method - used by main calcColor
-//	 * @param point3d - the specific point of which the color is calculated
-//	 * @param ray - the shooted ray to the point
-//	 * @param level - level of depth in recursion
-//	 * @param k - the intensity of impact of secondary rays
-//	 * @return Color - final color of point without ambient light
-// */
-	
 	/**
 	 * Calculation of color of a specific pixel with the improvement of Super-Sampling: for each pixel, if there is a need, it produce more than one ray
 	 * @param pCenter - center of the little pixels in the recursion
@@ -436,7 +425,7 @@ public class Render {
 				var lst = camera.getApertureRays(Nx, Ny, j, i, N_DEPTH_OF_FIELD);
 				for (Ray ray: lst)
 					color = color.add(rayTracerBase.TraceRay(ray));
-				color = color.reduce(600);
+				color = color.reduce(N_DEPTH_OF_FIELD*4);
 				imageWriter.writePixel(j, i, color);
 				}
 			}

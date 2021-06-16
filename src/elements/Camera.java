@@ -285,7 +285,7 @@ public class Camera {
 		Point3D p3 = pcenter.add(vRight.scale(l/2)).add(vUp.scale(-l/2));
 		Point3D p4 = pcenter.add(vRight.scale(-l/2)).add(vUp.scale(-l/2));
 		lstp.addAll(List.of(p1, p2, p3, p4)); 
-		for (int a= 0;a<N/4; a++) {
+		for (int a= 0;a<N; a++) {
 			double dX = rand.nextDouble()*l;
 			if(dX != 0)
 			{			
