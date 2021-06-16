@@ -35,12 +35,12 @@ public class ShadowTests {
 				new SpotLight(new Color(400, 240, 0), new Point3D(-100, -100, 200), new Vector(1, 1, -3)) //
 						.setkL(1E-5).setkQ(1.5E-7));
 
-		Render render = new Render(). //
-				setImageWriter(new ImageWriter("shadowSphereTriangleInitial", 400, 400)) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-		render.renderImage();
-		render.writeToImage();
+//		Render render = new Render(). //
+//				setImageWriter(new ImageWriter("shadowSphereTriangleInitial", 400, 400)) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//		render.renderImage();
+//		render.writeToImage();
 	}
 
 	/**
@@ -60,19 +60,19 @@ public class ShadowTests {
 				new SpotLight(new Color(400, 240, 0), new Point3D(-100, -100, 200), new Vector(1, 1, -3)) //
 						.setkL(1E-5).setkQ(1.5E-7));
 
-		Render render = new Render(). //
-				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle1", 400, 400)) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-		render.renderImage();
-		render.writeToImage();
-		
-		Render render1 = new Render(). //
-				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle1SS", 400, 400)) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-		render1.renderImageSuperSumpling();
-		render1.writeToImage();
+//		Render render = new Render(). //
+//				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle1", 400, 400)) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//		render.renderImage();
+//		render.writeToImage();
+//		
+//		Render render1 = new Render(). //
+//				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle1SS", 400, 400)) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//		render1.renderImageSuperSumpling();
+//		render1.writeToImage();
 		
 //		Render render1 = new Render(). //
 //				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle1SS", 400, 400)) //
@@ -110,12 +110,12 @@ public class ShadowTests {
 				new SpotLight(new Color(400, 240, 0), new Point3D(-100, -100, 200), new Vector(1, 1, -3)) //
 						.setkL(1E-5).setkQ(1.5E-7));
 
-		Render render = new Render(). //
-				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle2", 400, 400)) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-		render.renderImage();
-		render.writeToImage();
+//		Render render = new Render(). //
+//				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle2", 400, 400)) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//		render.renderImage();
+//		render.writeToImage();
 	}
 	/**
 	 * Produce a picture of a sphere and triangle with point light and shade
@@ -134,12 +134,12 @@ public class ShadowTests {
 				new SpotLight(new Color(400, 240, 0), new Point3D(-85, -85, 130), new Vector(1, 1, -3)) //
 						.setkL(1E-5).setkQ(1.5E-7));
 
-		Render render = new Render(). //
-				setImageWriter(new ImageWriter("shadowSphereTriangleMoveSphere1", 400, 400)) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-		render.renderImage();
-		render.writeToImage();
+//		Render render = new Render(). //
+//				setImageWriter(new ImageWriter("shadowSphereTriangleMoveSphere1", 400, 400)) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//		render.renderImage();
+//		render.writeToImage();
 	}
 	/**
 	 * Produce a picture of a sphere and triangle with point light and shade
@@ -158,12 +158,12 @@ public class ShadowTests {
 				new SpotLight(new Color(400, 240, 0), new Point3D(-70, -70, 50), new Vector(1, 1, -3)) //
 						.setkL(1E-5).setkQ(1.5E-7));
 
-		Render render = new Render(). //
-				setImageWriter(new ImageWriter("shadowSphereTriangleMoveSphere2", 400, 400)) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-		render.renderImage();
-		render.writeToImage();
+//		Render render = new Render(). //
+//				setImageWriter(new ImageWriter("shadowSphereTriangleMoveSphere2", 400, 400)) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//		render.renderImage();
+//		render.writeToImage();
 	}
 
 	/**
@@ -187,12 +187,12 @@ public class ShadowTests {
 				new SpotLight(new Color(700, 400, 400), new Point3D(40, 40, 115), new Vector(-1, -1, -4)) //
 						.setkL(4E-4).setkQ(2E-5));
 
-		Render render = new Render() //
-				.setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600)) //
-				.setCamera(camera) //
-				.setRayTracerBase(new RayTracerBasic(scene));
-		render.renderImage();
-		render.writeToImage();
+//		Render render = new Render() //
+//				.setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600)) //
+//				.setCamera(camera) //
+//				.setRayTracerBase(new RayTracerBasic(scene));
+//		render.renderImage();
+//		render.writeToImage();
 	}
 
 }

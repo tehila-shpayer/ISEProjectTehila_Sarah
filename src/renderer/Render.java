@@ -22,7 +22,7 @@ public class Render {
 	//N_RENDER - The square root of the number of rays sent through each pixel
 	private static final int N_SUPER_SAMPLING = 4;
 	private static final int N_DEPTH_OF_FIELD = 5;
-	private static final int MAX_LEVEL_ADAPTIVE_SS = 3;
+	private static final int MAX_LEVEL_ADAPTIVE_SS = 4;
 	
 	private int threadsCount = 0;
 	private static final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
@@ -312,30 +312,30 @@ public class Render {
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-				color = CalcColorAdaptive(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS, true);
+				color = CalcColorAdaptive2(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS);
 				imageWriter.writePixel(j, i, color);
 			}
 		}
 	}
 	
-/**
- * * Calculation of color of a specific point from a shooted ray (without ambient light)
-	 * color is calculated based on the implementation of Phong model of light.
-	 * private method - used by main calcColor
-	 * @param point3d - the specific point of which the color is calculated
-	 * @param ray - the shooted ray to the point
-	 * @param level - level of depth in recursion
-	 * @param k - the intensity of impact of secondary rays
-	 * @return Color - final color of point without ambient light
- */
+///**
+// * * Calculation of color of a specific point from a shooted ray (without ambient light)
+//	 * color is calculated based on the implementation of Phong model of light.
+//	 * private method - used by main calcColor
+//	 * @param point3d - the specific point of which the color is calculated
+//	 * @param ray - the shooted ray to the point
+//	 * @param level - level of depth in recursion
+//	 * @param k - the intensity of impact of secondary rays
+//	 * @return Color - final color of point without ambient light
+// */
 	
 	/**
 	 * Calculation of color of a specific pixel with the improvement of Super-Sampling: for each pixel, if there is a need, it produce more than one ray
-	 * @param pCenter
-	 * @param w
-	 * @param h
-	 * @param level
-	 * @param up
+	 * @param pCenter - center of the little pixels in the recursion
+	 * @param w - width of current pixel
+	 * @param h - height of current pixel
+	 * @param level - level of recursion
+	 * @param up - 
 	 * @param colorList
 	 * @return
 	 */
@@ -381,8 +381,51 @@ public class Render {
 		return color;			
 	}
 
+	/**
+	 * calcAdaptive2 method in each iteration of the recursion creates a view plane of 2X2,
+	 * within the pixel and calculates the 4 centers of the 'mini' pixels.
+	 * if the recursion ends(level = 1) it returns the average of the 4 colors,
+	 * else for each center it test equality to the main center color, if it is the same,
+	 * it adds this color reduced by 4, else it calculates by the recursion.
+	 * @param pCenter - the current pixel center
+	 * @param w - width of current pixel
+	 * @param h - height of current pixel 
+	 * @param level - level of recursion
+	 * @return the final color of the original pixel.
+	 */
+	public Color CalcColorAdaptive2(Point3D pCenter, double w, double h, int level) {
+		var lstc = new LinkedList<Color>();
+		var lstp = new LinkedList<Point3D>();
 
+		for(int a = 0;a<2;a++) {
+			for(int b = 0;b<2;b++) {
+				Point3D point3d = camera.calcPIJ(pCenter, w, h, 2, 2, b, a);
+				lstp.add(point3d);
+				lstc.add(rayTracerBase.TraceRay(camera.constructRayToPoint(point3d)));
+			}
+		}
 	
+		Color color = new Color(0,0,0);
+		if (level == 1) {
+			for(Color c: lstc)
+				color = color.add(c);
+			return color.reduce(4);
+		}
+		
+		Color centerColor = rayTracerBase.TraceRay(camera.constructRayToPoint(pCenter));
+		for(int k = 0; k < 4; k++) {
+	        if(!(lstc.get(k)).equals(centerColor))
+	        	color = color.add(CalcColorAdaptive2(lstp.get(k), w/2, h/2, level - 1).reduce(4));
+	        else 
+	        	color = color.add(lstc.get(k).reduce(4));
+	    }			
+		return color;			
+	}
+
+
+	/**
+	 * 
+	 */
 	public void renderImageFocus() {
 		exceptions();
 		int Nx = imageWriter.getNx();
