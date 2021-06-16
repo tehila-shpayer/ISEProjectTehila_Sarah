@@ -345,7 +345,7 @@ public class Render {
 		if(level == MAX_LEVEL_ADAPTIVE_SS) {
 			for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGridFirstTime(pCenter, w, h)) 
 				lstc.add(rayTracerBase.TraceRay(ray));
-		}
+		} 
 		lstc.addAll(List.of(colorList));
 		
 		Color color = new Color(0,0,0);
