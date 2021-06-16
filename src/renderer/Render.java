@@ -20,13 +20,9 @@ import scene.Scene;
 public class Render {
 	
 	//N_RENDER - The square root of the number of rays sent through each pixel
-	private static final int N_SUPER_SAMPLING = 8;
+	private static final int N_SUPER_SAMPLING = 4;
 	private static final int N_DEPTH_OF_FIELD = 5;
-	private static final int MAX_LEVEL_ADAPTIVE_SS = 4;
-	
-	Camera camera;
-	RayTracerBase rayTracerBase;
-	ImageWriter imageWriter;
+	private static final int MAX_LEVEL_ADAPTIVE_SS = 3;
 	
 	private int threadsCount = 0;
 	private static final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
@@ -37,6 +33,10 @@ public class Render {
 	private static final String IMAGE_WRITER_COMPONENT = "Image writer";
 	private static final String CAMERA_COMPONENT = "Camera";
 	private static final String RAY_TRACER_COMPONENT = "Ray tracer";
+	
+	Camera camera;
+	RayTracerBase rayTracerBase;
+	ImageWriter imageWriter;
 
 
 	/**
@@ -300,6 +300,11 @@ public class Render {
 			}
 		}
 	
+	/**
+	 * The function is responsible of the whole process of rendering the image.
+     * It call other function to produce rays, to calculate the color of each pixel, and to write it to the image.
+     * Implement the improvement of an adaptive Super-Sampling, continue to produce more rays only if the colors in the vertices are not equals.
+	 */
 	public void renderImageAdaptiveSuperSumpling() {
 		exceptions();
 		int Nx = imageWriter.getNx();
@@ -307,14 +312,33 @@ public class Render {
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-//				if (i==200 && j==145)
-//					color = Color.BLACK;
 				color = CalcColorAdaptive(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS, true);
 				imageWriter.writePixel(j, i, color);
 			}
 		}
 	}
-			
+	
+/**
+ * * Calculation of color of a specific point from a shooted ray (without ambient light)
+	 * color is calculated based on the implementation of Phong model of light.
+	 * private method - used by main calcColor
+	 * @param point3d - the specific point of which the color is calculated
+	 * @param ray - the shooted ray to the point
+	 * @param level - level of depth in recursion
+	 * @param k - the intensity of impact of secondary rays
+	 * @return Color - final color of point without ambient light
+ */
+	
+	/**
+	 * Calculation of color of a specific pixel with the improvement of Super-Sampling: for each pixel, if there is a need, it produce more than one ray
+	 * @param pCenter
+	 * @param w
+	 * @param h
+	 * @param level
+	 * @param up
+	 * @param colorList
+	 * @return
+	 */
 	public Color CalcColorAdaptive(Point3D pCenter, double w, double h, int level, boolean up,Color...colorList) {
 		var lstc = new LinkedList<Color>();
 		var lstcNextIteration = new LinkedList<Color>();
@@ -324,6 +348,13 @@ public class Render {
 		}
 		lstc.addAll(List.of(colorList));
 		
+		Color color = new Color(0,0,0);
+		if (level == 1) {
+			for(Color c: lstc)
+				color = color.add(c.reduce(4));
+			return color;
+		}
+
 		boolean flag = true;
 		for(int i=0;i<3; i++) {
 	        if(!(lstc.get(i)).equals(lstc.get(i+1)))
@@ -334,14 +365,7 @@ public class Render {
 	    }
 		if (flag)
 			return lstc.get(0);
-		
-		Color color = new Color(0,0,0);
-		if (level == 1) {
-			for(Color c: lstc)
-				color = color.add(c.reduce(4));
-			return color;
-		}
-		
+				
 		for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGrid(pCenter, w, h)) 
 			lstcNextIteration.add(rayTracerBase.TraceRay(ray));
 		
