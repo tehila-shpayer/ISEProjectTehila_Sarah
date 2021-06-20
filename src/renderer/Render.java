@@ -312,12 +312,13 @@ public class Render {
 		Color color = new Color(0,0,0);
 		for(int i = 0; i < Nx; i++) {
 			for(int j = 0; j < Ny; j++) {
-				color = CalcColorAdaptive2(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS);
+				color = CalcColorAdaptive(camera.calcPIJ(Nx, Ny, j, i), camera.getRx(Nx), camera.getRy(Ny), MAX_LEVEL_ADAPTIVE_SS);
 				imageWriter.writePixel(j, i, color);
 			}
 		}
 	}
 	
+<<<<<<< HEAD
 ///**
 // * * Calculation of color of a specific point from a shooted ray (without ambient light)
 //	 * color is calculated based on the implementation of Phong model of light.
@@ -380,6 +381,59 @@ public class Render {
 		}
 		return color;			
 	}
+=======
+//	/**
+//	 * Calculation of color of a specific pixel with the improvement of Super-Sampling: for each pixel, if there is a need, it produce more than one ray
+//	 * @param pCenter - center of the little pixels in the recursion
+//	 * @param w - width of current pixel
+//	 * @param h - height of current pixel
+//	 * @param level - level of recursion
+//	 * @param up - 
+//	 * @param colorList
+//	 * @return
+//	 */
+//	public Color CalcColorAdaptive(Point3D pCenter, double w, double h, int level, boolean up,Color...colorList) {
+//		var lstc = new LinkedList<Color>();
+//		var lstcNextIteration = new LinkedList<Color>();
+//		if(level == MAX_LEVEL_ADAPTIVE_SS) {
+//			for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGridFirstTime(pCenter, w, h)) 
+//				lstc.add(rayTracerBase.TraceRay(ray));
+//		} 
+//		lstc.addAll(List.of(colorList));
+//		
+//		Color color = new Color(0,0,0);
+//		if (level == 1) {
+//			for(Color c: lstc)
+//				color = color.add(c.reduce(4));
+//			return color;
+//		}
+//
+//		boolean flag = true;
+//		for(int i=0;i<3; i++) {
+//	        if(!(lstc.get(i)).equals(lstc.get(i+1)))
+//	        {
+//	        	flag = false;
+//	        	break;
+//	        }
+//	    }
+//		if (flag)
+//			return lstc.get(0);
+//				
+//		for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGrid(pCenter, w, h)) 
+//			lstcNextIteration.add(rayTracerBase.TraceRay(ray));
+//		
+//		int index = 0;
+//		Color centerColor = rayTracerBase.TraceRay(camera.constructRayToPoint(pCenter));
+//		for(int i = 0;i<2;i++) {
+//			for(int j = 0;j<2;j++) {
+//				color = color.add(CalcColorAdaptive(camera.calcPIJ(pCenter, w, h, 2, 2, j, i), w/2, h/2,
+//						level - 1, i==j, centerColor, lstc.get(index), lstcNextIteration.get(index), lstcNextIteration.get((index+1)%4)).reduce(4));
+//				index++;
+//			}
+//		}
+//		return color;			
+//	}
+>>>>>>> branch 'master' of https://github.com/tehila-shpayer/ISEProjectTehila_Sarah.git
 
 	/**
 	 * calcAdaptive2 method in each iteration of the recursion creates a view plane of 2X2,
@@ -393,10 +447,11 @@ public class Render {
 	 * @param level - level of recursion
 	 * @return the final color of the original pixel.
 	 */
-	public Color CalcColorAdaptive2(Point3D pCenter, double w, double h, int level) {
+	public Color CalcColorAdaptive(Point3D pCenter, double w, double h, int level) {
 		var lstc = new LinkedList<Color>();
 		var lstp = new LinkedList<Point3D>();
 
+		//produce 4 rays - from each center of the 4 "mini pixels" in the given pixel
 		for(int a = 0;a<2;a++) {
 			for(int b = 0;b<2;b++) {
 				Point3D point3d = camera.calcPIJ(pCenter, w, h, 2, 2, b, a);
@@ -406,6 +461,7 @@ public class Render {
 		}
 	
 		Color color = new Color(0,0,0);
+		//if we reach the maximum level of recursion, return the average of the 4 rays
 		if (level == 1) {
 			for(Color c: lstc)
 				color = color.add(c);
@@ -414,8 +470,12 @@ public class Render {
 		
 		Color centerColor = rayTracerBase.TraceRay(camera.constructRayToPoint(pCenter));
 		for(int k = 0; k < 4; k++) {
+			//for each mini pixel:
+			//if the color of its center is equal to the color of the center of the real pixel-
+			//this is the returned color
+			//else- we continue to divide the mini pixel to 4 mini pixels in recursion
 	        if(!(lstc.get(k)).equals(centerColor))
-	        	color = color.add(CalcColorAdaptive2(lstp.get(k), w/2, h/2, level - 1).reduce(4));
+	        	color = color.add(CalcColorAdaptive(lstp.get(k), w/2, h/2, level - 1).reduce(4));
 	        else 
 	        	color = color.add(lstc.get(k).reduce(4));
 	    }			
@@ -424,7 +484,8 @@ public class Render {
 
 
 	/**
-	 * 
+	 * The function is responsible of the whole process of rendering the image with an implement of the depth-of-field fetcher
+     * It call other function to produce rays, to calculate the color of each pixel, and to write it to the image.
 	 */
 	public void renderImageFocus() {
 		exceptions();
