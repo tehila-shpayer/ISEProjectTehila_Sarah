@@ -318,7 +318,6 @@ public class Render {
 		}
 	}
 	
-<<<<<<< HEAD
 ///**
 // * * Calculation of color of a specific point from a shooted ray (without ambient light)
 //	 * color is calculated based on the implementation of Phong model of light.
@@ -381,7 +380,6 @@ public class Render {
 		}
 		return color;			
 	}
-=======
 //	/**
 //	 * Calculation of color of a specific pixel with the improvement of Super-Sampling: for each pixel, if there is a need, it produce more than one ray
 //	 * @param pCenter - center of the little pixels in the recursion
@@ -433,7 +431,6 @@ public class Render {
 //		}
 //		return color;			
 //	}
->>>>>>> branch 'master' of https://github.com/tehila-shpayer/ISEProjectTehila_Sarah.git
 
 	/**
 	 * calcAdaptive2 method in each iteration of the recursion creates a view plane of 2X2,
