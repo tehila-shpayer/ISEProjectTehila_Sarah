@@ -87,7 +87,7 @@ public class ShadowTests {
 				setImageWriter(new ImageWriter("shadowSphereTriangleMoveTriangle1SSA", 400, 400)) //
 				.setCamera(camera) //
 				.setRayTracerBase(new RayTracerBasic(scene));
-		render2.renderImageAdaptiveSuperSumpling();
+		render2.renderImageSuperSumpling();
 		render2.writeToImage();
 		//with improve, level 6 (32x32): 69s
 

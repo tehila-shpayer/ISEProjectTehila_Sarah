@@ -175,7 +175,7 @@ public class Camera {
 		double Rx = width / nX;
 		Ray ray;
 		var lst = new LinkedList<Ray>();
-		//Divides the pixel into a grid
+		//Divides the pixel into                                        a grid
 		for(int Pi = 0; Pi < N; Pi++) {
 			for(int Pj = 0; Pj < N; Pj++) {
 				//for each "mini pixel" in the grid, we send a ray from the camera trough it
