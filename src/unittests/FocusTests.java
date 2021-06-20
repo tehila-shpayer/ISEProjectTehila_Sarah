@@ -78,7 +78,7 @@ public class FocusTests {
 	Geometry sphere5 = new Sphere(new Point3D(-30, -20, 100), 15) //
 			.setEmission(new Color(java.awt.Color.CYAN)) //
 			.setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100));
-	scene1.geometries.add(sphere1, sphere2, sphere3, sphere4, sphere5);
+	scene1.geometries.add(sphere1, sphere2, sphere3, sphere4, sphere5); 
 	
 	//scene1.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
 	scene1.lights.add(new DirectionalLight(new Color(300, 300, 0), new Vector(-1, 0, -1)));
