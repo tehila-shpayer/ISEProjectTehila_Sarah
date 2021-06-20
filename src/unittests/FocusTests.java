@@ -83,20 +83,20 @@ public class FocusTests {
 	//scene1.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
 	scene1.lights.add(new DirectionalLight(new Color(300, 300, 0), new Vector(-1, 0, -1)));
 
-//	ImageWriter imageWriter = new ImageWriter("focus2", 500, 500);
-//	Render render = new Render()//
-//			.setImageWriter(imageWriter) //
-//			.setCamera(camera1) //
-//			.setRayTracerBase(new RayTracerBasic(scene1));
-//	render.renderImageAdaptiveSuperSumpling();
-//	render.writeToImage();
-	
-	ImageWriter imageWriter2 = new ImageWriter("focus3", 500, 500);
-	Render render2 = new Render()//
-			.setImageWriter(imageWriter2) //
+	ImageWriter imageWriter = new ImageWriter("focus2", 500, 500);
+	Render render = new Render()//
+			.setImageWriter(imageWriter) //
 			.setCamera(camera1) //
 			.setRayTracerBase(new RayTracerBasic(scene1));
-	render2.renderImageFocus();
-	render2.writeToImage();
+	render.renderImageAdaptiveSuperSumpling();
+	render.writeToImage();
+	
+//	ImageWriter imageWriter2 = new ImageWriter("focus3", 500, 500);
+//	Render render2 = new Render()//
+//			.setImageWriter(imageWriter2) //
+//			.setCamera(camera1) //
+//			.setRayTracerBase(new RayTracerBasic(scene1));
+//	render2.renderImageFocus();
+//	render2.writeToImage();
 	}
 }
