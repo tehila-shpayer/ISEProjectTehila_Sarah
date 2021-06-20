@@ -318,69 +318,7 @@ public class Render {
 		}
 	}
 	
-///**
-// * * Calculation of color of a specific point from a shooted ray (without ambient light)
-//	 * color is calculated based on the implementation of Phong model of light.
-//	 * private method - used by main calcColor
-//	 * @param point3d - the specific point of which the color is calculated
-//	 * @param ray - the shooted ray to the point
-//	 * @param level - level of depth in recursion
-//	 * @param k - the intensity of impact of secondary rays
-//	 * @return Color - final color of point without ambient light
-// */
-	
-	/**
-	 * Calculation of color of a specific pixel with the improvement of Super-Sampling: for each pixel, if there is a need, it produce more than one ray
-	 * @param pCenter - center of the little pixels in the recursion
-	 * @param w - width of current pixel
-	 * @param h - height of current pixel
-	 * @param level - level of recursion
-	 * @param up - 
-	 * @param colorList
-	 * @return
-	 */
-	public Color CalcColorAdaptive(Point3D pCenter, double w, double h, int level, boolean up,Color...colorList) {
-		var lstc = new LinkedList<Color>();
-		var lstcNextIteration = new LinkedList<Color>();
-		if(level == MAX_LEVEL_ADAPTIVE_SS) {
-			for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGridFirstTime(pCenter, w, h)) 
-				lstc.add(rayTracerBase.TraceRay(ray));
-		}
-		lstc.addAll(List.of(colorList));
-		
-		Color color = new Color(0,0,0);
-		if (level == 1) {
-			for(Color c: lstc)
-				color = color.add(c.reduce(4));
-			return color;
-		}
-
-		boolean flag = true;
-		for(int i=0;i<3; i++) {
-	        if(!(lstc.get(i)).equals(lstc.get(i+1)))
-	        {
-	        	flag = false;
-	        	break;
-	        }
-	    }
-		if (flag)
-			return lstc.get(0);
-				
-		for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGrid(pCenter, w, h)) 
-			lstcNextIteration.add(rayTracerBase.TraceRay(ray));
-		
-		int index = 0;
-		Color centerColor = rayTracerBase.TraceRay(camera.constructRayToPoint(pCenter));
-		for(int i = 0;i<2;i++) {
-			for(int j = 0;j<2;j++) {
-				color = color.add(CalcColorAdaptive(camera.calcPIJ(pCenter, w, h, 2, 2, j, i), w/2, h/2,
-						level - 1, i==j, centerColor, lstc.get(index), lstcNextIteration.get(index), lstcNextIteration.get((index+1)%4)).reduce(4));
-				index++;
-			}
-		}
-		return color;			
-	}
-//	/**
+//	/** !!unused!!
 //	 * Calculation of color of a specific pixel with the improvement of Super-Sampling: for each pixel, if there is a need, it produce more than one ray
 //	 * @param pCenter - center of the little pixels in the recursion
 //	 * @param w - width of current pixel
@@ -396,7 +334,7 @@ public class Render {
 //		if(level == MAX_LEVEL_ADAPTIVE_SS) {
 //			for(Ray ray: camera.constructRayThroughPixelAdaptiveSuperSamplingGridFirstTime(pCenter, w, h)) 
 //				lstc.add(rayTracerBase.TraceRay(ray));
-//		} 
+//		}
 //		lstc.addAll(List.of(colorList));
 //		
 //		Color color = new Color(0,0,0);
@@ -431,6 +369,7 @@ public class Render {
 //		}
 //		return color;			
 //	}
+
 
 	/**
 	 * calcAdaptive2 method in each iteration of the recursion creates a view plane of 2X2,
